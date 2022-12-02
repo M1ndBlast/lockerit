@@ -1,0 +1,59 @@
+* {
+    box-sizing: border-box;
+  }
+  .card{
+    position: relative;
+    top: 80px;
+    border-color: rgb(33, 46, 70);
+}
+.colorBorder{
+    border-color: rgb(33, 46, 70);
+}
+a{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    text-decoration: none;
+    color: black;
+}
+a:visited{
+    text-decoration: none;
+    color: black;
+}
+  /* Create two equal columns that floats next to each other */
+  .row{
+    position: relative;
+    left: 4%;
+    height: 124px;
+    width: 1000px;
+  }
+  
+.bankImage{
+    width: 26%;
+    height: 83%;
+    padding-bottom: 0;
+}
+.columnImage{
+    width: 25%;
+    height: 80px;
+}
+  .column {
+    float: left;
+    width: 25%;
+    padding-top: 25px;
+    padding-left: 10px;
+    height: 80px; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  @media screen and (max-width: 600px) {
+    .column {
+      width: 100%;
+    }
+  }
