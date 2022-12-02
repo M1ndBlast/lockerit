@@ -1,28 +1,42 @@
 version: '3'
 
 services:
-  mysql-development:
-    image: mysql:8.0.31
-    environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-      MYSQL_DATABASE: lockerit
-      MYSQL_USER: lockerit_user
-      MYSQL_PASSWORD: 1q.2w3e4r
-    ports:
-      - "3308:3306"
-    volumes:
-      - ./mysql:/var/lib/mysql
-      # just for first time
-      - ./init.sql:/data/application/init.sql
-    command: --init-file /data/application/init.sql
+  mysql:
+      image: mysql:8.0.31
+          restart: unless-stopped
+              volumes:
+                    - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
+                        ports:
+                              - 3306:3306
+                                  expose:
+                                        - 3306
+                                            env_file:
+                                                  - mysql.env
+                                                      networks:
+                                                            - internalnet
 
-  node-development:
-    image: node:18.12.1-alpine3.15
-    depends_on:
-      - mysql-development
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: sh -c "npm install && npm start"
+                                                              node:
+                                                                  build: .
+                                                                      image: lockey:1
+                                                                          ports:
+                                                                                - 3000:3000
+                                                                                    volumes:
+                                                                                          - ./src/:/lockey/src/
+                                                                                              #   - ./src:/lockey
+                                                                                                  #   - ./package.json:/lockey/package.json
+                                                                                                      # working_dir: /lockey
+                                                                                                          # command: sh -c 'npm install && npm start'
+                                                                                                              expose:
+                                                                                                                    - 3000
+                                                                                                                        env_file:
+                                                                                                                              - node.env
+                                                                                                                                  depends_on:
+                                                                                                                                        - mysql
+                                                                                                                                            networks:
+                                                                                                                                                  - internalnet
+
+                                                                                                                                                  networks:
+                                                                                                                                                    internalnet:
+                                                                                                                                                        driver: bridge
+                                                                                                                                                        volumes:
+                                                                                                                                                          myapp_data:⅘
