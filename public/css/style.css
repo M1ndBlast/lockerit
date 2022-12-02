@@ -18,7 +18,7 @@ body {
 
 .seccion1{
     min-height: 400px;
-    background-image: url('../images/lockers.jpg');
+    background-image: url('./lockers.jpg');
     background-position: center;
     background-size: cover;
 }
