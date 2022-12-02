@@ -2,41 +2,42 @@ version: '3'
 
 services:
   mysql:
-      image: mysql:8.0.31
-          restart: unless-stopped
-              volumes:
-                    - ./db/init.sql:/docker-entrypoint-initdb.d/0_init.sql
-                        ports:
-                              - 3306:3306
-                                  expose:
-                                        - 3306
-                                            env_file:
-                                                  - mysql.env
-                                                      networks:
-                                                            - internalnet
+    image: mysql:8.0.31
+    restart: unless-stopped
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file:
+      - mysql.env
+    networks:
+      - internalnet
 
-                                                              node:
-                                                                  build: .
-                                                                      image: lockey:1
-                                                                          ports:
-                                                                                - 3000:3000
-                                                                                    volumes:
-                                                                                          - ./src/:/lockey/src/
-                                                                                              #   - ./src:/lockey
-                                                                                                  #   - ./package.json:/lockey/package.json
-                                                                                                      # working_dir: /lockey
-                                                                                                          # command: sh -c 'npm install && npm start'
-                                                                                                              expose:
-                                                                                                                    - 3000
-                                                                                                                        env_file:
-                                                                                                                              - node.env
-                                                                                                                                  depends_on:
-                                                                                                                                        - mysql
-                                                                                                                                            networks:
-                                                                                                                                                  - internalnet
+  node:
+    build: .
+    image: lockerit:1
+    command: npm run dev
+    volumes:
+      - ./code/:/app/code/
+    ports:
+      - 3000:3000
+    #   - ./src:/lockey
+    #   - ./package.json:/lockey/package.json
+    # working_dir: /lockey
+    # command: sh -c 'npm install && npm start'
+    expose:
+      - 3000
+    env_file:
+      - node.env
+    depends_on:
+      - mysql
+    networks:
+      - internalnet
 
-                                                                                                                                                  networks:
-                                                                                                                                                    internalnet:
-                                                                                                                                                        driver: bridge
-                                                                                                                                                        volumes:
-                                                                                                                                                          myapp_data:⅘
+networks:
+  internalnet:
+    driver: bridge
+volumes:
+  myapp_data:
