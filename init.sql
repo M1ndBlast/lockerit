@@ -322,10 +322,10 @@ CREATE UNIQUE INDEX `nombre_tipoUsuario_UNIQUE` ON `tipoUsuario` (`nombre_tipoUs
 
 SHOW WARNINGS;
 
-LOCK TABLES `tipousuario` WRITE;
-/*!40000 ALTER TABLE `tipousuario` DISABLE KEYS */;
-INSERT INTO `tipousuario` VALUES (1,'Administrador'),(3,'Cliente'),(2,'Repartidor');
-/*!40000 ALTER TABLE `tipousuario` ENABLE KEYS */;
+LOCK TABLES `tipoUsuario` WRITE;
+/*!40000 ALTER TABLE `tipoUsuario` DISABLE KEYS */;
+INSERT INTO `tipoUsuario` VALUES (1,'Administrador'),(3,'Cliente'),(2,'Repartidor');
+/*!40000 ALTER TABLE `tipoUsuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 SET SQL_MODE=@OLD_SQL_MODE;
