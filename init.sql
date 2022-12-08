@@ -313,6 +313,7 @@ CREATE TABLE IF NOT EXISTS `tipoUsuario` (
   PRIMARY KEY (`id_tipoUsuario`))
 ENGINE = InnoDB;
 
+
 SHOW WARNINGS;
 CREATE UNIQUE INDEX `id_tipoUsuario_UNIQUE` ON `tipoUsuario` (`id_tipoUsuario` ASC) VISIBLE;
 
@@ -320,6 +321,12 @@ SHOW WARNINGS;
 CREATE UNIQUE INDEX `nombre_tipoUsuario_UNIQUE` ON `tipoUsuario` (`nombre_tipoUsuario` ASC) VISIBLE;
 
 SHOW WARNINGS;
+
+LOCK TABLES `tipousuario` WRITE;
+/*!40000 ALTER TABLE `tipousuario` DISABLE KEYS */;
+INSERT INTO `tipousuario` VALUES (1,'Administrador'),(3,'Cliente'),(2,'Repartidor');
+/*!40000 ALTER TABLE `tipousuario` ENABLE KEYS */;
+UNLOCK TABLES;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

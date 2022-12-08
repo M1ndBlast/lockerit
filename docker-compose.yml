@@ -9,7 +9,18 @@ services:
     ports:
       - 3307:3306
     expose:
+<<<<<<< HEAD
       - 3307
+=======
+      - 3306
+    environment:
+      - MYSQL_DATABASE=Lockerit
+      - MYSQL_USER=locker
+      - MYSQL_PASSWORD=Lockerit!
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql
+>>>>>>> d973dd3ce88fa008b8a20ef6ae43feded9ff61eb
     env_file:
       - mysql.env
     networks:
@@ -29,12 +40,21 @@ services:
     # command: sh -c 'npm install && npm start'
     expose:
       - 3000
-    env_file:
-      - node.env
     depends_on:
       - mysql
     networks:
       - internalnet
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=locker
+      - MYSQL_PASSWORD=Lockerit!
+      - MYSQL_DATABASE=Lockerit
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=lockey
+      - SERVER_PORT=3000
+      - NODE_ENV=development
+      - DEBUG=lockerit:*
 
 networks:
   internalnet:
