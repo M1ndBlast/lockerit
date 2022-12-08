@@ -13,7 +13,6 @@ function validateForm(form) {
 function validatePassword(form) {
 	if (form.elements['contrasena-verificacion']) {
 		if (form.elements['contrasena'].value !== form.elements['contrasena-verificacion'].value) {
-			// toast('Passwords do not match')
 			form.elements['contrasena-verificacion'].setCustomValidity('Las contraseñas no coinciden');
 			alert('Las contraseñas no coinciden');
 			return false;
@@ -109,13 +108,13 @@ function validatePassword(form) {
 						if (data.redirect !== '')
 							window.location.href = data.redirect;
 						else
-							toast(data.message, TOAST_TYPES.SUCCESS);
+							alert(JSON.stringify(data));
 					else
-						toast(data.message, TOAST_TYPES.DANGER);
+						alert(JSON.stringify(data));
 					
 				})
 				.catch(err => {
-					toast('Error al enviar el formulario');
+					alert('Error al enviar el formulario');
 					console.log(err);
 				});
 			}

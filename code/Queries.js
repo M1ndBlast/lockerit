@@ -47,7 +47,7 @@ const db = {
 	 */
 	checkCredentials: (email, password) => {
 		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM User WHERE correo = ? AND password = ? LIMIT 1', [email, password], (err, results) => {
+			con.query('SELECT * FROM Cliente WHERE correo = ? AND password = ? LIMIT 1', [email, password], (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});

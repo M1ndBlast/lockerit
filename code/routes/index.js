@@ -5,7 +5,10 @@ var db = require('../Queries');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-	res.render('main', { title: 'expres' });
+	if (req.session.user) 
+		res.redirect('/Dashboard');
+	else 
+		res.render('main');
 });
 
 //Below showing to alternatives to redirect to another page
@@ -13,8 +16,10 @@ router.get('/', function (req, res, next) {
 
 router.route('/iniciarSesion')
 	.get((req, res, next) => {
-		let user = req.session.user
-		res.render('iniciarSesion', { title: user?.name });
+		if (req.session.user) 
+			res.redirect('/');
+		else 
+			res.render('iniciarSesion', { title: req.session.user?.name });
 	})
 	.post((req, res, next) => {
 		console.log('iniciarSesion', req.body);
@@ -47,8 +52,10 @@ router.route('/iniciarSesion')
 
 router.route('/RegistroCliente')
 	.get((req, res, next) => {
-		let user = req.session.user
-		res.render('RegistroCliente', { title: user?.name });
+		if (req.session.user) 
+			res.redirect('/');
+		else 
+			res.render('RegistroCliente', { title: req.session.user?.name });
 	})
 	.post((req, res, next) => {
 		console.log('RegistroCliente', req.body);
@@ -91,7 +98,10 @@ router.route('/recuperarContrasena')
 
 router.route('/Dashboard')
 	.get((req, res, next) => {
-		res.send('Dashboard');
+		if (req.session.user) 
+			res.render('AccesoMain');
+		else 
+			res.redirect('/');
 	});
 
 
