@@ -7,9 +7,9 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
     ports:
-      - 3306:3306
+      - 3307:3306
     expose:
-      - 3306
+      - 3307
     env_file:
       - mysql.env
     networks:
