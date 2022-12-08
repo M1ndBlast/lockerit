@@ -21,9 +21,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
 	secret: 'SuperContrasena',
-	resave: true,
+	resave: false,
 	saveUninitialized: true,
-	cookie: { maxAge: 1500 }	// 1 minute = 60 units
+	cookie: { maxAge: 3600000 }	// 1 minute = 60 units
 }));
 
 app.use('/', indexRouter);

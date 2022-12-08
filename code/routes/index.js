@@ -75,7 +75,7 @@ router.route('/RegistroCliente')
 						res.status(200).json({
 							response: 'OK',
 							message: 'Usuario creado correctamente',
-							redirect: '/panel'
+							redirect: '/Dashboard'
 						});
 					} else {
 						res.status(401).json({response:'ERROR', message:'Usuario no encontrado tras registro'});
