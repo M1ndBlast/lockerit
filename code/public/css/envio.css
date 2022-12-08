@@ -1,0 +1,50 @@
+  .card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.2);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+.imagen{
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.contenido{
+    position: relative;
+        top: 80px;
+        border-color: rgb(33, 46, 70);
+}
+
+.Border{
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: rgb(33, 46, 70);
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+}
+
+a{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    text-decoration: none;
+    color: black;
+}
+a:visited{
+    text-decoration: none;
+    color: black;
+}
+
+.seleccion{
+    border-color: rgb(33, 46, 70);
+}
+
+.seleccion:hover{
+    border-color: rgb(249, 217, 80);
+}

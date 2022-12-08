@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Lockerit!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="../public/css/card.css">
+  <link rel="stylesheet" href="../public/css/cotizarEnvio.css">
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="../public/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav ms-auto" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#sec2">¿Quieres somos?</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#sec4">Contacto</a>
+          </li>
+          <li class="nav-item " class="Botones">
+            <button type="submit" onclick="location.href='./iniciarSesion.html'"
+              class="btn btn-outline-light  fw-semibold">Iniciar Sesión</button>
+          </li>
+          <li class="nav-item mx-2" style="margin-left: 20px;">
+            <button type="submit" onclick="location.href='./RegistroCliente.html'"
+              class="btn btn-outline-light  fw-semibold ">Registrate</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- partial:index.partial.html -->
+  <div class=" d-flex justify-content-center align-items-center ">
+    <div class="bg-white border border-dark p-5 rounded-5 text-dark shadow" style="width: 60rem; margin-top: 30px; position: relative; top: 70px;">
+      <div class="card-body">
+        <center><img src="../public/images/cotizar.png" width="200px" height="70px"></center>
+        <h2 class="card-title text-center titulo">Cotizar envío</h2>
+      </div>
+
+      <!-- Seccion locker origen -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Locker de origen</h3>
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">*Campos obligatorios</p>
+      </div>
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg">
+        <option selected>Seleccione su alcaldía</option>
+        <option value="1">Álvaro Obregón</option>
+        <option value="2">Cuauhtémoc</option>
+        <option value="3">Gustavo A. Madero</option>
+        <option value="4">Miguel Hidalgo</option>
+      </select>
+
+      <div class="mapa">
+        <img src="../public/images/mapa.png" class="imgmapa">
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">Seleccione el locker de origen de su preferencia*</p>
+      </div>
+      <form>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadio" checked>
+            <label class="form-check-label stretched-link" for="firstRadio"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadio">
+            <label class="form-check-label stretched-link" for="secondRadio"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          </li>
+        </ul>
+      </form>
+
+
+      <!-- Seccion Locker Destino -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Locker de destino</h3>
+      </div>
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg">
+        <option selected>Seleccione una alcaldía</option>
+        <option value="1">Álvaro Obregón</option>
+        <option value="2">Cuauhtémoc</option>
+        <option value="3">Gustavo A. Madero</option>
+        <option value="4">Miguel Hidalgo</option>
+      </select>
+      <div class="mapa">
+        <img src="../public/images/mapa.png" class="imgmapa">
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">Seleccione el locker de destino de su preferencia*</p>
+      </div>
+      <form>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadioDestino"
+              checked>
+            <label class="form-check-label stretched-link" for="firstRadioDestino"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadioDestino">
+            <label class="form-check-label stretched-link" for="secondRadioDestino"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </form>
+
+      <!-- Seccion tamano de paquete -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Tamaño del paquete</h3>
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">Seleccione el tamaño de paquete de su preferencia*</p>
+      </div>
+      <div class="container">
+        <div class="row mt-2">
+          <div class="col-12">
+            <form>
+              <div class="form-group row">
+                <div class="col-12">
+                  <div class="card-deck">
+                    <div id="chico-card" class="card mb-4">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="chico" type="radio" name="paquete">
+                          <label for="chico">Chico</label>
+                        </h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="../public/images/icon-paqueteS.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="mediano-card" class="card mb-4 active">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="mediano" type="radio" checked="" name="paquete"> <label
+                            for="mediano">Mediano</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="../public/images/icon-paqueteM.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="grande-card" class="card mb-4 ">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="grande" type="radio" name="paquete"> <label for="grande">Grande</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="../public/images/icon-paqueteG.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipo de envío -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Tipo de envío</h3>
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">Seleccione el tipo de envío de su preferencia*</p>
+      </div>
+      <div class="container">
+        <div class="row mt-2">
+          <div class="col-12">
+            <form>
+              <div class="form-group row">
+                <div class="col-12">
+                  <div class="card-deck">
+                    <div id="express-card" class="card mb-4">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="express" type="radio" name="tipo">
+                          <label for="express">Express</label>
+                        </h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="../public/images/express.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="estandar-card" class="card mb-4 active">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="estandar" type="radio" checked="" name="tipo"> <label
+                            for="estandar">Estandar</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="../public/images/estandar.png"
+                            alt="Card image cap">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <center><button class="btn btn-outline-danger agregar">Cotizar</a>
+        </center>
+      </div>
+    </div>
+    
+  </div>
+  <br>
+  <!-- cards -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+  <script src="../public/js/card.js"></script>
+
+</body>
+
+</html>

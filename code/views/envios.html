@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+    <title>Lockerit!</title>
+    <link rel="stylesheet" href="../public/css/styleInicioSesion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../public/css/envio.css">
+</head>
+
+<body>
+    <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="../public/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Envios</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mi Cuenta
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="../views/editarDatosUsuario.html">Mis Datos</a></li>
+                          <li><a class="dropdown-item" href="../views/metodosPago.html">Métodos de Pago</a></li>
+                        </ul>
+                      </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">|</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Bienvenido Usuario</a>
+                    </li>
+                    <li class="nav-item " class="Botones">
+                        <button type="submit" onclick="location.href='./main.html'"
+                            class="btn btn-outline-light  fw-semibold">Cerrar Sesión</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container contenido">
+        <div class="Border">
+            <center><svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor"
+                    class="bi bi-box-seam" viewBox="0 0 16 16">
+                    <path
+                        d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                </svg></center>
+            <h2 class="card-title text-center" style="margin-bottom: 20px;">Envíos</h2>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <form>
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <div class="card-deck">
+                                    <div id="chico-card" class="card mb-4 seleccion">
+                                        <div class="card-body" role="button" onclick="location.href='../views/cotizarEnvio.html'" >
+                                            <div class="imagen">
+                                                <img class="img-top " width="220px" height="100px"
+                                                    src="../public/images/solicitud.png" alt="Card image cap" sytle="">
+                                            </div>
+                                            <h5 class="card-title text-center">Solicitud de Envío</h5>
+                                            <p class="card-text">Envía un paquete de un locker de origen a un locker
+                                                destino fácil y rápido.</p>
+                                        </div>
+                                    </div>
+                                    <div id="mediano-card" class="card mb-4 seleccion">
+                                        <div class="card-body seleccion" role="button" onclick="location.href=''">
+                                            <div class="imagen">
+                                                <img class="img-top " width="150px" height="100px"
+                                                    src="../public/images/ConsultarEnvio.png" alt="Card image cap" sytle="">
+                                            </div>
+                                            <h5 class="card-title text-center">Consultar Envíos</h5>
+                                            <p class="card-text">Consulta el estatus, guía y ticket de tus envíos
+                                                activos.</p>
+                                        </div>
+                                    </div>
+                                    <div id="grande-card" class="card mb-4 seleccion">
+                                        <div class="card-body" role="button" onclick="location.href=''">
+                                            <div class="imagen">
+                                                <img class="img-top " width="100px" height="100px"
+                                                    src="../public/images/Historial.png" alt="Card image cap" sytle="">
+                                            </div>
+                                            <h5 class="card-title text-center">Historial de Envíos</h5>
+                                            <p class="card-text">Consulta el historial de tus envíos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card" style="width: 50%; position:relative; left: 25%;">
+                <div class="card-header text-center">
+                    <h5>Rastrear envío</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder=""
+                                aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        
+
+    </div>
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src="../public/js/card.js"></script>
+
+</body>
+
+</html>
