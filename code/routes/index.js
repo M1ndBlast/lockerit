@@ -96,10 +96,44 @@ router.route('/recuperarContrasena')
 		res.render('recuperarContrasena');
 	});
 
+router.route('/cerrarsesion')
+	.get((req, res, next) => {
+		if (req.session.user) {
+			req.session.destroy();
+			res.redirect('/');
+		} else {
+			res.redirect('/');
+		}
+	});
+
 router.route('/Dashboard')
 	.get((req, res, next) => {
 		if (req.session.user) 
 			res.render('AccesoMain');
+		else 
+			res.redirect('/');
+	});
+
+router.route('/editarDatosUsuario')
+	.get((req, res, next) => {
+		if (req.session.user) 
+			res.render('editarDatosUsuario');
+		else 
+			res.redirect('/');
+	});
+
+router.route('/agregarmetodoPago')
+	.get((req, res, next) => {
+		if (req.session.user) 
+			res.render('agregarmetodoPago');
+		else 
+			res.redirect('/');
+	});
+
+router.route('/metodosPago')
+	.get((req, res, next) => {
+		if (req.session.user) 
+			res.render('metodosPago');
 		else 
 			res.redirect('/');
 	});
