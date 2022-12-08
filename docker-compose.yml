@@ -3,13 +3,13 @@ version: '3'
 services:
   mysql:
     image: mysql:8.0.31
-    restart: unless-stopped
+    restart: always
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
     ports:
-      - 3306:3306
+      - 3307:3306
     expose:
-      - 3306
+      - 3307
     environment:
       - MYSQL_DATABASE=Lockerit
       - MYSQL_USER=locker
@@ -17,8 +17,6 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - SERVICE_TAGS=dev
       - SERVICE_NAME=mysql
-    env_file:
-      - mysql.env
     networks:
       - internalnet
 
@@ -29,13 +27,13 @@ services:
     volumes:
       - ./code/:/app/code/
     ports:
-      - 3000:3000
+      - 3001:3000
     #   - ./src:/lockey
     #   - ./package.json:/lockey/package.json
     # working_dir: /lockey
     # command: sh -c 'npm install && npm start'
     expose:
-      - 3000
+      - 3001
     depends_on:
       - mysql
     networks:
