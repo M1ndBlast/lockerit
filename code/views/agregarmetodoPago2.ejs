@@ -64,35 +64,36 @@
                     </svg></center>
                 <h2 class="card-title text-center">Agregar tarjeta</h2>
                 <p class="card-text">*Campos obligatorios</p>
-                <form action="#" class="credit-card-div">
+                <form action="/agregarmetodoPago" method="post" class="credit-card-div needs-validation" novalidate>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row formMetodo">
                                 <div class="col-md-7">
                                     <label class="fw-bold">Número de Tarjeta*</label>
-                                    <input type="text" class="form-control" placeholder="1234 1234 1234 1234" />
+                                    <input type="text" name="nummerotarjeta" class="form-control" placeholder="1234 1234 1234 1234" required/>
                                 </div>
                                 <div class="col-md-3 col-sm-3 col-xs-3">
                                     <label class="fw-bold">Fecha de vencimiento*</label>
-                                    <input type="text" class="form-control" placeholder="12/34" />
+                                    <input type="text" name="fechaexpiracion" class="form-control" placeholder="12/34" required/>
                                 </div>
                             </div>
                             <br>
                             <div class="row ">
                                 <center><div class="col-md-3 col-sm-3 col-xs-3">
                                     <label class="fw-bold">CVV/CCV*</label>
-                                    <input type="text" class="form-control" placeholder="CCV" />
+                                    <input type="text" name="cvv" class="form-control" placeholder="CCV" required/>
                                 </div></center>
                             </div>
                             
                         </div>
                     </div>
                     <br>
-                    <center><a href="#" class="btn btn-outline-danger">Agregar tarjeta</a></center>
+                    <center><button type="submit" class="btn btn-outline-danger">Agregar tarjeta</button></center>
                 </form>
             </div>
         </div>
     </div>
+	<script src="/js/validation.js"></script>
 </body>
 
 </html>

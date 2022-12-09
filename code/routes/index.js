@@ -134,7 +134,6 @@ router.route('/editarDatosUsuario')
 		console.log('id', req.session.user.id);
 		console.log('editarDatosUsuario', req.body);
 
-
 		let {nombre, apellidoP, apellidoM, telefono, correo} = req.body;
 
 		// create new user
@@ -177,12 +176,39 @@ router.route('/agregarmetodoPago')
 			res.render('agregarmetodoPago2');
 		else 
 			res.redirect('/');
+	})
+	.post((req, res, next) => {
+		console.log(req.body);
+		let {nummerotarjeta, fechaexpiracion} = req.body;
+		db.addMetodoPago(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
+			if (results.affectedRows > 0) {
+				res.status(200).json({
+					response: 'OK',
+					message: 'Metodo de pago agregado correctamente',
+					redirect: '/metodosPago'
+				});
+			} else {
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
+			}
+		}).catch((err) => {
+			res.status(402).json({response:'ERROR', message:err});
+		});
 	});
 
 router.route('/metodosPago')
 	.get((req, res, next) => {
-		if (req.session.user) 
-			res.render('metodosPago');
+		if (req.session.user) {
+			// obtener metodos de pago
+			db.getMetodosPago(req.session.user.id).then((results) => {
+				if (results.length > 0) {
+					res.render('metodosPago2', { user: req.session.user, metodosPago: results });
+				} else {
+					res.render('metodosPago2', { user: req.session.user, metodosPago: [] });
+				}
+			}).catch((err) => {
+				res.status(402).json({response:'ERROR', message:err});
+			});
+		}
 		else 
 			res.redirect('/');
 	});

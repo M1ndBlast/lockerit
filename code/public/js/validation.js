@@ -6,6 +6,9 @@ const patterns = {
 	tel: /[0-9]{10}/,
 	email: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/,
 	password: /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}/,
+	nummerotarjeta: /[0-9]{16}/,
+	fechaexpiracion: /[0-9]{2}\/[0-9]{2}/,
+	cvv: /[0-9]{3}/,
 }
 
 function validateForm(form) {
