@@ -2,6 +2,7 @@ var debug = require('debug')('lockerit:router:index');
 var express = require('express');
 var router = express.Router();
 var db = require('../Queries');
+const MSG = require('../Messages');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -45,7 +46,7 @@ router.route('/iniciarSesion')
 				});
 			} else {
 				// res.redirect(401, '/identificacion');
-				res.status(401).json({response:'ERROR', message:'Correo o contraseña incorrectos'});
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE2});
 			}
 		}).catch((err) => {
 			debug(err);
@@ -86,13 +87,13 @@ router.route('/RegistroCliente')
 							redirect: '/Dashboard'
 						});
 					} else {
-						res.status(401).json({response:'ERROR', message:'Usuario no encontrado tras registro'});
+						res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 					}
 				}).catch((err) => {
 					res.status(402).json({response:'ERROR', message:err});
 				});
 			} else {
-				res.status(401).json({response:'ERROR', message:'No se pudo crear el usuario'});
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 			}
 		}).catch((err) => {
 			res.status(402).json({response:'ERROR', message:err});
@@ -157,13 +158,13 @@ router.route('/editarDatosUsuario')
 							message: 'Usuario actualizado correctamente'
 						});
 					} else {
-						res.status(401).json({response:'ERROR', message:'Usuario no encontrado tras registro'});
+						res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 					}
 				}).catch((err) => {
 					res.status(402).json({response:'ERROR', message:err});
 				});
 			} else {
-				res.status(401).json({response:'ERROR', message:'No se pudo actualizar el usuario'});
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 			}
 		}).catch((err) => {
 			res.status(402).json({response:'ERROR', message:err});
@@ -173,7 +174,7 @@ router.route('/editarDatosUsuario')
 router.route('/agregarmetodoPago')
 	.get((req, res, next) => {
 		if (req.session.user) 
-			res.render('agregarmetodoPago');
+			res.render('agregarmetodoPago2');
 		else 
 			res.redirect('/');
 	});

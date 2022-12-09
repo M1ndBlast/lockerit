@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const MSG = require('./Messages');
 
 var con = mysql.createConnection({
 	host:		process.env.MYSQL_HOST,
@@ -48,7 +49,11 @@ const db = {
 	checkCredentials: (email, password) => {
 		return new Promise((resolve, reject) => {
 			con.query('SELECT * FROM Cliente WHERE correo = ? AND password = ? LIMIT 1', [email, password], (err, results) => {
-				if (err) reject(err);
+				// if (err) reject(err);
+				if (err) {
+					console.error(err);
+					reject(MSG.ERROR.MSE7);
+				}
 				else resolve(results);
 			});
 		});
@@ -56,7 +61,11 @@ const db = {
 	getClientById: (id) => {
 		return new Promise((resolve, reject) => {
 			con.query('SELECT * FROM Cliente WHERE id_cliente = ? LIMIT 1', [id], (err, results) => {
-				if (err) reject(err);
+				// if (err) reject(err);
+				if (err) {
+					console.error(err);
+					reject(MSG.ERROR.MSE7);
+				}
 				else resolve(results);
 			});
 		});
@@ -65,7 +74,11 @@ const db = {
 	getClientByEmail: (correo) => {
 		return new Promise((resolve, reject) => {
 			con.query('SELECT * FROM Cliente WHERE correo = ? LIMIT 1', [correo], (err, results) => {
-				if (err) reject(err);
+				// if (err) reject(err);
+				if (err) {
+					console.error(err);
+					reject(MSG.ERROR.MSE7);
+				}
 				else resolve(results);
 			});
 		});
@@ -76,16 +89,21 @@ const db = {
 		return new Promise((resolve, reject) => {
 			// check if email is already in use
 			db.getClientByEmail(correo).then((results) => {
-				if (results.length > 0) reject('Correo ya en uso');
+				if (results.length > 0) reject(MSG.ERROR.MSE3);
 				else {
 					// create new user
 					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
-						if (err) reject(err);
+						// if (err) reject(err);
+						if (err) {
+							console.error(err);
+							reject(MSG.ERROR.MSE7);
+						}
 						else resolve(results);
 					});
 				}
 			}).catch((err) => {
-				reject(err);
+				console.error(err);
+				reject(MSG.ERROR.MSE7);
 			});
 		});
 	},
