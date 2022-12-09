@@ -7,9 +7,9 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
     ports:
-      - 3307:3306
+      - 3308:3306
     expose:
-      - 3307
+      - 3308
     environment:
       - MYSQL_DATABASE=Lockerit
       - MYSQL_USER=locker

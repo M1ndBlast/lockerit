@@ -29,9 +29,13 @@ router.route('/iniciarSesion')
 			debug('results', results);
 			if (results.length) {
 				req.session.user = {
-					name: results[0].nombres + ' ' + results[0].apellidoPaterno + ' ' + results[0].apellidoMaterno,
-					email: results[0].correo,
-					type: results[0].id_tipoUsuario
+					id: results[0].id_cliente,
+					nombres: results[0].nombres,
+					apellidoPaterno: results[0].apellidoPaterno,
+					apellidoMaterno: results[0].apellidoMaterno,
+					numeroCelular: results[0].numeroCelular,
+					correo: results[0].correo,
+					id_tipoUsuario: results[0].id_tipoUsuario
 				};
 				
 				res.status(200).json({
@@ -68,9 +72,13 @@ router.route('/RegistroCliente')
 				db.getClientById(results.insertId).then((results) => {
 					if (results.length > 0) {
 						req.session.user = {
-							name: results[0].nm_usr,
-							email: results[0].em_usr,
-							type: results[0].type_usr
+							id: results[0].id_cliente,
+							nombres: results[0].nombres,
+							apellidoPaterno: results[0].apellidoPaterno,
+							apellidoMaterno: results[0].apellidoMaterno,
+							numeroCelular: results[0].numeroCelular,
+							correo: results[0].correo,
+							id_tipoUsuario: results[0].id_tipoUsuario
 						};
 						res.status(200).json({
 							response: 'OK',
@@ -109,7 +117,7 @@ router.route('/cerrarsesion')
 router.route('/Dashboard')
 	.get((req, res, next) => {
 		if (req.session.user) 
-			res.render('AccesoMain');
+			res.render('AccesoMain', { user: req.session.user });
 		else 
 			res.redirect('/');
 	});
@@ -117,9 +125,49 @@ router.route('/Dashboard')
 router.route('/editarDatosUsuario')
 	.get((req, res, next) => {
 		if (req.session.user) 
-			res.render('editarDatosUsuario');
+			res.render('editarDatosUsuario', { user: req.session.user });
 		else 
 			res.redirect('/');
+	})
+	.post((req, res, next) => {
+		console.log('id', req.session.user.id);
+		console.log('editarDatosUsuario', req.body);
+
+
+		let {nombre, apellidoP, apellidoM, telefono, correo} = req.body;
+
+		// create new user
+		db.updateClient(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
+			console.log('updateClient', results);
+			if (results.affectedRows > 0) {
+				// get user by id
+				db.getClientById(req.session.user.id).then((results) => {
+					if (results.length > 0) {
+						req.session.user = {
+							id: results[0].id_cliente,
+							nombres: results[0].nombres,
+							apellidoPaterno: results[0].apellidoPaterno,
+							apellidoMaterno: results[0].apellidoMaterno,
+							numeroCelular: results[0].numeroCelular,
+							correo: results[0].correo,
+							id_tipoUsuario: results[0].id_tipoUsuario
+						};
+						res.status(200).json({
+							response: 'OK',
+							message: 'Usuario actualizado correctamente'
+						});
+					} else {
+						res.status(401).json({response:'ERROR', message:'Usuario no encontrado tras registro'});
+					}
+				}).catch((err) => {
+					res.status(402).json({response:'ERROR', message:err});
+				});
+			} else {
+				res.status(401).json({response:'ERROR', message:'No se pudo actualizar el usuario'});
+			}
+		}).catch((err) => {
+			res.status(402).json({response:'ERROR', message:err});
+		});
 	});
 
 router.route('/agregarmetodoPago')

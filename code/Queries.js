@@ -88,6 +88,15 @@ const db = {
 				reject(err);
 			});
 		});
+	},
+
+	updateClient: (id_cliente, nombre, apellidoP, apellidoA, celular, correo) => {
+		return new Promise((resolve, reject) => {
+			con.query('UPDATE Cliente SET nombres = ?, apellidoPaterno = ?, apellidoMaterno = ?, numeroCelular = ?, correo = ? WHERE id_cliente = ?', [nombre, apellidoP, apellidoA, celular, correo, id_cliente], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
 	}
 };
 

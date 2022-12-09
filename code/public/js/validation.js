@@ -105,12 +105,17 @@ function validatePassword(form) {
 				.then(res => res.json())
 				.then(data => {
 					if (data.response == 'OK')
-						if (data.redirect !== '')
+						if (data.redirect)
 							window.location.href = data.redirect;
-						else
-							alert(JSON.stringify(data));
-					else
-						alert(JSON.stringify(data));
+						else{
+							console.log(data.message);
+							alert(data.message);
+						}
+					else {
+						console.log(data.message);
+						form.classList.remove('was-validated');
+						alert(data.message);
+					}
 					
 				})
 				.catch(err => {
