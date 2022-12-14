@@ -15,12 +15,13 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/envio.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+            <a class="navbar-brand" href="/AccesoMain"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
                 aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,25 +29,25 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Envios</a>
+                        <a class="nav-link active" aria-current="page" href="/envios">Envios</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle active" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Mi Cuenta
                         </a>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="/editarDatosUsuario">Mis Datos</a></li>
-                          <li><a class="dropdown-item" href="/metodosPago">Métodos de Pago</a></li>
+                          <li><a class="dropdown-item" href="/MetodosPago">Métodos de Pago</a></li>
                         </ul>
                       </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">|</a>
+                        <h1 class="nav-link active" aria-current="page">|</h1>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bienvenido Usuario</a>
+                        <h1 class="nav-link active" aria-current="page">Bienvenido Usuario</h1>
                     </li>
                     <li class="nav-item " class="Botones">
-                        <button type="submit" onclick="location.href='./main.html'"
+                        <button type="submit" onclick="location.href='/main'"
                             class="btn btn-outline-light  fw-semibold">Cerrar Sesión</button>
                     </li>
                 </ul>
@@ -68,35 +69,33 @@
                             <div class="col-12">
                                 <div class="card-deck">
                                     <div id="chico-card" class="card mb-4 seleccion">
-                                        <div class="card-body" role="button" onclick="location.href='/cotizarEnvio'" >
+                                        <div class="card-body" role="button" onClick="location.href='/cotizarEnvio'" >
                                             <div class="imagen">
-                                                <img class="img-top " width="220px" height="100px"
-                                                    src="/images/solicitud.png" alt="Card image cap" sytle="">
+                                                <img class="img-top" width="220px" height="100px"
+                                                    src="/images/solicitud.png" alt="Card image cap" style="max-width: 100%;">
                                             </div>
                                             <h5 class="card-title text-center">Solicitud de Envío</h5>
-                                            <p class="card-text">Envía un paquete de un locker de origen a un locker
+                                            <p class="card-text texto">Envía un paquete de un locker de origen a un locker
                                                 destino fácil y rápido.</p>
                                         </div>
                                     </div>
                                     <div id="mediano-card" class="card mb-4 seleccion">
-                                        <div class="card-body seleccion" role="button" onclick="location.href=''">
+                                        <div class="card-body seleccion" role="button">
                                             <div class="imagen">
-                                                <img class="img-top " width="150px" height="100px"
-                                                    src="/images/ConsultarEnvio.png" alt="Card image cap" sytle="">
+                                                <img class="img-top img-seleccion" src="/images/ConsultarEnvio.png" alt="Card image cap">
                                             </div>
                                             <h5 class="card-title text-center">Consultar Envíos</h5>
-                                            <p class="card-text">Consulta el estatus, guía y ticket de tus envíos
+                                            <p class="card-text texto">Consulta el estatus, guía y ticket de tus envíos
                                                 activos.</p>
                                         </div>
                                     </div>
                                     <div id="grande-card" class="card mb-4 seleccion">
-                                        <div class="card-body" role="button" onclick="location.href=''">
+                                        <div class="card-body" role="button">
                                             <div class="imagen">
-                                                <img class="img-top " width="100px" height="100px"
-                                                    src="/images/Historial.png" alt="Card image cap" sytle="">
+                                                <img class="img-top img-seleccion" src="/images/Historial.png" alt="Card image cap">
                                             </div>
                                             <h5 class="card-title text-center">Historial de Envíos</h5>
-                                            <p class="card-text">Consulta el historial de tus envíos.</p>
+                                            <p class="card-text texto">Consulta el historial de tus envíos.</p>
                                         </div>
                                     </div>
                                 </div>

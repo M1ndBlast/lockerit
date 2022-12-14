@@ -6,6 +6,16 @@
     transition: all 0.5s ease;
   }
 
+.img-seleccion { 
+    width:100px; /* you can use % */ 
+    height: auto;
+    max-width:100%;
+}
+
+.texto{
+    text-align: center;
+}
+
 .imagen{
     text-align: center;
     padding-bottom: 25px;

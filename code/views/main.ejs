@@ -13,14 +13,14 @@
   <body >
     <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
         <div class="container">
-          <a class="navbar-brand" href="#"><img src="images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+          <a class="navbar-brand" href="/main"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto" style="--bs-scroll-height: 100px;">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="/main">Inicio</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#sec2">¿Quieres somos?</a>
@@ -29,10 +29,10 @@
                 <a class="nav-link" href="#sec4">Contacto</a>
               </li>
               <li class="nav-item " class="Botones">
-                <button type="submit" onclick="location.href='./iniciarSesion'" class="btn btn-outline-light  fw-semibold">Iniciar Sesión</button>
+                <button type="submit" onclick="location.href='/iniciarSesion'" class="btn btn-outline-light  fw-semibold">Iniciar Sesión</button>
               </li>
               <li class="nav-item mx-2" style="margin-left: 20px;" >
-                <button type="submit" onclick="location.href='./RegistroCliente'" class="btn btn-outline-light  fw-semibold ">Registrate</button>
+                <button type="submit" onclick="location.href='/RegistroCliente'" class="btn btn-outline-light  fw-semibold ">Registrate</button>
               </li>
             </ul>
           </div>
@@ -58,7 +58,9 @@
           </div>
           <div class="row ">
             <div class="col-md-4">
-              <button type="submit"  class="btn btn-small btn-danger offset-md-2 text-red w-50 p-1  mt-1 fw-bold">Cotiza tu envío</button>
+              <button type="submit"  
+              class="btn btn-small btn-danger offset-md-2 text-red w-50 p-1  mt-1 fw-bold"
+              onclick="location.href='/cotizarEnvio'">Cotiza tu envío</button>
             </div>
           </div>
            

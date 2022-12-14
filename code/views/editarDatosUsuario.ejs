@@ -40,10 +40,10 @@
                         </ul>
                       </li>
                     <li class="nav-item ">
-                        <a class="nav-link active" aria-current="page" href="#">|</a>
+                        <h1 class="nav-link active" aria-current="page" >|</h1>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Bienvenido Usuario</a>
+                        <h1 class="nav-link active" aria-current="page" >Bienvenido Usuario</h1>
                     </li>
                     <li class="nav-item " class="Botones">
                         <button type="submit" onclick="location.href='/cerrarsesion'"
@@ -64,34 +64,33 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                   </svg></center>
                 <h2 class="card-title text-center">Datos Personales</h2>
-                <form action="/editarDatosUsuario" method="POST" class="needs-validation credit-card-div" novalidate>
+                <form action="/editarDatosUsuario" method="POST" class="needs-validation credit-card-div p-3" novalidate>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="row formMetodo">
-                                <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label class="fw-bold">Nombre</label>
                                     <input type="name" name="nombre" class="form-control" placeholder="Nombre(s)" value="<%=user.nombres%>" >
-
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <label class="fw-bold">Apellido Materno</label>
                                     <input type="name" name="apellidoM" class="form-control" placeholder="Apellido Materno" value="<%=user.apellidoMaterno%>" />
                                 </div>
                             </div>
                             <br>
-                            <div class="row formMetodo">
-                                <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label class="fw-bold">Apellido Paterno</label>
                                     <input type="name" name="apellidoP" class="form-control" placeholder="Apellido Paterno" value="<%=user.apellidoPaterno%>" />
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <label class="fw-bold">Número de telefono</label>
                                     <input type="tel" name="telefono" class="form-control" placeholder="Número" value="<%=user.numeroCelular%>" />
                                 </div>
                             </div>
                             <br>
-                            <div class="row formMetodo">
-                                <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label class="fw-bold">Correo Electrónico</label>
                                     <input type="email" name="correo" class="form-control" placeholder="Correo" value="<%=user.correo%>" />
                                 </div>

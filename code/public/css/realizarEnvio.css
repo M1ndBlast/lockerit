@@ -1,0 +1,44 @@
+.imgmapa { 
+    width:500px; /* you can use % */ 
+    height: auto;
+    max-width:100%;
+}
+
+.mapa{
+    display: flex;
+  justify-content: center;
+}
+
+/* barra de navegacion */
+
+.colorNav{
+    background-color: #212e46;
+}
+
+.body{
+    font-family: 'Alata', sans-serif;
+}
+
+.border{
+    border-color: rgb(33, 46, 70) !important;
+    margin-top: 10px;
+}
+
+.bankImage{
+    width: 26%;
+    height: 70%;
+    padding-bottom: 0;
+}
+
+.Botones{
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 990px) {
+    .Botones{
+        margin-bottom: 10px;
+        margin-left: 0px;
+        width: 150px;
+    }
+}
+

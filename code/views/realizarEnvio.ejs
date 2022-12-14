@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Lockerit!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/realizarEnvio.css">
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
+    <div class="container">
+        <a class="navbar-brand" href="/AccesoMain"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="/realizarEnvio">Envios</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mi Cuenta
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/editarDatosUsuario">Mis Datos</a></li>
+                      <li><a class="dropdown-item" href="/metodosPago">Métodos de Pago</a></li>
+                    </ul>
+                  </li>
+                <li class="nav-item">
+                    <h1 class="nav-link " aria-current="page" >|</h1>
+                </li>
+                <li class="nav-item">
+                    <h1 class="nav-link" aria-current="page">Bienvenido Usuario</h1>
+                </li>
+                <li class="nav-item " class="Botones">
+                    <button type="submit" onclick="location.href='/main'"
+                        class="btn btn-outline-light  fw-semibold">Cerrar Sesión</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+  <!-- partial:index.partial.html -->
+  <div class=" d-flex justify-content-center align-items-center ">
+    <div class="bg-white border border-dark p-5 rounded-5 text-dark shadow" style="width: 60rem; margin-top: 30px; position: relative; top: 70px;">
+      <div class="card-body">
+        <center><img src="/images/cotizar.png" width="200px" height="70px"></center>
+        <h2 class="card-title text-center titulo">solicitud de envío</h2>
+      </div>
+
+      <!-- Seccion locker origen -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Locker de origen</h3>
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">*Campos obligatorios</p>
+      </div>
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" required>
+        <option selected>Seleccione su alcaldía</option>
+        <option value="1">Álvaro Obregón</option>
+        <option value="2">Cuauhtémoc</option>
+        <option value="3">Gustavo A. Madero</option>
+        <option value="4">Miguel Hidalgo</option>
+      </select>
+
+      <div class="mapa">
+        <img src="/images/mapa.png" class="imgmapa">
+      </div>
+      <div class="input-group mt-2">
+        <p class="small fw-light">Seleccione el locker de origen de su preferencia*</p>
+      </div>
+      <form>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="lockerOrigen" value="" id="firstRadio" checked required>
+            <label class="form-check-label stretched-link" for="firstRadio"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="lockerOrigen" value="" id="secondRadio">
+            <label class="form-check-label stretched-link" for="secondRadio"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          </li>
+        </ul>
+      </form>
+
+
+      <!-- Seccion Locker Destino -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Locker de destino</h3>
+      </div>
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg">
+        <option selected>Seleccione una alcaldía</option>
+        <option value="1">Álvaro Obregón</option>
+        <option value="2">Cuauhtémoc</option>
+        <option value="3">Gustavo A. Madero</option>
+        <option value="4">Miguel Hidalgo</option>
+      </select>
+      <div class="mapa">
+        <img src="/images/mapa.png" class="imgmapa">
+      </div>
+      <div class="mt-2">
+        <p class="small fw-light">Seleccione el locker de destino de su preferencia*</p>
+      </div>
+      <form>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadioDestino"
+              checked required>
+            <label class="form-check-label stretched-link" for="firstRadioDestino"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadioDestino">
+            <label class="form-check-label stretched-link" for="secondRadioDestino"></label>
+            <div class="container row align-items-start">
+              <div class="col">
+                <p>Locker</p>
+              </div>
+              <div class="col-8">
+                <p>Información del locker</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </form>
+
+      <!-- Seccion tamano de paquete -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Tamaño del paquete</h3>
+      </div>
+      <div class="mt-2">
+        <p class="small fw-light">Seleccione el tamaño de paquete de su preferencia*</p>
+      </div>
+      <div class="container">
+        <div class="row mt-2">
+          <div class="col-12">
+            <form>
+              <div class="form-group row">
+                <div class="col-12">
+                  <div class="card-deck">
+                    <div id="chico-card" class="card mb-4">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="chico" type="radio" name="paquete" required>
+                          <label for="chico">Chico</label>
+                        </h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="/images/icon-paqueteS.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="mediano-card" class="card mb-4 active">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="mediano" type="radio" checked="" name="paquete"> <label
+                            for="mediano">Mediano</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="/images/icon-paqueteM.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="grande-card" class="card mb-4 ">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="grande" type="radio" name="paquete"> <label for="grande">Grande</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="/images/icon-paqueteG.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tipo de envío -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold ">Tipo de envío</h3>
+      </div>
+      <div class="mt-2">
+        <p class="small fw-light">Seleccione el tipo de envío de su preferencia*</p>
+      </div>
+      <div class="container">
+        <div class="row mt-2">
+          <div class="col-12">
+            <form>
+              <div class="form-group row">
+                <div class="col-12">
+                  <div class="card-deck">
+                    <div id="express-card" class="card mb-4">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="express" type="radio" name="tipo">
+                          <label for="express">Express</label>
+                        </h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="/images/express.png"
+                            alt="Card image cap" sytle="">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                    <div id="estandar-card" class="card mb-4 active">
+                      <div class="card-body" role="button">
+                        <h5 class="card-title"><input id="estandar" type="radio" checked="" name="tipo"> <label
+                            for="estandar">Estandar</label></h5>
+                        <div class="imagen">
+                          <img class="img-top " width="100px" height="100px" src="/images/estandar.png"
+                            alt="Card image cap">
+                        </div>
+                        <p class="card-text">Con dimensiones de hasta:
+                          <br>Altura: 23 cm
+                          <br>Ancho: 39 cm
+                          <br>Profundidad: 62 cm
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Seccion datos destinatario -->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold mb-4">Datos del destinatario</h3>
+      </div>
+      <center>
+      <form class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="inputName" class="col-form-label">Nombre*</label>
+          </div>
+          <div class="col-md-5 ">
+            <input type="text" id="inputName" class="form-control border" placeholder="Marco Torres" required>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-md-6">
+            <label for="inputMail" class="col-form-label">Correo electrónico*</label>
+          </div>
+          <div class="col-md-5">
+            <input type="email" id="inputMail" class="form-control border" placeholder="marko274.matl@gmail.com" required>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-md-6">
+            <label for="inputNumber" class="col-form-label">Número de teléfono*</label>
+          </div>
+          <div class="col-md-5 ">
+            <input type="tel" id="inputNumber" class="form-control border" placeholder="5522951113" required>
+          </div>
+        </div>
+      </form>
+      </center>
+      <!-- Seccion Metodo de pago-->
+      <div class=" mt-2">
+        <h3 class="font-weight-bold mb-4">Método de pago</h3>
+      </div>
+      <div class="mt-2">
+        <p class="small fw-light">Seleccione o agregue su método de pago*</p>
+      </div>
+
+      <form class="form-group">
+        <ul class="list-group border">
+          <li class="list-group-item ">
+            <input class="form-check-input ml-2" type="radio" name="listGroupRadio" value="" id="firstRadioPago" checked>
+            <label class="form-check-label stretched-link" for="firstRadioPago"></label>
+            <div class="container row align-items-center">
+              <p class="fw-bold">Tarjeta 1</p>
+                <div class="col">
+                    <img src="/images/visa.png" class="bankImage">
+                </div>
+                <div class="col ">
+                    <p>XXXX XXXX 9324</p>
+                </div>
+                <div class="col">
+                    <p>Vence: 10/2025</p>
+                </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <input class="form-check-input ml-2" type="radio" name="listGroupRadio" value="" id="secondRadioPago">
+            <label class="form-check-label stretched-link" for="secondRadioPago"></label>
+            <div class="container row align-items-center">
+              <p class="fw-bold">Tarjeta 2</p>
+                <div class="col">
+                    <img src="/images/visa.png" class="bankImage">
+                </div>
+                <div class="col ">
+                    <p>XXXX XXXX 6324</p>
+                </div>
+                <div class="col">
+                    <p>Vence: 06/2024</p>
+                </div>
+            </div>
+          </li>
+          </li>
+        </ul>
+      </form>
+
+      <center><a href="/agregarmetodoPago" class="btn btn-outline-danger agregar">Agregar nueva tarjeta</a>
+      </center>
+
+      
+      <div class="mt-2">
+        <p class="small fw-light">Introduzca su CVV/CVC de la tarjeta seleccionada*</p>
+      </div>
+      
+      <form class="form-group">
+        <div class="row">
+          <center>
+          <div class="col-6">
+            <label for="inputCVV" class="col-form-label fw-bold">CVV/CVC*</label>
+          </div>
+        </center>
+        </div>
+        <div class="row">
+          <center>
+          <div class="col-6">
+            <input type="tel" id="inputCVV" class="form-control border" placeholder="123" required>
+          </div>
+          </center>
+        </div>
+      </form>
+      
+      <center><button class="btn btn-outline-danger agregar" onClick="location.href='#'">Realizar solicitud de envío</a>
+      </center>
+      
+    </div>
+    
+  </div>
+  <br>
+  <!-- cards -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+  <script src="/js/card.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
