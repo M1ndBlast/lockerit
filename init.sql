@@ -53,7 +53,7 @@ ENGINE = InnoDB;
 
  
 CREATE TABLE IF NOT EXISTS `Lockerit`.`Cliente` (
-  `id_cliente` INT NOT NULL AUTO_INCREMENT,
+ `id_cliente` INT NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `apellidoPaterno` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `apellidoMaterno` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `Lockerit`.`Cliente` (
   `correo` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `password` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_tipoUsuario` INT NOT NULL,
+  `tk_Cliente` INT(6) NOT NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE INDEX `id_cliente_UNIQUE` (`id_cliente` ASC) VISIBLE,
   UNIQUE INDEX `correo_UNIQUE` (`correo` ASC) VISIBLE,
