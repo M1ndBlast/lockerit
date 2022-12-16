@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `Lockerit`.`Cliente` (
   `correo` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `password` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_tipoUsuario` INT NOT NULL,
-  `tk_Cliente` INT(6) NOT NULL,
+  `tk_Cliente` INT(6) NULL,
   PRIMARY KEY (`id_cliente`),
   UNIQUE INDEX `id_cliente_UNIQUE` (`id_cliente` ASC) VISIBLE,
   UNIQUE INDEX `correo_UNIQUE` (`correo` ASC) VISIBLE,

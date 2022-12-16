@@ -223,14 +223,30 @@ router.route('/cotizarEnvio')
 			tamanios: tamanios 
 		});
 	})
-	.post((req, res, next) => {
+	.post(async (req, res, next) => {
 		console.log(req.body);
 		let {origen, destino, paquete, tipo} = req.body;
+		let tamanios = await db.getTamanios();
+		let tipoEnvio = await db.getTipoEnvio();
+		let alcaldias = await db.getAlcaldias();
+		// get tamanio by id from tipo
+		let tamanio = tamanios.find(t => t.id_tamanio == paquete);
+		tipo = tipoEnvio.find(t => t.id_tipoEnvio == tipo);
+		origen = alcaldias.find(a => a.id_Alcaldias == origen);
+		destino = alcaldias.find(a => a.id_Alcaldias == destino);
+
+		console.log(tamanio);
+		console.log(tipo);
+		console.log(origen);
+		console.log(destino);
+		
 		req.session.newShipping = {
 			origen: origen,
 			destino: destino,
-			paquete: paquete,
-			tipo: tipo
+			tamanio: tamanio,
+			tipo: tipo,
+			//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
+			precio: tamanio.Precio+(25.6*(100/27.5))
 		};
 
 		console.log(req.session.newShipping);
@@ -240,7 +256,7 @@ router.route('/cotizarEnvio')
 
 router.route('/resumenCotizacion')
 	.get((req, res, next) => {
-		res.render('resumenCotizacion', { user: req.session.user, newShipping: req.session.newShipping });
+		res.render('resumenCotizacion', { user: req.session.user, ...req.session.newShipping });
 	});
 
 

@@ -57,7 +57,7 @@
 				<div class="collapse navbar-collapse" id="navbarScroll">
 					<ul class="navbar-nav ms-auto" style="--bs-scroll-height: 100px;">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/main">Inicio</a>
+							<a class="nav-link" aria-current="page" href="/">Inicio</a>
 						</li>
 						<li class="nav-item " class="Botones">
 							<button type="submit" onclick="location.href='/iniciarSesion'"
@@ -194,7 +194,7 @@
 												<% for (var i = 0; i < tamanios.length; i++) { %>
 													<div class="card mb-4">
 														<div class="card-body" role="button">
-															<h5 class="card-title"><input id="<%= tamanios[i].id_tamanio %>" type="radio"
+															<h5 class="card-title"><input id="<%= tamanios[i].nombre_tamanio %>" type="radio"
 																	name="paquete" value="<%= tamanios[i].id_tamanio %>" required>
 																<label for="<%= tamanios[i].id_tamanio %>"><%= tamanios[i].nombre_tamanio %></label>
 															</h5>
@@ -210,58 +210,7 @@
 														</div>
 													</div>
 												<% } %>
-												<div id="chico-card" class="card mb-4">
-													<div class="card-body" role="button">
-														<h5 class="card-title"><input id="chico" type="radio"
-																name="paquete" value="Chico" required>
-															<label for="chico">Chico</label>
-														</h5>
-														<div class="imagen">
-															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteChico.png" alt="Card image cap"
-																sytle="">
-														</div>
-														<p class="card-text">Con dimensiones de hasta:
-															<br>Altura: 23 cm
-															<br>Ancho: 39 cm
-															<br>Profundidad: 62 cm
-														</p>
-													</div>
-												</div>
-												<div id="mediano-card" class="card mb-4 active">
-													<div class="card-body" role="button">
-														<h5 class="card-title"><input id="mediano" type="radio"
-																checked="" name="paquete" value="Mediano" required> <label
-																for="mediano">Mediano</label></h5>
-														<div class="imagen">
-															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteMediano.png" alt="Card image cap"
-																sytle="">
-														</div>
-														<p class="card-text">Con dimensiones de hasta:
-															<br>Altura: 23 cm
-															<br>Ancho: 39 cm
-															<br>Profundidad: 62 cm
-														</p>
-													</div>
-												</div>
-												<div id="grande-card" class="card mb-4 ">
-													<div class="card-body" role="button">
-														<h5 class="card-title"><input id="grande" type="radio"
-																name="paquete" value="Grande" required> <label
-																for="grande">Grande</label></h5>
-														<div class="imagen">
-															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteGrande.png" alt="Card image cap"
-																sytle="">
-														</div>
-														<p class="card-text">Con dimensiones de hasta:
-															<br>Altura: 23 cm
-															<br>Ancho: 39 cm
-															<br>Profundidad: 62 cm
-														</p>
-													</div>
-												</div>
+												
 											</div>
 										</div>
 									</div>
@@ -284,39 +233,20 @@
 								<div class="form-group row">
 									<div class="col-12">
 										<div class="card-deck">
-											<div id="express-card" class="card mb-4">
-												<div class="card-body" role="button">
-													<h5 class="card-title"><input id="express" type="radio" name="tipo" value="Express"
-															required>
-														<label for="express">Express</label>
-													</h5>
-													<div class="imagen">
-														<img class="img-top " width="100px" height="100px"
-															src="/images/express.png" alt="Card image cap" sytle="">
+											<% for (var i = 0; i < tipoEnvio.length; i++) { %>
+												<div id="<%= tipoEnvio[i].nombre_tipoEnvio %>-card" class="card mb-4">
+													<div class="card-body" role="button">
+														<h5 class="card-title"><input id="<%= tipoEnvio[i].nombre_tipoEnvio %>" type="radio" name="tipo"
+																value="<%= tipoEnvio[i].id_tipoEnvio %>" required>
+															<label for="<%= tipoEnvio[i].id_tipoEnvio %>"><%= tipoEnvio[i].nombre_tipoEnvio %></label>
+														</h5>
+														<div class="imagen">
+															<img class="img-top " width="100px" height="100px"
+																src="/images/<%= tipoEnvio[i].nombre_tipoEnvio %>.png" alt="Card image cap">
+														</div>
 													</div>
-													<p class="card-text">Con dimensiones de hasta:
-														<br>Altura: 23 cm
-														<br>Ancho: 39 cm
-														<br>Profundidad: 62 cm
-													</p>
 												</div>
-											</div>
-											<div id="estandar-card" class="card mb-4 active">
-												<div class="card-body" role="button">
-													<h5 class="card-title"><input id="estandar" type="radio" checked="" value="Estandar"
-															name="tipo" required> <label for="estandar">Estandar</label>
-													</h5>
-													<div class="imagen">
-														<img class="img-top " width="100px" height="100px"
-															src="/images/estandar.png" alt="Card image cap">
-													</div>
-													<p class="card-text">Con dimensiones de hasta:
-														<br>Altura: 23 cm
-														<br>Ancho: 39 cm
-														<br>Profundidad: 62 cm
-													</p>
-												</div>
-											</div>
+											<% } %>
 										</div>
 									</div>
 								</div>
