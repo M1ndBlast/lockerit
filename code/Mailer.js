@@ -8,7 +8,7 @@ const val = {
 	 */
 	// async..await is not allowed in global scope, must use a wrapper
 	mailVerification: async (email, num) => {
-		var b = num.toString();
+		let link = 'http/127.0.0.1:3001/activacion/'+num
 		console.log(b);
 		console.log(email);
 		// create reusable transporter object using the default SMTP transport
@@ -27,8 +27,8 @@ const val = {
 			from: '"Lockerit-Envios" ', // sender address
 			to: email, // list of receivers
 			subject: "Lockerit - Código de Verificación", // Subject line
-			text: b, // plain text body
-			html: "Código de Verificación es : <b>" + b + "</b>",
+			text: link, // plain text body
+			html: "URL de Verificación es : <a href='"+link+"'> " + link + "</a>",
 		});
 
 		console.log("Message sent: %S", info.messageId);

@@ -70,20 +70,7 @@ router.route('/RegistroCliente')
 				// get user by id
 				db.getClientById(results.insertId).then((results) => {
 					if (results.length > 0) {
-						req.session.user = {
-							id: results[0].id_cliente,
-							nombres: results[0].nombres,
-							apellidoPaterno: results[0].apellidoPaterno,
-							apellidoMaterno: results[0].apellidoMaterno,
-							numeroCelular: results[0].numeroCelular,
-							correo: results[0].correo,
-							id_tipoUsuario: results[0].id_tipoUsuario
-						};
-						res.status(200).json({
-							response: 'OK',
-							message: 'Usuario creado correctamente',
-							redirect: '/Dashboard'
-						});
+						mailer.mailVerification(correo, results.insertId)
 					} else {
 						res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 					}
@@ -96,6 +83,27 @@ router.route('/RegistroCliente')
 		}).catch((err) => {
 			res.status(402).json({response:'ERROR', message:err});
 		});
+	});
+
+router.route('/activacion/\d+')
+	.get((req, res, next) => {
+		let idUser = req.path.match(/\d+/)[0]
+		db.getClientById(idUser).then((results) => {
+			if (results[0]) {
+				req.session.user = {
+					id: results[0].id_cliente,
+					nombres: results[0].nombres,
+					apellidoPaterno: results[0].apellidoPaterno,
+					apellidoMaterno: results[0].apellidoMaterno,
+					numeroCelular: results[0].numeroCelular,
+					correo: results[0].correo,
+					id_tipoUsuario: results[0].id_tipoUsuario
+				};
+				res.send("<h1>Cuenta Activada </h1><a href='/'>Inicio</a>")
+			}
+			res.send("<h1>Cuenta Desconocida</h1><h5>No existe ningún registro de la página</h5><a href='/'>Inicio</a>")
+		});
+		res.render('recuperarContrasena');
 	});
 
 router.route('/recuperarContrasena')
@@ -253,11 +261,9 @@ router.route('/cotizarEnvio')
 		res.redirect('/resumenCotizacion');
 	});
 
-
 router.route('/resumenCotizacion')
 	.get((req, res, next) => {
 		res.render('resumenCotizacion', { user: req.session.user, ...req.session.newShipping });
 	});
-
 
 module.exports = router;
