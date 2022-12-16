@@ -108,7 +108,7 @@ ENGINE = InnoDB;
  
 CREATE TABLE IF NOT EXISTS `Lockerit`.`Tamanio` (
   `id_tamanio` INT NOT NULL AUTO_INCREMENT,
-  `nombre_tamaño` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `nombre_tamanio` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `alto` FLOAT NOT NULL,
   `ancho` FLOAT NOT NULL,
   `profundidad` FLOAT NOT NULL,
@@ -401,7 +401,7 @@ COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `Lockerit`.`Tamanio` (`id_tamanio`, `nombre_tamaño`, `alto`, `ancho`, `profundidad`,`precio`) VALUES ('1', 'Chico', '10.922', '40.64', '63.5','100'), ('2', 'Mediano', '24.13', '40.64', '63.5','125'), ('3', 'Grande', '50.8', '40.64', '63.5','175');
+INSERT INTO `Lockerit`.`Tamanio` (`id_tamanio`, `nombre_tamanio`, `alto`, `ancho`, `profundidad`,`precio`) VALUES ('1', 'Chico', '10.922', '40.64', '63.5','100'), ('2', 'Mediano', '24.13', '40.64', '63.5','125'), ('3', 'Grande', '50.8', '40.64', '63.5','175');
 COMMIT;
 
 START TRANSACTION;

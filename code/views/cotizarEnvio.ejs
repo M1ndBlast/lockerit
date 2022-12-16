@@ -90,10 +90,9 @@
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen" required>
 						<option value="" selected>Seleccione su alcaldía</option>
-						<option value="1">Álvaro Obregón</option>
-						<option value="2">Cuauhtémoc</option>
-						<option value="3">Gustavo A. Madero</option>
-						<option value="4">Miguel Hidalgo</option>
+						<% for (var i = 0; i < alcaldias.length; i++) { %>
+							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
+						<% } %>
 					</select>
 
 					<div class="mapa_responsive" id="map"></div>
@@ -138,10 +137,9 @@
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino" required>
 						<option value="" selected>Seleccione una alcaldía</option>
-						<option value="1">Álvaro Obregón</option>
-						<option value="2">Cuauhtémoc</option>
-						<option value="3">Gustavo A. Madero</option>
-						<option value="4">Miguel Hidalgo</option>
+						<% for (var i = 0; i < alcaldias.length; i++) { %>
+							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
+						<% } %>
 					</select>
 
 					<div class="mapa_responsive" id="map2"></div>
@@ -193,6 +191,25 @@
 									<div class="form-group row">
 										<div class="col-12">
 											<div class="card-deck">
+												<% for (var i = 0; i < tamanios.length; i++) { %>
+													<div class="card mb-4">
+														<div class="card-body" role="button">
+															<h5 class="card-title"><input id="<%= tamanios[i].id_tamanio %>" type="radio"
+																	name="paquete" value="<%= tamanios[i].id_tamanio %>" required>
+																<label for="<%= tamanios[i].id_tamanio %>"><%= tamanios[i].nombre_tamanio %></label>
+															</h5>
+															<div class="imagen">
+																<img class="img-top " width="100px" height="100px"
+																	src="/images/icon-paquete<%= tamanios[i].nombre_tamanio %>.png" alt="Card image cap">
+															</div>
+															<p class="card-text">Con dimensiones de hasta:
+																<br>Altura: <%= tamanios[i].alto %> cm
+																<br>Ancho: <%= tamanios[i].ancho %> cm
+																<br>Profundidad: <%= tamanios[i].profundidad %> cm
+															</p>
+														</div>
+													</div>
+												<% } %>
 												<div id="chico-card" class="card mb-4">
 													<div class="card-body" role="button">
 														<h5 class="card-title"><input id="chico" type="radio"
@@ -201,7 +218,7 @@
 														</h5>
 														<div class="imagen">
 															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteS.png" alt="Card image cap"
+																src="/images/icon-paqueteChico.png" alt="Card image cap"
 																sytle="">
 														</div>
 														<p class="card-text">Con dimensiones de hasta:
@@ -218,7 +235,7 @@
 																for="mediano">Mediano</label></h5>
 														<div class="imagen">
 															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteM.png" alt="Card image cap"
+																src="/images/icon-paqueteMediano.png" alt="Card image cap"
 																sytle="">
 														</div>
 														<p class="card-text">Con dimensiones de hasta:
@@ -235,7 +252,7 @@
 																for="grande">Grande</label></h5>
 														<div class="imagen">
 															<img class="img-top " width="100px" height="100px"
-																src="/images/icon-paqueteG.png" alt="Card image cap"
+																src="/images/icon-paqueteGrande.png" alt="Card image cap"
 																sytle="">
 														</div>
 														<p class="card-text">Con dimensiones de hasta:

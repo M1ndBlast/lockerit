@@ -134,6 +134,33 @@ const db = {
 			});
 		});
 	},
+
+	getAlcaldias: () => {
+		return new Promise((resolve, reject) => {
+			con.query('SELECT * FROM Alcaldias', [], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getTamanios: () => {
+		return new Promise((resolve, reject) => {
+			con.query('SELECT * FROM Tamanio', [], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getTipoEnvio: () => {
+		return new Promise((resolve, reject) => {
+			con.query('SELECT * FROM tipoEnvio', [], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	}
 };
 
 

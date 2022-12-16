@@ -212,31 +212,35 @@ router.route('/metodosPago')
 	});
 
 router.route('/cotizarEnvio')
-	.get((req, res, next) => {
-		res.render('cotizarEnvio', { user: req.session.user });
+	.get(async(req, res, next) => {
+		let alcaldias = await db.getAlcaldias(),
+			tipoEnvio = await db.getTipoEnvio(),
+			tamanios = await db.getTamanios();
+		res.render('cotizarEnvio', { 
+			user: req.session.user, 
+			alcaldias: alcaldias, 
+			tipoEnvio: tipoEnvio, 
+			tamanios: tamanios 
+		});
 	})
 	.post((req, res, next) => {
 		console.log(req.body);
 		let {origen, destino, paquete, tipo} = req.body;
-		db.cotizarEnvio(origen, destino, peso, alto, ancho, largo).then((results) => {
-			if (results.length > 0) {
-				res.status(200).json({
-					response: 'OK',
-					message: 'Cotizacion realizada correctamente',
-					cotizacion: results
-				});
-			} else {
-				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
-			}
-		}).catch((err) => {
-			res.status(402).json({response:'ERROR', message:err});
-		});
+		req.session.newShipping = {
+			origen: origen,
+			destino: destino,
+			paquete: paquete,
+			tipo: tipo
+		};
+
+		console.log(req.session.newShipping);
+		res.redirect('/resumenCotizacion');
 	});
 
 
 router.route('/resumenCotizacion')
 	.get((req, res, next) => {
-		res.render('resumenCotizacion', { user: req.session.user });
+		res.render('resumenCotizacion', { user: req.session.user, newShipping: req.session.newShipping });
 	});
 
 
