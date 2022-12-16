@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  
+<head>  
   <meta charset="UTF-8">
   <title>Lockerit!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +13,30 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    let map, map2;
+    function initMap() {
+      const myLatLng = { lat: -19.30, lng: -99.04 };
+
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: {  lat: 19.393628348303253,  lng: -99.14488340654229 },
+      zoom: 11,
+    });
+
+    map2 = new google.maps.Map(document.getElementById("map2"), {
+      center: {  lat: 19.393628348303253,  lng: -99.14488340654229 },
+      zoom: 11,
+    });
+
+    /*Marcadores*/
+    const lockerimage = src="/images/lockers.png";
+    new google.maps.Marker({ position: {  lat: 19.343625265988365,  lng:  -99.24650584242741 }, map, title: "Alvaro Obregon", });
+    new google.maps.Marker({ position: {  lat: 19.432243219651717,  lng:  -99.14850109089078 }, map, title: "Cuauhtémoc", });
+    new google.maps.Marker({ position: {  lat: 19.500261745337223,  lng:  -99.12512973823159, }, map, title: "Gustavo A. Madero", });
+    new google.maps.Marker({ position: {  lat: 19.430553091619043,  lng:  -99.2025590499952 }, map, title: "Miguel Hidalgo"});
+  }
+  window.initMap = initMap;
+  </script>
 </head>
 
 <body>
@@ -64,9 +87,8 @@
         <option value="4">Miguel Hidalgo</option>
       </select>
 
-      <div class="mapa">
-        <img src="/images/mapa.png" class="imgmapa">
-      </div>
+      <div class="mapa_responsive" id="map" ></div>      
+
       <div class="input-group mt-2">
         <p class="small fw-light">Seleccione el locker de origen de su preferencia*</p>
       </div>
@@ -112,9 +134,9 @@
         <option value="3">Gustavo A. Madero</option>
         <option value="4">Miguel Hidalgo</option>
       </select>
-      <div class="mapa">
-        <img src="/images/mapa.png" class="imgmapa">
-      </div>
+
+      <div class="mapa_responsive" id="map2" ></div>
+      
       <div class="input-group mt-2">
         <p class="small fw-light">Seleccione el locker de destino de su preferencia*</p>
       </div>
@@ -273,6 +295,7 @@
     
   </div>
   <br>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXd07XaRMWkkTYtv4_futTk_th_nqnwK4&callback=initMap"></script>
   <!-- cards -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
   <script src="/js/card.js"></script>
