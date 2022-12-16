@@ -7,22 +7,20 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Lockerit
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `Lockerit` ;
+
 
 -- -----------------------------------------------------
 -- Schema Lockerit
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `Lockerit` DEFAULT CHARACTER SET utf8 ;
-SHOW WARNINGS;
 USE `Lockerit` ;
 
 -- -----------------------------------------------------
 -- Table `tipoEnvio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipoEnvio` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tipoEnvio` (
+
+CREATE TABLE IF NOT EXISTS `Lockerit`.`tipoEnvio` (
   `id_tipoEnvio` INT NOT NULL AUTO_INCREMENT,
   `nombre_tipoEnvio` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_tipoEnvio`),
@@ -30,15 +28,15 @@ CREATE TABLE IF NOT EXISTS `tipoEnvio` (
   UNIQUE INDEX `nombre_tipoEnvio_UNIQUE` (`nombre_tipoEnvio` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `tipoUsuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipoUsuario` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tipoUsuario` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`tipoUsuario` (
   `id_tipoUsuario` INT NOT NULL AUTO_INCREMENT,
   `nombre_tipoUsuario` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_tipoUsuario`),
@@ -46,15 +44,15 @@ CREATE TABLE IF NOT EXISTS `tipoUsuario` (
   UNIQUE INDEX `nombre_tipoUsuario_UNIQUE` (`nombre_tipoUsuario` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Cliente` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Cliente` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Cliente` (
   `id_cliente` INT NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `apellidoPaterno` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
@@ -73,15 +71,15 @@ CREATE TABLE IF NOT EXISTS `Cliente` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Empleados`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Empleados` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Empleados` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Empleados` (
   `numeroEmpleado` INT NOT NULL AUTO_INCREMENT,
   `nombres` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `apellidoPaterno` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
@@ -99,15 +97,15 @@ CREATE TABLE IF NOT EXISTS `Empleados` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Tamanio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Tamanio` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Tamanio` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Tamanio` (
   `id_tamanio` INT NOT NULL AUTO_INCREMENT,
   `nombre_tamaño` VARCHAR(25) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `alto` FLOAT NOT NULL,
@@ -118,45 +116,45 @@ CREATE TABLE IF NOT EXISTS `Tamanio` (
   UNIQUE INDEX `id_tipoPaquete_UNIQUE` (`id_tamanio` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `estadoEnvio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `estadoEnvio` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `estadoEnvio` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`estadoEnvio` (
   `id_estadoEnvio` INT NOT NULL AUTO_INCREMENT,
   `nombre_estadoEnvio` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_estadoEnvio`),
   UNIQUE INDEX `id_estadoEnvio_UNIQUE` (`id_estadoEnvio` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Alcaldias`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Alcaldias` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Alcaldias` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Alcaldias` (
   `id_Alcaldias` INT NOT NULL AUTO_INCREMENT,
   `nombre_alcaldia` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_Alcaldias`),
   UNIQUE INDEX `id_Alcaldias_UNIQUE` (`id_Alcaldias` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Locker`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Locker` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Locker` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Locker` (
   `id_locker` INT NOT NULL AUTO_INCREMENT,
   `nombre_locker` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `ancho` FLOAT NOT NULL,
@@ -177,15 +175,15 @@ CREATE TABLE IF NOT EXISTS `Locker` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `Taquilla`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Taquilla` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `Taquilla` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`Taquilla` (
   `id_taquilla` INT NOT NULL AUTO_INCREMENT,
   `id_tamanio` INT NOT NULL,
   `id_locker` INT NULL,
@@ -204,15 +202,15 @@ CREATE TABLE IF NOT EXISTS `Taquilla` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `metodoPago`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `metodoPago` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `metodoPago` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`metodoPago` (
   `id_metodoPago` INT NOT NULL AUTO_INCREMENT,
   `numero_tarjeta` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `fecha_expiracion` VARCHAR(5) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
@@ -226,15 +224,15 @@ CREATE TABLE IF NOT EXISTS `metodoPago` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `envio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `envio` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `envio` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`envio` (
   `id_envio` INT NOT NULL AUTO_INCREMENT,
   `hora_solicitud` TIME NOT NULL,
   `fecha_solicitud` DATE NOT NULL,
@@ -290,15 +288,15 @@ CREATE TABLE IF NOT EXISTS `envio` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `qr`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `qr` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `qr` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`qr` (
   `id_qr` INT NOT NULL AUTO_INCREMENT,
   `datos_qr` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `estado_qr` VARCHAR(20) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
@@ -306,15 +304,15 @@ CREATE TABLE IF NOT EXISTS `qr` (
   UNIQUE INDEX `datos_qr_UNIQUE` (`datos_qr` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `taquilla_envio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `taquilla_envio` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `taquilla_envio` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`taquilla_envio` (
   `id_taquilla_envio` INT NOT NULL AUTO_INCREMENT,
   `id_taquilla` INT NOT NULL,
   `id_envio` INT NOT NULL,
@@ -338,29 +336,29 @@ CREATE TABLE IF NOT EXISTS `taquilla_envio` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `tipoReporte`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `tipoReporte` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `tipoReporte` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`tipoReporte` (
   `id_tipoReporte` INT NOT NULL AUTO_INCREMENT,
   `nombre_tipoReporte` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_tipoReporte`))
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 -- -----------------------------------------------------
 -- Table `reporte`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `reporte` ;
 
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `reporte` (
+
+ 
+CREATE TABLE IF NOT EXISTS `Lockerit`.`reporte` (
   `id_reporte` INT NOT NULL AUTO_INCREMENT,
   `id_repartidor` INT NULL,
   `id_envío` INT NOT NULL,
@@ -383,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `reporte` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-SHOW WARNINGS;
+ 
 
 START TRANSACTION;
 USE `Lockerit`;
