@@ -412,7 +412,7 @@ COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `lockerit`.`Cliente` (`nombres`,`apellidoPaterno`,`apellidoMaterno`,`numeroCelular`,`correo`,`password`,`id_tipoUsuario`) VALUES('Edgar Josue', 'Varillas', 'Figueroa', '5534315125','teamedgaar01@gmail.com','41Ur4.','3');
+INSERT INTO `lockerit`.`Cliente` (`nombres`,`apellidoPaterno`,`apellidoMaterno`,`numeroCelular`,`correo`,`password`,`id_tipoUsuario`) VALUES('Edgar Josue', 'Varillas', 'Figueroa', '5534315125','teamedgaar01@gmail.com','MeL4stimas.','3');
 COMMIT;
 
 SET SQL_MODE=@OLD_SQL_MODE;
