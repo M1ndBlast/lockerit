@@ -390,22 +390,22 @@ COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `Lockerit`.`alcaldias` (`id_Alcaldias`, `nombre_alcaldia`) VALUES ('1', 'Alvaro Obregon') ,('2', 'Azcapotzalco') ,('3', 'Benito Juarez') ,('4', 'Coyoacan') ,('5', 'Cuajimalpa') ,('6', 'Cuahtemoc') ,('7', 'Gustavo A. Madero') ,('8', 'Iztacalco') ,('9', 'Iztapalapa') ,('10', 'Magdalena Contreras') ,('11', 'Miguel Hidalgo') ,('12', 'Milpa Alta') ,('13', 'Tlahuac') ,('14', 'Tlalpan') ,('15', 'Venustiano Carranza') ,('16', 'Xochimilco');
+INSERT INTO `Lockerit`.`Alcaldias` (`id_Alcaldias`, `nombre_alcaldia`) VALUES ('1', 'Alvaro Obregon') ,('2', 'Azcapotzalco') ,('3', 'Benito Juarez') ,('4', 'Coyoacan') ,('5', 'Cuajimalpa') ,('6', 'Cuahtemoc') ,('7', 'Gustavo A. Madero') ,('8', 'Iztacalco') ,('9', 'Iztapalapa') ,('10', 'Magdalena Contreras') ,('11', 'Miguel Hidalgo') ,('12', 'Milpa Alta') ,('13', 'Tlahuac') ,('14', 'Tlalpan') ,('15', 'Venustiano Carranza') ,('16', 'Xochimilco');
 COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `Lockerit`.`tipoenvio` (`id_tipoEnvio`, `nombre_tipoEnvio`) VALUES ('1', 'Tradicional'), ('2', 'Express');
+INSERT INTO `Lockerit`.`tipoEnvio` (`id_tipoEnvio`, `nombre_tipoEnvio`) VALUES ('1', 'Tradicional'), ('2', 'Express');
 COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `Lockerit`.`tamanio` (`id_tamanio`, `nombre_tamaño`, `alto`, `ancho`, `profundidad`,`precio`) VALUES ('1', 'Chico', '10.922', '40.64', '63.5','100'), ('2', 'Mediano', '24.13', '40.64', '63.5','125'), ('3', 'Grande', '50.8', '40.64', '63.5','175');
+INSERT INTO `Lockerit`.`Tamanio` (`id_tamanio`, `nombre_tamaño`, `alto`, `ancho`, `profundidad`,`precio`) VALUES ('1', 'Chico', '10.922', '40.64', '63.5','100'), ('2', 'Mediano', '24.13', '40.64', '63.5','125'), ('3', 'Grande', '50.8', '40.64', '63.5','175');
 COMMIT;
 
 START TRANSACTION;
 USE `Lockerit`;
-INSERT INTO `Lockerit`.`estadoenvio` (`id_estadoEnvio`, `nombre_estadoEnvio`) VALUES ('1', 'En espera de entrega para recoleccion') ,('2', 'En espera de recoleccion') ,('3', 'En traslado') ,('4', 'En espera de recepcion del destinatario') ,('5', 'En almacen') ,('6', 'Completado') ,('7', 'Cancelado');
+INSERT INTO `Lockerit`.`estadoEnvio` (`id_estadoEnvio`, `nombre_estadoEnvio`) VALUES ('1', 'En espera de entrega para recoleccion') ,('2', 'En espera de recoleccion') ,('3', 'En traslado') ,('4', 'En espera de recepcion del destinatario') ,('5', 'En almacen') ,('6', 'Completado') ,('7', 'Cancelado');
 COMMIT;
 
 START TRANSACTION;
@@ -416,3 +416,5 @@ COMMIT;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+---------
