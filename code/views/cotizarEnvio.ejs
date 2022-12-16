@@ -89,7 +89,7 @@
 						<p class="small fw-light">*Campos obligatorios</p>
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen" required>
-						<option value="" selected>Seleccione su alcaldía</option>
+						<option value="" selected disabled>Seleccione su alcaldía</option>
 						<% for (var i = 0; i < alcaldias.length; i++) { %>
 							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
 						<% } %>
@@ -136,7 +136,7 @@
 						<h3 class="font-weight-bold ">Locker de destino</h3>
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino" required>
-						<option value="" selected>Seleccione una alcaldía</option>
+						<option value="" selected disabled>Seleccione una alcaldía</option>
 						<% for (var i = 0; i < alcaldias.length; i++) { %>
 							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
 						<% } %>
