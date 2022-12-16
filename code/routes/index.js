@@ -214,6 +214,29 @@ router.route('/metodosPago')
 router.route('/cotizarEnvio')
 	.get((req, res, next) => {
 		res.render('cotizarEnvio', { user: req.session.user });
+	})
+	.post((req, res, next) => {
+		console.log(req.body);
+		let {origen, destino, paquete, tipo} = req.body;
+		db.cotizarEnvio(origen, destino, peso, alto, ancho, largo).then((results) => {
+			if (results.length > 0) {
+				res.status(200).json({
+					response: 'OK',
+					message: 'Cotizacion realizada correctamente',
+					cotizacion: results
+				});
+			} else {
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
+			}
+		}).catch((err) => {
+			res.status(402).json({response:'ERROR', message:err});
+		});
+	});
+
+
+router.route('/resumenCotizacion')
+	.get((req, res, next) => {
+		res.render('resumenCotizacion', { user: req.session.user });
 	});
 
 
