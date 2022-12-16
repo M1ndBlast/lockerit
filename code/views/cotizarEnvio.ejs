@@ -34,6 +34,11 @@
     new google.maps.Marker({ position: {  lat: 19.432243219651717,  lng:  -99.14850109089078 }, map, title: "Cuauhtémoc", });
     new google.maps.Marker({ position: {  lat: 19.500261745337223,  lng:  -99.12512973823159, }, map, title: "Gustavo A. Madero", });
     new google.maps.Marker({ position: {  lat: 19.430553091619043,  lng:  -99.2025590499952 }, map, title: "Miguel Hidalgo"});
+
+    new google.maps.Marker({ position: {  lat: 19.343625265988365,  lng:  -99.24650584242741 }, map2, title: "Alvaro Obregon", });
+    new google.maps.Marker({ position: {  lat: 19.432243219651717,  lng:  -99.14850109089078 }, map2, title: "Cuauhtémoc", });
+    new google.maps.Marker({ position: {  lat: 19.500261745337223,  lng:  -99.12512973823159, }, map2, title: "Gustavo A. Madero", });
+    new google.maps.Marker({ position: {  lat: 19.430553091619043,  lng:  -99.2025590499952 }, map2, title: "Miguel Hidalgo"});
   }
   window.initMap = initMap;
   </script>
@@ -79,7 +84,7 @@
       <div class="input-group mt-2">
         <p class="small fw-light">*Campos obligatorios</p>
       </div>
-      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg">
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" required>
         <option selected>Seleccione su alcaldía</option>
         <option value="1">Álvaro Obregón</option>
         <option value="2">Cuauhtémoc</option>
@@ -92,7 +97,7 @@
       <div class="input-group mt-2">
         <p class="small fw-light">Seleccione el locker de origen de su preferencia*</p>
       </div>
-      <form>
+      <!-- <form>
         <ul class="list-group">
           <li class="list-group-item">
             <input class="form-check-input me-1" type="radio" name="lockerOrigen" value="" id="firstRadio" checked required>
@@ -120,14 +125,14 @@
           </li>
           </li>
         </ul>
-      </form>
+      </form> -->
 
 
       <!-- Seccion Locker Destino -->
       <div class=" mt-2">
         <h3 class="font-weight-bold ">Locker de destino</h3>
       </div>
-      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg">
+      <select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" required>
         <option selected>Seleccione una alcaldía</option>
         <option value="1">Álvaro Obregón</option>
         <option value="2">Cuauhtémoc</option>
@@ -140,7 +145,7 @@
       <div class="input-group mt-2">
         <p class="small fw-light">Seleccione el locker de destino de su preferencia*</p>
       </div>
-      <form>
+      <!-- <form>
         <ul class="list-group">
           <li class="list-group-item">
             <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadioDestino"
@@ -168,7 +173,7 @@
             </div>
           </li>
         </ul>
-      </form>
+      </form> -->
 
       <!-- Seccion tamano de paquete -->
       <div class=" mt-2">
@@ -186,7 +191,7 @@
                   <div class="card-deck">
                     <div id="chico-card" class="card mb-4">
                       <div class="card-body" role="button">
-                        <h5 class="card-title"><input id="chico" type="radio" name="paquete">
+                        <h5 class="card-title"><input id="chico" type="radio" name="paquete" required>
                           <label for="chico">Chico</label>
                         </h5>
                         <div class="imagen">
@@ -202,7 +207,7 @@
                     </div>
                     <div id="mediano-card" class="card mb-4 active">
                       <div class="card-body" role="button">
-                        <h5 class="card-title"><input id="mediano" type="radio" checked="" name="paquete"> <label
+                        <h5 class="card-title"><input id="mediano" type="radio" checked="" name="paquete" required> <label
                             for="mediano">Mediano</label></h5>
                         <div class="imagen">
                           <img class="img-top " width="100px" height="100px" src="/images/icon-paqueteM.png"
@@ -217,7 +222,7 @@
                     </div>
                     <div id="grande-card" class="card mb-4 ">
                       <div class="card-body" role="button">
-                        <h5 class="card-title"><input id="grande" type="radio" name="paquete"> <label for="grande">Grande</label></h5>
+                        <h5 class="card-title"><input id="grande" type="radio" name="paquete" required> <label for="grande">Grande</label></h5>
                         <div class="imagen">
                           <img class="img-top " width="100px" height="100px" src="/images/icon-paqueteG.png"
                             alt="Card image cap" sytle="">
@@ -253,7 +258,7 @@
                   <div class="card-deck">
                     <div id="express-card" class="card mb-4">
                       <div class="card-body" role="button">
-                        <h5 class="card-title"><input id="express" type="radio" name="tipo">
+                        <h5 class="card-title"><input id="express" type="radio" name="tipo" required>
                           <label for="express">Express</label>
                         </h5>
                         <div class="imagen">
@@ -269,7 +274,7 @@
                     </div>
                     <div id="estandar-card" class="card mb-4 active">
                       <div class="card-body" role="button">
-                        <h5 class="card-title"><input id="estandar" type="radio" checked="" name="tipo"> <label
+                        <h5 class="card-title"><input id="estandar" type="radio" checked="" name="tipo" required> <label
                             for="estandar">Estandar</label></h5>
                         <div class="imagen">
                           <img class="img-top " width="100px" height="100px" src="/images/estandar.png"

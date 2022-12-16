@@ -1,7 +1,8 @@
-var debug = require('debug')('lockerit:router:index');
-var express = require('express');
-var router = express.Router();
-var db = require('../Queries');
+const debug = require('debug')('lockerit:router:index');
+const express = require('express');
+const router = express.Router();
+const db = require('../Queries');
+const mailer = require('../Mailer');
 const MSG = require('../Messages');
 
 /* GET home page. */
@@ -11,9 +12,6 @@ router.get('/', function (req, res, next) {
 	else 
 		res.render('main');
 });
-
-//Below showing to alternatives to redirect to another page
-// Fer, elige el que mejor quieras
 
 router.route('/iniciarSesion')
 	.get((req, res, next) => {
@@ -211,6 +209,11 @@ router.route('/metodosPago')
 		}
 		else 
 			res.redirect('/');
+	});
+
+router.route('/cotizarEnvio')
+	.get((req, res, next) => {
+		res.render('cotizarEnvio', { user: req.session.user });
 	});
 
 
