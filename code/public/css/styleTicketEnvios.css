@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+  }
+  .card{
+    
+    top: 80px;
+    border-color: rgb(33, 46, 70);
+}
+.colorBorder{
+    border-color: rgb(33, 46, 70);
+}
+a{
+    text-decoration: none;
+    color:black;
+}
+
+.bankImage{
+    width: 26%;
+    height: 83%;
+    padding-bottom: 0;
+}
+
+.agregar{
+  margin-top: 30px;
+}
+
+.titulo{
+  margin-bottom: 20px;
+}
+
+.border{
+  border-color: rgb(33, 46, 70) !important;
+  margin-top: 10px;
+  border-style: solid;
+}
+
+.color-eliminar:hover{
+  color: red !important;
+}
+
+
+.p-5 {
+  padding-left: 5em !important;
+}
+
+.Botones{
+  margin-left: 20px;
+}
+
+@media screen and (max-width: 990px) {
+  .barra{
+      display: none;
+  }
+}

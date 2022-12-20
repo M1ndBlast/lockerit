@@ -1,0 +1,14 @@
+.card{
+    position: relative;
+    top: 80px;
+    left: 15%;
+    border-color: rgb(33, 46, 70);
+    width: 70%;
+}
+
+@media screen and (max-width: 990px) {
+    .barra{
+        display: none;
+    }
+  }
+  

@@ -1,0 +1,69 @@
+.formMetodo {
+    position: relative;
+    left: 9%;
+}
+
+.border {
+    border-color: rgb(33, 46, 70) !important;
+    margin-top: 10px;
+}
+
+div .col {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+div .col p {
+
+    position: relative;
+    top: 5px;
+}
+
+.boton{
+    background-color: rgb(33, 46, 70);
+    border-color: rgb(33, 46, 70) !important;
+}
+
+.tabla{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.credit-card-div span {
+    padding-top: 10px;
+}
+
+.credit-card-div img {
+    padding-top: 30px;
+}
+
+.credit-card-div .small-font {
+    font-size: 9px;
+}
+
+.credit-card-div .pad-adjust {
+    padding-top: 10px;
+}
+
+.botones-solicitud {
+    width: 150px !important;
+    margin: 0 10px;
+}
+
+<<<<<<< HEAD
+=======
+.detalles{
+    border-color: black !important;
+}
+
+>>>>>>> 577c87360c308696194036c5669b50d7e943a8b5
+@media screen and (max-width: 990px) {
+    .barra{
+        display: none;
+    }
+<<<<<<< HEAD
+  }
+  
+=======
+}
+>>>>>>> 577c87360c308696194036c5669b50d7e943a8b5
