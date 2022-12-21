@@ -39,7 +39,7 @@ const v = {
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isLength({ min: 3 }).withMessage(`${name} debe tener al menos 3 caracteres`)
 		.isLength({ max: 50 }).withMessage(`${name} debe tener maximo 50 caracteres`)
-		.matches(/[a-zA-Zà-ÿÀ-Ÿ]{3,}( [a-zA-Zà-ÿÀ-Ÿ]{2,})? */).withMessage(`${name} debe contener solo letras y espacios`)
+		.matches(/^[a-zA-Zà-ÿÀ-Ÿ]{3,}( [a-zA-Zà-ÿÀ-Ÿ]{2,})? *$/).withMessage(`${name} debe contener solo letras y espacios`)
 	},
 	// Phone
 	_phone: function (param, name) { return check(param)
@@ -73,7 +73,7 @@ const v = {
 		.custom((value, { req }) => value === req.body[comparation]).withMessage('Las contraseñas no coinciden')
 	},
 	// Terms and conditions as checkbox boolean
-	_termsAndConditions: function (param, name) { return check(param)
+	_terms: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.equals('true').withMessage(`Debes aceptar ${name}`)
 	},
@@ -129,8 +129,8 @@ const Validator = {
 	
 	// Sign in
 	signin: [
-		v._email('email', 'El correo'),
-		v._password('password', 'La contraseña'),
+		v._email('correo', 'El correo'),
+		v._password('contrasena', 'La contraseña'),
 		validateResult
 	],
 
@@ -144,7 +144,7 @@ const Validator = {
 		v._emailConfirm('correo-verificacion', 'La confirmación del correo', 'correo'),
 		v._password('contrasena', 'La contraseña'),
 		v._passwordConfirm('contrasena-verificacion', 'La confirmación de la contraseña', 'contrasena'),
-		v._termsAndConditions('terms', 'Los Términos y Condiciones'),
+		v._terms('terms', 'Los Términos y Condiciones'),
 		validateResult
 	],	
 
@@ -174,6 +174,21 @@ const Validator = {
 		v._anyexist('tipo', 'El tipo'),
 		validateResult
 	],
+
+	// Realizar envio
+	realizarEnvio: [
+		v._anyexist('origen', 'El origen'),
+		v._anyexist('destino', 'El destino'),
+		v._anyexist('paquete', 'El paquete'),
+		v._anyexist('tipo', 'El tipo'),
+		v._name('inputName', 'El nombre'),
+		v._email('inputMail', 'El correo'),
+		v._phone('inputNumber', 'El teléfono'),
+		v._anyexist('listGroupRadio', 'Método de pago'),
+		v._creditCardCvv('inputCVV', 'El CVV'),
+		validateResult
+	],
+
 
 
 

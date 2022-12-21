@@ -160,7 +160,16 @@ const db = {
 				else resolve(results);
 			});
 		});
-	}
+	},
+
+	createShipping: (id_cliente, id_tipoEnvio, id_tamanio, nombre_dest, correo_dest, tel_dest, id_metodo, id_lockerOrg, id_lockerDst, costo) => {
+		return new Promise((resolve, reject) => {
+			con.query('INSERT INTO envio VALUES (NULL, curtime(), curdate(), ?, ?, ?, ?, ?, curtime(), curdate() + INTERVAL 1 DAY, ?, ?, ?, ?, ?, 1)', [costo, nombre_dest, correo_dest, tel_dest, id_metodo, id_cliente, id_lockerOrg, id_lockerDst, id_tipoEnvio, id_tamanio], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
 };
 
 

@@ -1,10 +1,10 @@
 function toast(title, message, type='error') {
-	Swal.fire({
+	return Swal.fire({
 		title: title,
 		text: message,
 		icon: type,
 		confirmButtonText: 'Aceptar'
-	})
+	});
 }
 (() => {
 	// Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -57,7 +57,7 @@ function toast(title, message, type='error') {
 						
 						else {				// show toast
 							console.log(data.message);
-							toast(data.title||'Éxito', data.message, 'success');
+							toast(data.title||'Éxito', data.message, 'success').then((isConfirm)=>{location.assign('/')});
 						}
 					else if (data.response == 'ERROR') {
 						if (data.errors) {	// show errors
@@ -65,8 +65,10 @@ function toast(title, message, type='error') {
 								index === self.findIndex((t) => (t.param === err.param))
 							);
 							
-							for (let err of errors)
+							for (let err of errors){
+								console.log(err.param, err.msg);
 								form.querySelector(`[name="${err.param}"]`).classList.add('is-invalid');
+							}
 							
 							toast('Error', errors[0].msg);
 						}

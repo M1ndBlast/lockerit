@@ -1,6 +1,7 @@
 const Auth = {
 	// Allow only logged users (ADMIN, CLIENT, DELIVERER)
 	onlyUsers: (req, res, next) => {
+		console.log('onlyUsers', !req.session.user);
 		if (!req.session.user) {
 			if (req.method == 'GET')
 				res.redirect('/');
@@ -14,7 +15,7 @@ const Auth = {
 	},
 	// Allow only logged users (ADMIN)
 	onlyAdmins: (req, res, next) => {
-		if (!req.session.user || req.session.user.type != 'ADMIN') {
+		if (!req.session.user || req.session.user.id_tipoUsuario != 1) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -27,7 +28,7 @@ const Auth = {
 	},
 	// Allow only logged users (DELIVERER)
 	onlyDeliverers: (req, res, next) => {
-		if (!req.session.user || req.session.user.type != 'DELIVERER') {
+		if (!req.session.user || req.session.user.id_tipoUsuario != 2) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -40,7 +41,7 @@ const Auth = {
 	},
 	// Allow only logged users (CLIENT)
 	onlyClients: (req, res, next) => {
-		if (!req.session.user || req.session.user.type != 'CLIENT') {
+		if (!req.session.user || req.session.user.id_tipoUsuario != 3) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -53,6 +54,7 @@ const Auth = {
 	},
 	// Allow not logged users (GUEST)
 	onlyGuests: (req, res, next) => {
+		console.log('onlyGuests', req.session.user);
 		if (req.session.user) {
 			if (req.method == 'GET')
 				res.redirect('/Dashboard');
@@ -66,20 +68,15 @@ const Auth = {
 	},
 
 	createSession: (req, newUser) => {
-		req.session.regenerate((err) => {
-			if (err)
-				throw new Error('No se pudo iniciar sesión')
-
-			req.session.user = {
-				id: newUser.id_cliente,
-				nombres: newUser.nombres,
-				apellidoPaterno: newUser.apellidoPaterno,
-				apellidoMaterno: newUser.apellidoMaterno,
-				numeroCelular: newUser.numeroCelular,
-				correo: newUser.correo,
-				id_tipoUsuario: newUser.id_tipoUsuario
-			};
-		});
+		req.session.user = {
+			id: newUser.id_cliente,
+			nombres: newUser.nombres,
+			apellidoPaterno: newUser.apellidoPaterno,
+			apellidoMaterno: newUser.apellidoMaterno,
+			numeroCelular: newUser.numeroCelular,
+			correo: newUser.correo,
+			id_tipoUsuario: newUser.id_tipoUsuario
+		};
 	},
 
 	deleteSession: (req, res) => {

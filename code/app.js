@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-	secret: 'SuperContrasena',
+	secret: 'foo',
 	resave: false,
 	saveUninitialized: true,
 	cookie: { maxAge: 3600000 }	// 1 minute = 60 units

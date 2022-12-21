@@ -9,6 +9,14 @@
   justify-content: center;
 }
 
+.mapa_responsive{
+    display: flex;
+    overflow: scroll;
+    position: fixed;    
+    width: 100%;
+    height: 500px;
+}  
+
 /* barra de navegacion */
 
 .colorNav{
