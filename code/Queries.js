@@ -92,7 +92,7 @@ const db = {
 				if (results.length > 0) reject(MSG.ERROR.MSE3);
 				else {
 					// create new user
-					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
+					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NULL)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
 						// if (err) reject(err);
 						if (err) {
 							console.error(err);
