@@ -92,7 +92,7 @@ const db = {
 				if (results.length > 0) reject(MSG.ERROR.MSE3);
 				else {
 					// create new user
-					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
+					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NULL)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
 						// if (err) reject(err);
 						if (err) {
 							console.error(err);
@@ -119,7 +119,7 @@ const db = {
 
 	addMetodoPago: (id_cliente, numeroTarjeta, fechaVencimiento) => { 
 		return new Promise((resolve, reject) => {
-			con.query('INSERT INTO metodoPago VALUES (NULL, ?, ?, "VISA")', [numeroTarjeta, fechaVencimiento], (err, results) => {
+			con.query('INSERT INTO metodoPago VALUES (NULL, ?, ?, "VISA", ?)', [numeroTarjeta, fechaVencimiento, id_cliente], (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});
@@ -127,8 +127,8 @@ const db = {
 	},
 	getMetodosPago: (id_cliente) => {
 		return new Promise((resolve, reject) => {
-			// con.query('SELECT * FROM metodoPago WHERE id_cliente = ?', [id_cliente], (err, results) => {
-			con.query('SELECT * FROM metodoPago', [], (err, results) => {
+			con.query('SELECT * FROM metodoPago WHERE id_cliente = ?', [id_cliente], (err, results) => {
+			//con.query('SELECT * FROM metodoPago', [], (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});

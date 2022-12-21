@@ -27,6 +27,17 @@ function validatePassword(form) {
 	return true;
 }
 
+function validateEmail(form) {
+	if (form.elements['correo-verificacion']) {
+		if (form.elements['correo'].value !== form.elements['correo-verificacion'].value) {
+			form.elements['correo-verificacion'].setCustomValidity('Los correos no coinciden');
+			return false;
+		}
+		form.elements['correo-verificacion'].setCustomValidity('');
+	}
+	return true;
+}
+
 (() => {
 	// Fetch all the forms we want to apply custom Bootstrap validation styles to
 	const forms = document.querySelectorAll('.needs-validation')	
@@ -51,12 +62,12 @@ function validatePassword(form) {
 			event.preventDefault();
 			event.stopPropagation();
 
-			if (!validatePassword(form) || !validateForm(form)) {
+			if (!validatePassword(form) || !validateEmail(form) || !validateForm(form) ) {
 				for(let element of form.elements) {
 					let parent = element.parentElement;
 					
 					let feedback = parent.querySelector('.invalid-feedback');
-					if (!element.checkValidity() || element.type === 'password')
+					if (!element.checkValidity() || element.type === 'password' || element.type === 'email')
 						if (element.validity.valueMissing) {
 							Swal.fire(
 								'Campos vacíos.',
@@ -67,26 +78,18 @@ function validatePassword(form) {
 						}  else if (element.validity.patternMismatch) {
 							Swal.fire(
 								'Datos incorrectos.',
-								'Los datos ingresados no están registrados en el sistema.',
+								'Los datos ingresados no poseen el formato requerido.',
 								'error'
 							)
 							break;
 						} else if (element.validity.customError) {
 							Swal.fire(
-								'Contraseña no validada.',
-								'La contraseña y la validación son diferentes.',
+								'Validacion incorrecta',
+								`¡${element.validationMessage}!`,
 								'error'
 							)
 							break;
-						} else {
-							Swal.fire(
-								'Error.',
-								element.validationMessage,
-								'error'
-							)
-							break;
-						}
-
+						} 
 				}
 			}
 			else {
@@ -122,8 +125,8 @@ function validatePassword(form) {
 						form.classList.remove('was-validated');
 						console.log(data);
 						Swal.fire(
-							data.title || `¡${data.status}!`,
-							data.message,
+							`¡${data.message.title}!`,
+							`¡${data.message.message}!`,
 							'error'
 						)
 						
