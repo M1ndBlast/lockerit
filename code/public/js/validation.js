@@ -1,146 +1,93 @@
-
-
-const patterns = {
-	nombre: /[a-zA-Zà-ÿÀ-Ÿ]{3,}( [a-zA-Zà-ÿÀ-Ÿ]{2,})? */,
-	text: /[a-zA-Zà-ÿÀ-Ÿ]{3,}/,
-	tel: /[0-9]{10}/,
-	email: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/,
-	password: /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){6,16}/,
-	nummerotarjeta: /[0-9]{16}/,
-	fechaexpiracion: /[0-9]{2}\/[0-9]{2}/,
-	cvv: /[0-9]{3}/,
+function toast(title, message, type='error') {
+	Swal.fire({
+		title: title,
+		text: message,
+		icon: type,
+		confirmButtonText: 'Aceptar'
+	})
 }
-
-function validateForm(form) {
-	return Array.from(form.elements)
-		.every((element) => element.checkValidity() )
-}
-
-function validatePassword(form) {
-	if (form.elements['contrasena-verificacion']) {
-		if (form.elements['contrasena'].value !== form.elements['contrasena-verificacion'].value) {
-			form.elements['contrasena-verificacion'].setCustomValidity('Las contraseñas no coinciden');
-			return false;
-		}
-		form.elements['contrasena-verificacion'].setCustomValidity('');
-	}
-	return true;
-}
-
 (() => {
 	// Fetch all the forms we want to apply custom Bootstrap validation styles to
-	const forms = document.querySelectorAll('.needs-validation')	
+	const forms = document.querySelectorAll('form')	
 
 	// Loop over them and prevent submission
 	Array.from(forms).forEach(form => {
 		Array.from(form.elements).forEach((element) => {
-			// set pattern
-			if (element.pattern === '') {
-				console.log(element.name, element.name in patterns, element.type, element.type in patterns);
-				if (element.name in patterns)
-					element.setAttribute('pattern', patterns[element.name].source)
-				else if (element.type in patterns)
-					element.setAttribute('pattern', patterns[element.type].source)
-			}
 
-			element.addEventListener('keypress', event => 
-				form.classList.remove('was-validated'));
+			element.addEventListener('change', event =>  {
+				element.classList.remove('is-invalid')
+			});
 		});
 
 		form.addEventListener('submit', event => {
 			event.preventDefault();
 			event.stopPropagation();
 
-			if (!validatePassword(form) || !validateForm(form)) {
-				for(let element of form.elements) {
-					let parent = element.parentElement;
-					
-					let feedback = parent.querySelector('.invalid-feedback');
-					if (!element.checkValidity() || element.type === 'password')
-						if (element.validity.valueMissing) {
-							Swal.fire(
-								'Campos vacíos.',
-								'Es necesario que todos los campos obligatorios no estén vacíos.',
-								'error'
-							)
-							break;
-						}  else if (element.validity.patternMismatch) {
-							Swal.fire(
-								'Datos incorrectos.',
-								'Los datos ingresados no están registrados en el sistema.',
-								'error'
-							)
-							break;
-						} else if (element.validity.customError) {
-							Swal.fire(
-								'Contraseña no validada.',
-								'La contraseña y la validación son diferentes.',
-								'error'
-							)
-							break;
-						} else {
-							Swal.fire(
-								'Error.',
-								element.validationMessage,
-								'error'
-							)
-							break;
-						}
-
-				}
-			}
-			else {
-				let action = form.getAttribute('action'),
+			let action = form.getAttribute('action'),
 					method = form.getAttribute('method'),
 					urlencoded = new URLSearchParams();
 					
+				// element.type in ['text', 'email', 'password', 'number', 'tel', 'date', 'time', 'textarea']
+
 				Array.from(form.elements)
 					.filter(element => element.name !== '')
+					.filter(element => {
+						if (element.type == 'radio')
+							return element.checked;
+						return true;
+					})
 					.forEach(element => {
-						console.log(element.name, element.value);
-						urlencoded.append(element.name, element.value)
+						console.log(element.name, element.type=='checkbox'?element.checked:element.value);
+						urlencoded.append(element.name, element.type=='checkbox'?element.checked:element.value);
 					});
-				
+
+				form.querySelectorAll('fieldset')
+					.forEach((fieldset) => fieldset.disabled = true);
 				fetch(action, {
 					method: method,
-					body: urlencoded
+					body: urlencoded,
 				})
 				.then(res => res.json())
 				.then(data => {
 					if (data.response == 'OK')
-						if (data.redirect)
+						if (data.redirect)	// redirect to url
 							window.location.href = data.redirect;
-						else{
-							console.log(data);
-							Swal.fire(
-								`¡${data.title || data.response}!`,
-								data.message,
-								'success'
-							)
-						}
-					else {
-						form.classList.remove('was-validated');
-						console.log(data);
-						Swal.fire(
-							data.title || `¡${data.status}!`,
-							data.message,
-							'error'
-						)
+						else if(data.modal)	// switch modal
+							switchModal(data.modal.old, data.modal.new);
 						
+						else {				// show toast
+							console.log(data.message);
+							toast(data.title||'Éxito', data.message, 'success');
+						}
+					else if (data.response == 'ERROR') {
+						if (data.errors) {	// show errors
+							let errors = data.errors.filter((err, index, self) => 
+								index === self.findIndex((t) => (t.param === err.param))
+							);
+							
+							for (let err of errors)
+								form.querySelector(`[name="${err.param}"]`).classList.add('is-invalid');
+							
+							toast('Error', errors[0].msg);
+						}
+						else
+							toast(data.title || `${data.status}`,
+								data.message);
 					}
+					else 
+						throw new Error('Error al recibir la respuesta del servidor');
+					
 					
 				})
 				.catch(err => {
+					toast(err.name || 'Error',
+						err.message || 'Error al enviar la petición');
 					console.log(err);
-					Swal.fire(
-						'Error en el formato.',
-						'Los datos ingresados no tienen el formato especificado.',
-						'error'
-					)
+				})
+				.finally(() => {
+					form.querySelectorAll('fieldset')
+					.forEach((fieldset) => fieldset.disabled = false);
 				});
-			}
-
-			form.classList.add('was-validated');
 		}, false)
 	})
 })()

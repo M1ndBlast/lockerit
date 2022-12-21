@@ -9,8 +9,6 @@ const val = {
 	// async..await is not allowed in global scope, must use a wrapper
 	mailVerification: async (email, num) => {
 		let link = 'http/127.0.0.1:3001/activacion/'+num
-		console.log(b);
-		console.log(email);
 		// create reusable transporter object using the default SMTP transport
 		let transporter = nodemailer.createTransport({
 			host: "smtp-mail.outlook.com",
