@@ -1,0 +1,103 @@
+.card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.2);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.logo{
+    width: 142.812px;
+    height: 128px;
+}
+
+.estado{
+    width: 684.200px;
+    height: 83px;
+    position: relative;
+    left: 21%;
+}
+
+.numero{
+    position: relative;
+    left: 25px;
+}
+
+.paquete p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.paquete input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    top: 6px;
+}
+
+.img-seleccion {
+    width: 100px;
+    /* you can use % */
+    height: auto;
+    max-width: 100%;
+}
+
+.texto {
+    text-align: center;
+}
+
+.imagen {
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.contenido {
+    position: relative;
+    top: 80px;
+    border-color: rgb(33, 46, 70);
+}
+
+.Border {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: rgb(33, 46, 70);
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.seleccion {
+    border-color: rgb(33, 46, 70);
+}
+
+.seleccion:hover {
+    border-color: rgb(249, 217, 80);
+}
+
+.form-check-input:checked{
+    border-color: rgb(249, 217, 80) !important;
+    background-color: rgb(249, 217, 80) !important;
+}
+
+@media screen and (max-width: 990px) {
+    .barra{
+        display: none;
+    }
+}

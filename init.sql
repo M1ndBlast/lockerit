@@ -414,6 +414,11 @@ USE `Lockerit`;
 INSERT INTO `Lockerit`.`Cliente` (`nombres`,`apellidoPaterno`,`apellidoMaterno`,`numeroCelular`,`correo`,`password`,`id_tipoUsuario`) VALUES('Edgar Josue', 'Varillas', 'Figueroa', '5534315125','teamedgaar01@gmail.com','MeL4stimas.','3');
 COMMIT;
 
+START TRANSACTION;
+USE `Lockerit`;
+INSERT INTO `Lockerit`.`Locker` (`id_locker`, `nombre_locker`, `ancho`, `alto`, `profundidad`, `num_taquillasS`, `num_taquillasM`, `num_taquillasL`, `ubicacion`, `id_alcaldia`, `estado_locker`) VALUES ('1', 'Reforma 222', '99.9998', '199.009', '63.5', '5', '6', '2', 'Av. Paseo de la Reforma 222, Juárez, Cuauhtémoc, 06600 Cuauhtemoc, CDMX, {lat:19.428809314912836, lon:-99.16169126910391}', '6', 'Disponible'), ('2', 'Plaza lindavista', '99.9998', '199.009', '63.5', '5', '6', '2', 'Av. Montevideo 363, Lindavista Sur, Gustavo A. Madero, 07300 Ciudad de México, CDMX, {lat:19.49215147959578, lon:-99.13359960338582}', '7', 'Disponible'), ('3', 'Patio Tlalpan', '99.9998', '199.009', '63.5', '5', '6', '2', 'Av. Insurgentes Sur 4177, Sta Úrsula Xitla, Tlalpan, 14420 Ciudad de México, CDMX, {lat:19.28380112062941, lon:-99.1771035356514}', '14', 'Disponible'), ('4', 'Plaza Antara', '99.9998', '199.009', '63.5', '5', '6', '2', 'Av. Ejército Nacional Mexicano 843-B, Granada, Miguel Hidalgo, 11520 Ciudad de México, CDMX, {lat:19.43902613507273, lon:-99.20223391079132}', '11', 'Disponible');
+COMMIT;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
