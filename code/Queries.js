@@ -170,6 +170,15 @@ const db = {
 			});
 		});
 	},
+
+	getShippings: (id_cliente) => {
+		return new Promise((resolve, reject) => {
+			con.query('SELECT * FROM envio WHERE id_cliente = ?', [id_cliente], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
 };
 
 

@@ -61,50 +61,31 @@
             <br>
         <form>
             <ul class="list-group">
-                <li class="list-group-item">
-                    <label class="form-check-label stretched-link" for="locker1"></label>
-                    <div class="container row align-items-start">
-                        <div class="row">
-                            <div class="col-4">
-                                <center>
-                                <p>Paquete #</p>
-                                </center>
-                            </div>
-                            <div class="col-4">
-                                <center>
-                                <p>Número de envío</p>
-                                </center>
-                            </div>
-                            <div class="col-4" >
-                                <center>
-                                <input class="form-check-input ml-5" type="radio" name="locker" value="" id="locker1" checked>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                  </li>
-                <li class="list-group-item">
-                    <label class="form-check-label stretched-link" for="locker2"></label>
-                    <div class="container row align-items-start">
-                        <div class="row">
-                        <div class="col-4">
-                            <center>
-                            <p>Paquete #</p>
-                            </center>
-                        </div>
-                        <div class="col-4">
-                            <center>
-                            <p>Número de envío</p>
-                            </center>
-                        </div>
-                        <div class="col-4" >
-                            <center>
-                            <input class="form-check-input ml-5" type="radio" name="locker" value="" id="locker2">
-                            </center>
-                        </div>
-                        </div>
-                    </div>
-                </li>
+				<% for (var i = 0; i < envios.length; i++) { %>
+				<li class="list-group-item">
+					<label class="form-check-label stretched-link" for="locker<%= i %>"></label>
+					<div class="container row align-items-start">
+						<div class="row">
+							<div class="col-4">
+								<center>
+									<p>Número de envío #<%= envios[i].id_envio %></p>
+								</center>
+							</div>
+							<div class="col-4">
+								<center>
+									<p>Recibe: <%= envios[i].nombre_destinatario %></p>
+								</center>
+							</div>
+							<div class="col-4" >
+								<center>
+									<input class="form-check-input ml-5" type="radio" name="locker" 
+										value="<%=envios[i].id_envio %>" id="locker<%= i %>" checked>
+								</center>
+							</div>
+						</div>
+					</div>
+				</li>
+				<% } %>
             </ul>
           </form>
             <br>

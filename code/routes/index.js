@@ -306,8 +306,12 @@ router.route('/realizarEnvio')
 });
 
 router.route('/consultarEnvio')
-.get(Auth.onlyClients, (req, res, next) => {
-	res.render('consultarEnvio', { user: req.session.user });
+.get(Auth.onlyClients,async (req, res, next) => {
+	let envios = await db.getShippings(req.session.user.id);
+	res.render('consultarEnvio', { 
+		user: req.session.user,
+		envios: envios
+	 });
 });
 
 router.route('/ticketEnvios')
