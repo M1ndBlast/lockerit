@@ -324,5 +324,10 @@ router.route('/estatusEnvio')
 	res.render('estatusEnvio', { user: req.session.user });
 });
 
+router.get('/:file', (req, res, next) => {
+	let file = req.params.file;
+	console.log(file);
+	res.render(file, { user: req.session.user });
+});
 
 module.exports = router;
