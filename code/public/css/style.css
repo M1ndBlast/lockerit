@@ -18,7 +18,7 @@ body {
 
 .seccion1{
     min-height: 400px;
-    background-image: url('./lockers.jpg');
+    background-image: url('./lockersRetocado.png');
     background-position: center;
     background-size: cover;
 }
@@ -180,13 +180,25 @@ body {
 }
 
 .Botones{
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .footer_icon {
     width: 50%;
     height: 50%;
     margin-bottom: 1em;
+}
+
+@media screen and (max-width: 990px) {
+    .Botones{
+        margin-bottom: 10px;
+        margin-left: 0px;
+        width: 150px;
+    }
+
+    .barra{
+        display: none;
+    }
 }
 
 @media screen and (max-width: 770px) {
@@ -197,9 +209,6 @@ body {
         width: 30%;
         height: 30%;
         margin-bottom: 1em;
-    }
-    .Botones{
-        margin-bottom: 0;
     }
     .lockers{
         max-width: 500px;
@@ -217,5 +226,7 @@ body {
     }
     .hero__title{
         background-color: white;
+        justify-content: center;
+        display: flex;
     }
 }

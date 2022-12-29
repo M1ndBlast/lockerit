@@ -13,21 +13,7 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
   <body >
-    <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
-        <div class="container">
-          <a class="navbar-brand" href="/"><img src="images/logo-amarillo.svg" alt="" width="150" height="30"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <%- include('./navInvitado'); %>
     <div class="container">
         <div class="card">
             <div class="card-body">
@@ -38,7 +24,7 @@
                     <input type="email" id="inputPassword5" class="form-control" placeholder="Correo">
                 </form>
                 <br>
-                <center><a href="#" class="btn btn-outline-danger">Restablecer</a>
+                <center><a href="#" class="btn text-white boton">Recuperar contraseña</a>
                 </center>
                 <br>
                 <center><a href="/iniciarSesion" class="btn btn-outline-dark">Regresar</a>
