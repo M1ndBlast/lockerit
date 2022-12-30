@@ -20,7 +20,7 @@ router.route('/iniciarSesion')
 .post(Auth.onlyGuests, Validator.signin, (req, res, next) => {
 	let {correo, contrasena} = req.body;
 
-	db.checkCredentials(correo, contrasena).then((results) => {
+	db.login(correo, contrasena).then((results) => {
 		debug('results', results);
 		if (results.length) {
 			Auth.createSession(req, results[0]);
@@ -47,30 +47,23 @@ router.route('/RegistroCliente')
 .post(Auth.onlyGuests, Validator.signup, (req, res, next) => {
 	let {nombre, apellidoP, apellidoM, telefono, correo, contrasena} = req.body;
 	// create new user
-	db.createClient(nombre, apellidoP, apellidoM, telefono, correo, contrasena, db.ROLES.CLIENT).then((results) => {
-		if (results.insertId > 0) {
+	db.createClient(nombre, apellidoP, apellidoM, telefono, correo, contrasena, db.ROLES.CLIENT).then(async (results) => {
+		if (results.insertId) {
 			console.log('creado');
 			// get user by id
-			db.getClientById(results.insertId).then((results2) => {
-				if (results2.length > 0) {
-					console.log('enviando correo');
-					mailer.mailVerification(correo, results.insertId).then(_ => {
-						console.log('correo enviado');
-						res.json({
-							response: 'OK',
-							title: 'Usuario creado correctamente',
-							message: 'Verifique su correo para activar su cuenta',
-						});
-					}).catch((err) => {
-						console.log(err);
-						res.status(402).json({response:'ERROR', message:err});
-					});
-				} else {
-					res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
-				}
-			}).catch((err) => {
-				res.status(402).json({response:'ERROR', ...err});
-			});
+			let costumer = await db.getCostumerById(results.insertId);
+			if (costumer.length) {
+				console.log('enviando correo');
+
+				await mailer.mailVerification(correo, results.insertId);
+				res.json({
+					response: 'OK',
+					title: 'Usuario creado correctamente',
+					message: 'Verifique su correo para activar su cuenta',
+				});
+			} else {
+				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
+			}
 		} else {
 			res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 		}
@@ -83,7 +76,7 @@ router.route('/activacion/:id([0-9]{1,})')
 .get(Auth.onlyGuests, (req, res, next) => {
 	console.log('activacion');
 	let idUser = req.params.id;
-	db.getClientById(idUser).then((results) => {
+	db.getCostumerById(idUser).then((results) => {
 		if (results[0]) {
 			Auth.createSession(req, results[0]);
 			res.send("<h1>Cuenta Activada </h1><a href='/'>Inicio</a>")
@@ -119,21 +112,13 @@ router.route('/editarDatosUsuario')
 	let {nombre, apellidoP, apellidoM, telefono, correo} = req.body;
 
 	// create new user
-	db.updateClient(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
+	db.updateCostumer(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
 		console.log('updateClient', results);
 		if (results.affectedRows > 0) {
 			// get user by id
-			db.getClientById(req.session.user.id).then((results) => {
+			db.getCostumerById(req.session.user.id).then((results) => {
 				if (results.length > 0) {
-					req.session.user = {
-						id: results[0].id_cliente,
-						nombres: results[0].nombres,
-						apellidoPaterno: results[0].apellidoPaterno,
-						apellidoMaterno: results[0].apellidoMaterno,
-						numeroCelular: results[0].numeroCelular,
-						correo: results[0].correo,
-						id_tipoUsuario: results[0].id_tipoUsuario
-					};
+					Auth.createSession(req, results[0])
 					res.status(200).json({
 						response: 'OK',
 						message: 'Usuario actualizado correctamente'

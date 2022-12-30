@@ -1,186 +1,414 @@
 const mysql = require('mysql2');
 const MSG = require('./Messages');
 
-var con = mysql.createConnection({
+const con = mysql.createConnection({
 	host:		process.env.MYSQL_HOST,
 	port:		process.env.MYSQL_PORT,
 	user: 		process.env.MYSQL_USER,
 	password:	process.env.MYSQL_PASSWORD,
 	database:	process.env.MYSQL_DATABASE,
 });
-
-// loop if fails to connect
-function connect() {
-	con.connect((err) => {
-		if (err) {
-			console.error(err);
-			console.log('Connection to MySQL failed. Retrying in 2 seconds...');
-			setTimeout(connect, 2*1000);	// try again in 2 seconds
-		} 
-		else console.log(`Connected to MySQL on ${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}!`);
-	});
-}
-
-connect();
+const errorDBConnection = new Error('Sin conexión a la base de datos.');
+var isConnected = false;
 
 con.on('error', function(err) {
-	console.log('db error', err);
-	if(err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED') 
-		connect();
+	isConnected = false;
+	console.error('db error', err);
+	if(err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED') {
+		console.log('Connection to MySQL failed. Retrying in 5 seconds...');
+		setTimeout(con.connect(), 5*1000);	// try again in 2 seconds
+	}
 	else
 		throw err;
+}).on('connect', function(err) {
+	isConnected = true;
+	console.info(`Connected to MySQL on ${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}!`)
 });
 
-// Here goes MySQL queries
+con.connect();
 
 const db = {
 	// Roles
 	ROLES: {
 		ADMIN: 1,
-		DELIVERY: 2,
+		DELIVER: 2,
 		CLIENT: 3,
 	},
-	/**
-	 * 
-	 * @param {string} email 
-	 * @param {string} password 
-	 * @returns {Promise}
-	 */
-	checkCredentials: (email, password) => {
-		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM Cliente WHERE correo = ? AND password = ? LIMIT 1', [email, password], (err, results) => {
-				// if (err) reject(err);
-				if (err) {
-					console.error(err);
-					reject(MSG.ERROR.MSE7);
-				}
-				else resolve(results);
-			});
-		});
-	},
-	getClientById: (id) => {
-		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM Cliente WHERE id_cliente = ? LIMIT 1', [id], (err, results) => {
-				// if (err) reject(err);
-				if (err) {
-					console.error(err);
-					reject(MSG.ERROR.MSE7);
-				}
-				else resolve(results);
-			});
-		});
-	},
 
-	getClientByEmail: (correo) => {
+	login: (email, password) => {
 		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM Cliente WHERE correo = ? LIMIT 1', [correo], (err, results) => {
-				// if (err) reject(err);
-				if (err) {
-					console.error(err);
-					reject(MSG.ERROR.MSE7);
-				}
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM costumer WHERE em_cos = ? AND pas_cos = ? LIMIT 1', [email, password], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	// get user by id
+	getCostumerById: (id) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM costumer WHERE id_cos = ? LIMIT 1', [id], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	getCostumerByEmail: (email) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM costumer WHERE em_cos = ? LIMIT 1', [email], (err, results) => {
+				if (err) reject(err);
 				else resolve(results);
 			});
 		});
 	},
 	
 	// create new user with validation
-	createClient: (nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario) => {
+	setCostumer: (name, lastnameF, lastnameM, email, tel, password, token, type) => {
 		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			
 			// check if email is already in use
-			db.getClientByEmail(correo).then((results) => {
-				if (results.length > 0) reject(MSG.ERROR.MSE3);
+			db.getCostumerByEmail(email).then((results) => {
+				if (results.length > 0) reject('Correo ya en uso');
 				else {
 					// create new user
-					con.query('INSERT INTO Cliente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NULL)', [nombre, apellidoP, apellidoA, celular, correo, password, id_tipoUsuario], (err, results) => {
-						// if (err) reject(err);
-						if (err) {
-							console.error(err);
-							reject(MSG.ERROR.MSE7);
-						}
+					con.query('INSERT INTO costumer VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, 3, ?)', [name, lastnameF, lastnameM, tel, email, password, token, type], (err, results) => {
+						if (err) reject(err);
 						else resolve(results);
 					});
 				}
 			}).catch((err) => {
-				console.error(err);
-				reject(MSG.ERROR.MSE7);
+				reject(err);
 			});
 		});
 	},
 
-	updateClient: (id_cliente, nombre, apellidoP, apellidoA, celular, correo) => {
+	// create new user with validation
+	updateCostumer: (id, name, lastnameF, lastnameM, email, tel) => {
 		return new Promise((resolve, reject) => {
-			con.query('UPDATE Cliente SET nombres = ?, apellidoPaterno = ?, apellidoMaterno = ?, numeroCelular = ?, correo = ? WHERE id_cliente = ?', [nombre, apellidoP, apellidoA, celular, correo, id_cliente], (err, results) => {
-				if (err) reject(err);
-				else resolve(results);
+			if (!isConnected)
+				throw errorDBConnection;
+			
+			// check if email is already in use
+			db.getCostumerByEmail(email).then((results) => {
+				if (!results.length) reject('Usuario no encontrado');
+				else {
+					// create new user
+					con.query('UPDATE costumer SET nam_cos=?, patsur_cos=?, matsur_cos=?, tel_cos=?, em_cos=? WHERE id_cos=?', [name, lastnameF, lastnameM, tel, email, id], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
+				}
+			}).catch((err) => {
+				reject(err);
 			});
 		});
 	},
 
-	addMetodoPago: (id_cliente, numeroTarjeta, fechaVencimiento) => { 
+	verifycode: (email, token) => {
 		return new Promise((resolve, reject) => {
-			con.query('INSERT INTO metodoPago VALUES (NULL, ?, ?, "VISA", ?)', [numeroTarjeta, fechaVencimiento, id_cliente], (err, results) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM costumer WHERE id_cos = ? AND tk_cos = ? LIMIT 1', [email,token], (err, results) => {
 				if (err) reject(err);
-				else resolve(results);
+				else if (results.length) {
+					con.query('UPDATE User SET tk_usr = NULL WHERE em_usr = ?', [email], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
+				}
+				else 
+					reject('Código Inválido');
 			});
 		});
 	},
-	getMetodosPago: (id_cliente) => {
+			
+	// Obtener todos los registros de la tabla Shipping
+	getShipping: () => {
 		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM metodoPago WHERE id_cliente = ?', [id_cliente], (err, results) => {
-			//con.query('SELECT * FROM metodoPago', [], (err, results) => {
-				if (err) reject(err);
-				else resolve(results);
-			});
-		});
-	},
-
-	getAlcaldias: () => {
-		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM Alcaldias', [], (err, results) => {
-				if (err) reject(err);
-				else resolve(results);
-			});
-		});
-	},
-
-	getTamanios: () => {
-		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM Tamanio', [], (err, results) => {
-				if (err) reject(err);
-				else resolve(results);
-			});
-		});
-	},
-
-	getTipoEnvio: () => {
-		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM tipoEnvio', [], (err, results) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Shipping', (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});
 		});
 	},
 
-	createShipping: (id_cliente, id_tipoEnvio, id_tamanio, nombre_dest, correo_dest, tel_dest, id_metodo, id_lockerOrg, id_lockerDst, costo) => {
+	// Obtener registros de shipping por estado del envio
+	getShpgByStat: (stat) => {
 		return new Promise((resolve, reject) => {
-			con.query('INSERT INTO envio VALUES (NULL, curtime(), curdate(), ?, ?, ?, ?, ?, curtime(), curdate() + INTERVAL 1 DAY, ?, ?, ?, ?, ?, 1)', [costo, nombre_dest, correo_dest, tel_dest, id_metodo, id_cliente, id_lockerOrg, id_lockerDst, id_tipoEnvio, id_tamanio], (err, results) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Shipping WHERE stat_shpg = ?', [stat], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	
+	getshippingdetails: (trk_shpg) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM ShippingDetail WHERE trk_shpg= ?', [trk_shpg], (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});
 		});
 	},
 
-	getShippings: (id_cliente) => {
+	getShippingStat: (trk_shpg) => {
 		return new Promise((resolve, reject) => {
-			con.query('SELECT * FROM envio WHERE id_cliente = ?', [id_cliente], (err, results) => {
+			con.query('SELECT stat_shpg FROM ShippingDetail WHERE trk_shpg = ?', [stat_shpg], (err,results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});
 		});
 	},
+
+	getContactsByUserId: (id_usr) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Contact WHERE id_usr= ?', [id_usr], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	
+	getShippings: (id_usr) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM ShippingDetail  WHERE id_usr= ? AND (stat_shpg = 6 OR stat_shpg < 5)', [id_usr], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+		
+	UpdateShippings: (estado,id_envio) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query("UPDATE Shipping SET stat_shpg = stat_shpg + 1 where trk_shpg = ?", [estado,id_envio], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getContactById: (id_cont) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Contact  WHERE id_cont= ? LIMIT 1', [id_cont], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+
+	getContact:(id_usr,email,tel) =>{
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Contact  WHERE id_usr= ? and em_cont= ? and tel_cont= ?', [id_usr, email, tel], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+
+	createContact: (idUser,name, email, tel) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			// check if email is already in use			
+			db.getContact(idUser,email,tel).then((results) => {
+				if (results.length > 0) reject('El contacto ya ha sido registrado');
+				else {
+					// create new user
+					con.query('INSERT INTO Contact VALUES (DEFAULT, ?, ?, ?, ?)', [idUser, name ,email, tel], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
+				}
+			}).catch((err) => {
+				reject(err);
+			});
+		});
+	},
+
+	getAdress:(id_usr,email,tel) =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Contact  WHERE id_usr= ? and em_cont= ? and tel_cont= ?', [id_usr, email, tel], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getlocations:() =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Locker', [], (err, results) => {
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	getloker:(id) =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			console.log('id es: '+id);
+			con.query('SELECT * FROM Locker WHERE id_lkr = ? ', [id], (err, results) => {
+				console.log('results: ');
+				console.log(results);
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	createAddresse: (idUser,name, email, tel) => { //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			
+			// check if email is already in use
+			
+			db.getAdress(idUser,email,tel).then((results) => {
+				if (results.length > 0) reject('El contacto ya ha sido registrado');
+				else {
+					// create new user
+					con.query('INSERT INTO Contact VALUES (DEFAULT, ?, ?, ?, ?)', [idUser, name ,email, tel], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
+				}
+			}).catch((err) => {
+				reject(err);
+			});
+
+
+	
+		});
+	},
+
+
+	getPayment:(id_usr,name,card,date) =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Wallet  WHERE id_usr= ? and nm_wal= ? and num_wal= ? and  date_wal= STR_TO_DATE(?,"%d/%m/%Y")', [id_usr, name, card, date], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+
+	createPayment: (idUser,nick,name,card,date) => { //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			// check if card is already in use			
+			db.getPayment(idUser,name,card,date).then((results) => {
+				if (results.length > 0) reject('El metodo de pago ya se encuentra registrado');
+				else {
+					//console.log("FECHA:", date);
+					// create new payment
+					con.query('INSERT INTO Wallet VALUES (DEFAULT, ?, ?, ?, ?, STR_TO_DATE(?,"%d/%m/%Y"))', [idUser,nick,name,card,date], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
+				}
+			}).catch((err) => {
+				reject(err);
+			});
+		});
+	},
+
+	// Get wallets by id_usr
+	getWalletsByUserId:(idUser) =>{ 
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Wallet WHERE id_usr = ?', [idUser], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	// Deliver Methods
+
+	getStateRoute:(idUser) =>{ //
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT id_rte, date_rte, stat_rte FROM route WHERE id_usr = ?', [idUser], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getLockersByUserId:(idUser, stat) =>{
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query(`SELECT * 
+			FROM Route 
+			INNER JOIN RouteDetail
+			ON Route.id_rte = RouteDetail.id_rte
+			INNER JOIN Locker
+			ON RouteDetail.id_lkr = Locker.id_lkr
+			WHERE id_usr = ? 
+			ORDER BY stat_rte, date_rte `, [idUser], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getShippingdetailByUserId: (userId, lockerDestino) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM ShippingDetail WHERE nm_lkrdst = ? ', [ lockerDestino ], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+	getShippinguide: (userId, guia) => {
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM Shipping WHERE trk_shpg = ? ', [ guia ], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+
 };
 
-
-// End of queries
 module.exports = db;

@@ -15,7 +15,7 @@ const Auth = {
 	},
 	// Allow only logged users (ADMIN)
 	onlyAdmins: (req, res, next) => {
-		if (!req.session.user || req.session.user.id_tipoUsuario != 1) {
+		if (!req.session.user || req.session.user.type_usr != 1) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -28,7 +28,7 @@ const Auth = {
 	},
 	// Allow only logged users (DELIVERER)
 	onlyDeliverers: (req, res, next) => {
-		if (!req.session.user || req.session.user.id_tipoUsuario != 2) {
+		if (!req.session.user || req.session.user.type_usr != 2) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -41,7 +41,7 @@ const Auth = {
 	},
 	// Allow only logged users (CLIENT)
 	onlyClients: (req, res, next) => {
-		if (!req.session.user || req.session.user.id_tipoUsuario != 3) {
+		if (!req.session.user || req.session.user.type_usr != 3) {
 			if (req.method == 'GET')
 				res.redirect('/');
 			else if (req.method == 'POST')
@@ -69,13 +69,13 @@ const Auth = {
 
 	createSession: (req, newUser) => {
 		req.session.user = {
-			id: newUser.id_cliente,
-			nombres: newUser.nombres,
-			apellidoPaterno: newUser.apellidoPaterno,
-			apellidoMaterno: newUser.apellidoMaterno,
-			numeroCelular: newUser.numeroCelular,
-			correo: newUser.correo,
-			id_tipoUsuario: newUser.id_tipoUsuario
+			id: newUser.id_cos,
+			nombres: newUser.nam_cos,
+			apellidoPaterno: newUser.patsur_cos,
+			apellidoMaterno: newUser.matsur_cos,
+			numeroCelular: newUser.tel_cos,
+			correo: newUser.em_cos,
+			type_usr: newUser.type_usr
 		};
 	},
 

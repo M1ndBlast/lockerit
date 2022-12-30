@@ -11,9 +11,9 @@ services:
     expose:
       - 3308
     environment:
-      - MYSQL_DATABASE=Lockerit
+      - MYSQL_DATABASE=lockerit
       - MYSQL_USER=locker
-      - MYSQL_PASSWORD=Lockerit!
+      - MYSQL_PASSWORD=lockerit!
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - SERVICE_TAGS=dev
       - SERVICE_NAME=mysql
@@ -42,8 +42,8 @@ services:
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
       - MYSQL_USER=locker
-      - MYSQL_PASSWORD=Lockerit!
-      - MYSQL_DATABASE=Lockerit
+      - MYSQL_PASSWORD=lockerit!
+      - MYSQL_DATABASE=lockerit
       - SERVICE_TAGS=dev
       - SERVICE_NAME=lockey
       - SERVER_PORT=3000

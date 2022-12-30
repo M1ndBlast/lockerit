@@ -1,4 +1,5 @@
 function toast(title, message, type='error') {
+	console.log(`${type}: ${title} - ${JSON.stringify(message)}`)
 	return Swal.fire({
 		title: title,
 		text: message,
