@@ -2,6 +2,28 @@
     background-color: #212e46;
 }
 
+.boton{
+    border-color:  #212e46 !important;
+    background-color: #212e46 !important;
+}
+
 .body{
     font-family: 'Alata', sans-serif;
+}
+
+.Botones{
+    margin-left: 20px;
+}
+
+
+@media screen and (max-width: 990px) {
+    .Botones{
+        margin-bottom: 10px;
+        margin-left: 0px;
+        width: 150px;
+    }
+
+    .barra{
+        display: none;
+    }
 }

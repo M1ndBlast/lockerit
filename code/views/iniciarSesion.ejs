@@ -11,21 +11,7 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body >
-    <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
-        <div class="container">
-          <a class="navbar-brand" href="/"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <%- include('./navInvitado'); %>
     <div class=" d-flex justify-content-center align-items-center vh-100">
       <div class="bg-whit border border-dark p-5 rounded-5 text-dark shadow mt-5 "style="width: 25rem">
         <div class="d-flex justify-content-center ">
@@ -46,7 +32,7 @@
               <p class="small">¿Haz olvidado tu contraseña? </p>
               <a href="/recuperarContrasena" class="text-decoration-none text-info fw-semibold small">Recuperar</a>
           </div>
-          <button type="submit"  class="btn btn-outline-danger text-red w-100 mt-4 fw-semibold shadow-sm">Acceder</button>
+          <button type="submit"  class="btn boton  text-white w-100 mt-4 fw-semibold shadow-sm">Acceder</button>
           <div class="d-flex gap-1 justify-content-center mt-1">
         </form>
           <div class="small">¿Aún no tienes una cuenta?</div>
