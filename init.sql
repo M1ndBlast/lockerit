@@ -568,7 +568,7 @@ delimiter //
 drop procedure if exists inicio;
 create procedure inicio(in correo varchar(80) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci')
 begin
-	select costumer.em_cos, costumer.type_usr into @em, @typ from costumer where costumer.em_cos = correo;
+	select costumer.em_cos into @em from costumer where costumer.em_cos = correo;
     if (@em = correo) then
 		select * from costumer where costumer.em_cos = correo;
 	else
