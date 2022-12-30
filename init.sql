@@ -559,3 +559,20 @@ INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (
 INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (7, 'Cancelado');
 
 COMMIT;
+
+-----------------------------------------------------------------------------------------------------
+-- Creation of stored procedure to query users ------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+use lockerit;
+delimiter //
+drop procedure if exists inicio;
+create procedure inicio(in correo varchar(80) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci')
+begin
+	select costumer.em_cos, costumer.type_usr into @em, @typ from costumer where costumer.em_cos = correo;
+    if (@em = correo) then
+		select * from costumer where costumer.em_cos = correo;
+	else
+		select * from staff where staff.em_stf = correo;
+	end if;
+end//
+delimiter ;
