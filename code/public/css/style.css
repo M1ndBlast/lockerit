@@ -18,7 +18,7 @@ body {
 
 .seccion1{
     min-height: 400px;
-    background-image: url('./lockersRetocado.png');
+    background-image: url('./lockerOscuro.jpg');
     background-position: center;
     background-size: cover;
 }
@@ -181,6 +181,16 @@ body {
 
 .Botones{
     margin-left: 20px;
+}
+
+.boton{
+    border-color:  #212e46 !important;
+    background-color: #212e46 !important;
+}
+
+.boton-amarillo{
+    border-color:  #f9d959 !important;
+    background-color: #f9d959  !important;
 }
 
 .footer_icon {
