@@ -265,12 +265,57 @@ const db = {
 		return new Promise((resolve, reject) => {
 			if (!isConnected)
 				throw errorDBConnection;
-			con.query('SELECT * FROM Locker', [], (err, results) => {
+			con.query('SELECT * FROM locker', [], (err, results) => {
 				if(err)reject(err);
 				else resolve(results);
 			});
 		});
 	},
+
+	getCityHalls:() =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM cityhalls', [], (err, results) => {
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getSize:() =>{ 
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM size', [], (err, results) => {
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getShippingSize:() =>{ 
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM shippingsize', [], (err, results) => {
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getShippingType:() =>{ 
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+			con.query('SELECT * FROM shippingtype', [], (err, results) => {
+				if(err)reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
 	getloker:(id) =>{ //modifique
 		return new Promise((resolve, reject) => {
 			if (!isConnected)
@@ -311,11 +356,22 @@ const db = {
 	},
 
 
-	getPayment:(id_usr,name,card,date) =>{ //modifique
+	getPayment:(id_usr, card, date) =>{ //modifique
 		return new Promise((resolve, reject) => {
 			if (!isConnected)
 				throw errorDBConnection;
-			con.query('SELECT * FROM Wallet  WHERE id_usr= ? and nm_wal= ? and num_wal= ? and  date_wal= STR_TO_DATE(?,"%d/%m/%Y")', [id_usr, name, card, date], (err, results) => {
+				con.query('SELECT * FROM paymentmethods  WHERE id_cos = ? and num_pmt = ? and date_pmt = STR_TO_DATE(?,"%d/%m/%Y")', [id_usr, card, date], (err, results) => {
+				if (err) reject(err);
+				else resolve(results);
+			});
+		});
+	},
+
+	getPaymentMethods:(id_usr) =>{ //modifique
+		return new Promise((resolve, reject) => {
+			if (!isConnected)
+				throw errorDBConnection;
+				con.query('SELECT * FROM paymentmethods  WHERE id_cos = ?', [id_usr], (err, results) => {
 				if (err) reject(err);
 				else resolve(results);
 			});
@@ -323,35 +379,23 @@ const db = {
 	},
 
 
-	createPayment: (idUser,nick,name,card,date) => { //modifique
+	createPayment: (idUser, card, date) => { //modifique
 		return new Promise((resolve, reject) => {
 			if (!isConnected)
 				throw errorDBConnection;
 			// check if card is already in use			
-			db.getPayment(idUser,name,card,date).then((results) => {
+			db.getPayment(idUser, card, date).then((results) => {
 				if (results.length > 0) reject('El metodo de pago ya se encuentra registrado');
 				else {
-					//console.log("FECHA:", date);
+					console.log("FECHA:", date);
 					// create new payment
-					con.query('INSERT INTO Wallet VALUES (DEFAULT, ?, ?, ?, ?, STR_TO_DATE(?,"%d/%m/%Y"))', [idUser,nick,name,card,date], (err, results) => {
+					con.query("INSERT INTO paymentmethods VALUES (DEFAULT, ?, STR_TO_DATE(CONCAT('31/', ?),'%d/%m/%Y'), ?)", [card, date, idUser], (err, results) => {
 						if (err) reject(err);
 						else resolve(results);
 					});
 				}
 			}).catch((err) => {
 				reject(err);
-			});
-		});
-	},
-
-	// Get wallets by id_usr
-	getWalletsByUserId:(idUser) =>{ 
-		return new Promise((resolve, reject) => {
-			if (!isConnected)
-				throw errorDBConnection;
-			con.query('SELECT * FROM Wallet WHERE id_usr = ?', [idUser], (err, results) => {
-				if (err) reject(err);
-				else resolve(results);
 			});
 		});
 	},

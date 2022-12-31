@@ -144,7 +144,7 @@ router.route('/agregarmetodoPago')
 .post(Auth.onlyClients, Validator.creditCard, (req, res, next) => {
 	console.log(req.body);
 	let {nummerotarjeta, fechaexpiracion} = req.body;
-	db.addMetodoPago(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
+	db.createPayment(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
 		if (results.affectedRows > 0) {
 			res.status(200).json({
 				response: 'OK',
@@ -163,7 +163,7 @@ router.route('/metodosPago')
 .get(Auth.onlyClients, (req, res, next) => {
 	if (req.session.user) {
 		// obtener metodos de pago
-		db.getMetodosPago(req.session.user.id).then((results) => {
+		db.getPaymentMethods(req.session.user.id).then((results) => {
 			if (results.length > 0) {
 				res.render('metodosPago2', { user: req.session.user, metodosPago: results });
 			} else {
@@ -179,29 +179,34 @@ router.route('/metodosPago')
 
 router.route('/cotizarEnvio')
 .get(async(req, res, next) => {
-	let alcaldias = await db.getAlcaldias(),
-		tipoEnvio = await db.getTipoEnvio(),
-		tamanios = await db.getTamanios();
+	let alcaldias = await db.getCityHalls(),
+		tipoEnvio = await db.getShippingType(),
+		lockers = await db.getlocations(),
+		tamanios = await db.getSize();
 	res.render('cotizarEnvio', { 
 		user: req.session.user, 
 		alcaldias: alcaldias, 
 		tipoEnvio: tipoEnvio, 
+		lockers: lockers,
 		tamanios: tamanios 
 	});
 })
 .post(Validator.cotizacion, async (req, res, next) => {
 	console.log(req.body);
 	let {origen, destino, paquete, tipo} = req.body;
-	let tamanios = await db.getTamanios();
-	let tipoEnvio = await db.getTipoEnvio();
-	let alcaldias = await db.getAlcaldias();
+	let tamanios = await db.getShippingSize();
+	let sizes = await db.getSize();
+	let tipoEnvio = await db.getShippingType();
+	let alcaldias = await db.getCityHalls();
 	// get tamanio by id from tipo
-	let tamanio = tamanios.find(t => t.id_tamanio == paquete);
-	tipo = tipoEnvio.find(t => t.id_tipoEnvio == tipo);
-	origen = alcaldias.find(a => a.id_Alcaldias == origen);
-	destino = alcaldias.find(a => a.id_Alcaldias == destino);
+	let tamanio = tamanios.find(t => t.id_size == paquete);
+	size = sizes.find(t => t.id_size == paquete);
+	tipo = tipoEnvio.find(t => t.id_shpgtype == tipo);
+	origen = alcaldias.find(a => a.id_cityhll == origen);
+	destino = alcaldias.find(a => a.id_cityhll == destino);
 
 	console.log(tamanio);
+	console.log(size);
 	console.log(tipo);
 	console.log(origen);
 	console.log(destino);
@@ -209,10 +214,10 @@ router.route('/cotizarEnvio')
 	req.session.newShipping = {
 		origen: origen,
 		destino: destino,
-		tamanio: tamanio,
+		tamanio: size,
 		tipo: tipo,
 		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio: tamanio.Precio+(25.6*(100/27.5))
+		precio: tamanio.price_shpgsize+(25.6*(100/27.5))
 	};
 
 	console.log(req.session.newShipping);
