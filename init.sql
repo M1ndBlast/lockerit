@@ -566,13 +566,36 @@ COMMIT;
 use lockerit;
 delimiter //
 drop procedure if exists inicio;
-create procedure inicio(in correo varchar(80) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci')
+create procedure inicio(
+	in correo VARCHAR(80) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci', 
+	in contra VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci')
 begin
 	select costumer.em_cos into @em from costumer where costumer.em_cos = correo;
     if (@em = correo) then
-		select * from costumer where costumer.em_cos = correo;
+		select 
+			id_cos as id,
+			nam_cos as nam,
+			patsur_cos as patsur,
+			matsur_cos as matsur,
+			tel_cos as tel,
+			em_cos as em,
+			pas_cos as pas,
+			type_usr as `type`,
+			tk_cos as tk,
+			act_cos as act
+		from costumer where costumer.em_cos = correo AND costumer.pas_cos = contra;
 	else
-		select * from staff where staff.em_stf = correo;
+		select
+			id_stf as id,
+			nam_stf as nam,
+			patsur_stf as patsur,
+			matsur_stf as matsur,
+			tel_stf as tel,
+			em_stf as em,
+			pas_stf as pas,
+			type_usr as `type`,
+			stfnum_stf as stfnum
+		from staff where staff.em_stf = correo AND staff.pas_stf = contra;
 	end if;
 end//
 delimiter ;

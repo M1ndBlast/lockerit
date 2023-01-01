@@ -20,7 +20,7 @@ router.route('/iniciarSesion')
 .post(Auth.onlyGuests, Validator.signin, (req, res, next) => {
 	let {correo, contrasena} = req.body;
 
-	db.login(correo, contrasena).then((results) => {
+	db.costumer.getByCredentials(correo, contrasena).then((results) => {
 		debug('results', results);
 		if (results.length) {
 			Auth.createSession(req, results[0]);
@@ -36,7 +36,7 @@ router.route('/iniciarSesion')
 	}).catch((err) => {
 		debug(err);
 		// res.redirect(402, '/identificacion');
-		res.status(402).json({response:'ERROR', message:err});
+		res.status(402).json({response:'ERROR', message:err.message||err});
 	});
 });
 
@@ -47,11 +47,11 @@ router.route('/RegistroCliente')
 .post(Auth.onlyGuests, Validator.signup, (req, res, next) => {
 	let {nombre, apellidoP, apellidoM, telefono, correo, contrasena} = req.body;
 	// create new user
-	db.createClient(nombre, apellidoP, apellidoM, telefono, correo, contrasena, db.ROLES.CLIENT).then(async (results) => {
+	db.costumer.set(nombre, apellidoP, apellidoM, telefono, correo, contrasena, db.ROLES.CLIENT).then(async (results) => {
 		if (results.insertId) {
 			console.log('creado');
 			// get user by id
-			let costumer = await db.getCostumerById(results.insertId);
+			let costumer = await db.costumer.getById(results.insertId);
 			if (costumer.length) {
 				console.log('enviando correo');
 
@@ -68,7 +68,7 @@ router.route('/RegistroCliente')
 			res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
 		}
 	}).catch((err) => {
-		res.status(402).json({response:'ERROR', ...err});
+		res.status(402).json({response:'ERROR', message:err.message||err});
 	});
 }); 
 
@@ -76,7 +76,7 @@ router.route('/activacion/:id([0-9]{1,})')
 .get(Auth.onlyGuests, (req, res, next) => {
 	console.log('activacion');
 	let idUser = req.params.id;
-	db.getCostumerById(idUser).then((results) => {
+	db.costumer.getById(idUser).then((results) => {
 		if (results[0]) {
 			Auth.createSession(req, results[0]);
 			res.send("<h1>Cuenta Activada </h1><a href='/'>Inicio</a>")
@@ -112,11 +112,11 @@ router.route('/editarDatosUsuario')
 	let {nombre, apellidoP, apellidoM, telefono, correo} = req.body;
 
 	// create new user
-	db.updateCostumer(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
+	db.costumer.update(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
 		console.log('updateClient', results);
 		if (results.affectedRows > 0) {
 			// get user by id
-			db.getCostumerById(req.session.user.id).then((results) => {
+			db.costumer.getById(req.session.user.id).then((results) => {
 				if (results.length > 0) {
 					Auth.createSession(req, results[0])
 					res.status(200).json({
@@ -144,7 +144,7 @@ router.route('/agregarmetodoPago')
 .post(Auth.onlyClients, Validator.creditCard, (req, res, next) => {
 	console.log(req.body);
 	let {nummerotarjeta, fechaexpiracion} = req.body;
-	db.addMetodoPago(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
+	db.payment.set(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
 		if (results.affectedRows > 0) {
 			res.status(200).json({
 				response: 'OK',
@@ -163,7 +163,7 @@ router.route('/metodosPago')
 .get(Auth.onlyClients, (req, res, next) => {
 	if (req.session.user) {
 		// obtener metodos de pago
-		db.getMetodosPago(req.session.user.id).then((results) => {
+		db.payment.getAllByCostumer(req.session.user.id).then((results) => {
 			if (results.length > 0) {
 				res.render('metodosPago2', { user: req.session.user, metodosPago: results });
 			} else {
@@ -179,9 +179,9 @@ router.route('/metodosPago')
 
 router.route('/cotizarEnvio')
 .get(async(req, res, next) => {
-	let alcaldias = await db.getAlcaldias(),
-		tipoEnvio = await db.getTipoEnvio(),
-		tamanios = await db.getTamanios();
+	let alcaldias = await db.lockers.getCityHalls(),
+		tipoEnvio = await db.lockers.getShipmentTypes(),
+		tamanios = await db.lockers.getShipmentSizes();
 	res.render('cotizarEnvio', { 
 		user: req.session.user, 
 		alcaldias: alcaldias, 
@@ -191,15 +191,16 @@ router.route('/cotizarEnvio')
 })
 .post(Validator.cotizacion, async (req, res, next) => {
 	console.log(req.body);
-	let {origen, destino, paquete, tipo} = req.body;
-	let tamanios = await db.getTamanios();
-	let tipoEnvio = await db.getTipoEnvio();
-	let alcaldias = await db.getAlcaldias();
-	// get tamanio by id from tipo
-	let tamanio = tamanios.find(t => t.id_tamanio == paquete);
-	tipo = tipoEnvio.find(t => t.id_tipoEnvio == tipo);
-	origen = alcaldias.find(a => a.id_Alcaldias == origen);
-	destino = alcaldias.find(a => a.id_Alcaldias == destino);
+	let {origen, destino, paquete, tipo} = req.body,
+
+		alcaldias = await db.lockers.getCityHalls(),
+		tipoEnvio = await db.lockers.getShipmentTypes(),
+		tamanios = await db.lockers.getShipmentSizes(),
+		
+		tamanio = tamanios.find(t => t.id_tamanio == paquete);
+		tipo = tipoEnvio.find(t => t.id_tipoEnvio == tipo);
+		origen = alcaldias.find(a => a.id_Alcaldias == origen);
+		destino = alcaldias.find(a => a.id_Alcaldias == destino);
 
 	console.log(tamanio);
 	console.log(tipo);
@@ -232,10 +233,10 @@ router.route('/envios')
 
 router.route('/realizarEnvio')
 .get(Auth.onlyClients, async(req, res, next) => {
-	let alcaldias = await db.getAlcaldias(),
-		tipoEnvio = await db.getTipoEnvio(),
-		metodosPago = await db.getMetodosPago(req.session.user.id),
-		tamanios = await db.getTamanios();
+	let alcaldias = await db.lockers.getCityHalls(),
+		tipoEnvio = await db.lockers.getShipmentTypes(),
+		tamanios = await db.lockers.getShipmentSizes(),
+		metodosPago = await db.payment.getAllByCostumer(req.session.user.id);
 
 	res.render('realizarEnvio', {
 		user: req.session.user,
@@ -249,7 +250,7 @@ router.route('/realizarEnvio')
 	console.log('req.body KEJEJ');
 	console.log(req.body);
 	let {origen, destino, paquete, tipo, inputName, inputMail, inputNumber, listGroupRadio} = req.body;
-	let tamanios = await db.getTamanios();
+	let tamanios = await db.lockers.getShipmentSizes();
 	let tamanio = tamanios.find(t => t.id_tamanio == paquete);
 	let precio= tamanio.Precio+(25.6*(100/27.5))
 
@@ -272,7 +273,8 @@ router.route('/realizarEnvio')
 	};
 
 	console.log(req.session.newShipping);
-	db.createShipping(req.session.user.id, tipo, paquete, inputName, inputMail, inputNumber, listGroupRadio, origen, destino, precio).then((results) => {
+
+	db.shipping.set(req.session.user.id, tipo, precio, paquete, listGroupRadio, inputName, inputMail, inputNumber, origen, destino).then((results) => {
 		res.json({
 			response: 'OK', 
 			message: 'Solicitud de envío generada con éxito. Recibirá un correo electronico con todos los estados para continuar con su envío',
@@ -292,7 +294,7 @@ router.route('/realizarEnvio')
 
 router.route('/consultarEnvio')
 .get(Auth.onlyClients,async (req, res, next) => {
-	let envios = await db.getShippings(req.session.user.id);
+	let envios = await db.shipping.getAllByCostumer(req.session.user.id);
 	res.render('consultarEnvio', { 
 		user: req.session.user,
 		envios: envios
