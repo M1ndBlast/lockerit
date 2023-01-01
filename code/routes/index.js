@@ -186,6 +186,7 @@ router.route('/cotizarEnvio')
 		user: req.session.user, 
 		alcaldias: alcaldias, 
 		tipoEnvio: tipoEnvio, 
+		lockers: lockers,
 		tamanios: tamanios 
 	});
 })
@@ -203,6 +204,7 @@ router.route('/cotizarEnvio')
 		destino = alcaldias.find(a => a.id_Alcaldias == destino);
 
 	console.log(tamanio);
+	console.log(size);
 	console.log(tipo);
 	console.log(origen);
 	console.log(destino);
@@ -210,10 +212,10 @@ router.route('/cotizarEnvio')
 	req.session.newShipping = {
 		origen: origen,
 		destino: destino,
-		tamanio: tamanio,
+		tamanio: size,
 		tipo: tipo,
 		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio: tamanio.Precio+(25.6*(100/27.5))
+		precio: tamanio.price_shpgsize+(25.6*(100/27.5))
 	};
 
 	console.log(req.session.newShipping);

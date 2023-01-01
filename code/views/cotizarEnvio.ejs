@@ -22,25 +22,52 @@
 				map = new google.maps.Map(document.getElementById("map"), {
 					center: { lat: 19.393628348303253, lng: -99.14488340654229 },
 					zoom: 11,
-				});
+				});			
 
 				map2 = new google.maps.Map(document.getElementById("map2"), {
 					center: { lat: 19.393628348303253, lng: -99.14488340654229 },
 					zoom: 11,
 				});
 
-				/*Marcadores*/
-				const lockerimage = src = "/images/lockers.png";
-				new google.maps.Marker({ position: { lat: 19.343625265988365, lng: -99.24650584242741 }, map, title: "Alvaro Obregon", });
-				new google.maps.Marker({ position: { lat: 19.432243219651717, lng: -99.14850109089078 }, map, title: "Cuauhtémoc", });
-				new google.maps.Marker({ position: { lat: 19.500261745337223, lng: -99.12512973823159, }, map, title: "Gustavo A. Madero", });
-				new google.maps.Marker({ position: { lat: 19.430553091619043, lng: -99.2025590499952 }, map, title: "Miguel Hidalgo" });
+				setMarkers(map, map2);
 
-				new google.maps.Marker({ position: { lat: 19.343625265988365, lng: -99.24650584242741 }, map2, title: "Alvaro Obregon", });
-				new google.maps.Marker({ position: { lat: 19.432243219651717, lng: -99.14850109089078 }, map2, title: "Cuauhtémoc", });
-				new google.maps.Marker({ position: { lat: 19.500261745337223, lng: -99.12512973823159, }, map2, title: "Gustavo A. Madero", });
-				new google.maps.Marker({ position: { lat: 19.430553091619043, lng: -99.2025590499952 }, map2, title: "Miguel Hidalgo" });
+
+				/*Marcadores*/
+				
+				//const lockerimage = src = "";
+			}		
+
+			var lugares = [  ['Tlalpan', 19.28380112062941, -99.1771035356514],  
+			['Cuauhtémoc', 19.428809314912836, -99.16169126910391],  
+			['Gustavo A. Madero', 19.49215147959578, -99.13359960338582],
+			['Miguel Hidalgo', 19.43902613507273, -99.20223391079132]
+			];
+
+			function setMarkers(map, map2){		
+				
+				for(var i = 0; i < lugares.length; i++){
+					var sitio = lugares[i];
+					var marcador = new google.maps.Marker({
+						position: {lat: sitio[1], lng: sitio[2]},
+						map: map,
+						title: sitio[0]
+					})
+				}  
+
+				for(var i = 0; i < lugares.length; i++){
+					var sitio = lugares[i];
+					var marcador = new google.maps.Marker({
+						position: {lat: sitio[1], lng: sitio[2]},
+						map: map2,
+						title: sitio[0]
+					})
+				} 
+				
+				
+
 			}
+
+
 			window.initMap = initMap;
 		</script>
 	</head>
@@ -91,7 +118,7 @@
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen" required>
 						<option value="" selected disabled>Seleccione su alcaldía</option>
 						<% for (var i = 0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
+							<option value="<%= alcaldias[i].id_cityhll%>"><%= alcaldias[i].name_cityhll %></option>
 						<% } %>
 					</select>
 
@@ -138,7 +165,7 @@
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino" required>
 						<option value="" selected disabled>Seleccione una alcaldía</option>
 						<% for (var i = 0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_Alcaldias%>"><%= alcaldias[i].nombre_alcaldia %></option>
+							<option value="<%= alcaldias[i].id_cityhll%>"><%= alcaldias[i].name_cityhll %></option>
 						<% } %>
 					</select>
 
@@ -194,18 +221,18 @@
 												<% for (var i = 0; i < tamanios.length; i++) { %>
 													<div class="card mb-4">
 														<div class="card-body" role="button">
-															<h5 class="card-title"><input id="<%= tamanios[i].nombre_tamanio %>" type="radio"
-																	name="paquete" value="<%= tamanios[i].id_tamanio %>" required>
-																<label for="<%= tamanios[i].id_tamanio %>"><%= tamanios[i].nombre_tamanio %></label>
+															<h5 class="card-title"><input id="<%= tamanios[i].name_size %>" type="radio"
+																	name="paquete" value="<%= tamanios[i].id_size %>" required>
+																<label for="<%= tamanios[i].id_size %>"><%= tamanios[i].name_size %></label>
 															</h5>
 															<div class="imagen">
 																<img class="img-top " width="100px" height="100px"
-																	src="/images/icon-paquete<%= tamanios[i].nombre_tamanio %>.png" alt="Card image cap">
+																	src="/images/icon-paquete<%= tamanios[i].name_size %>.png" alt="Card image cap">
 															</div>
 															<p class="card-text">Con dimensiones de hasta:
-																<br>Altura: <%= tamanios[i].alto %> cm
-																<br>Ancho: <%= tamanios[i].ancho %> cm
-																<br>Profundidad: <%= tamanios[i].profundidad %> cm
+																<br>Altura: <%= tamanios[i].high_size %> cm
+																<br>Ancho: <%= tamanios[i].width_size %> cm
+																<br>Profundidad: <%= tamanios[i].depth_size %> cm
 															</p>
 														</div>
 													</div>
@@ -234,15 +261,15 @@
 									<div class="col-12">
 										<div class="card-deck">
 											<% for (var i = 0; i < tipoEnvio.length; i++) { %>
-												<div id="<%= tipoEnvio[i].nombre_tipoEnvio %>-card" class="card mb-4">
+												<div id="<%= tipoEnvio[i].nm_shpgtype %>-card" class="card mb-4">
 													<div class="card-body" role="button">
-														<h5 class="card-title"><input id="<%= tipoEnvio[i].nombre_tipoEnvio %>" type="radio" name="tipo"
-																value="<%= tipoEnvio[i].id_tipoEnvio %>" required>
-															<label for="<%= tipoEnvio[i].id_tipoEnvio %>"><%= tipoEnvio[i].nombre_tipoEnvio %></label>
+														<h5 class="card-title"><input id="<%= tipoEnvio[i].nm_shpgtype %>" type="radio" name="tipo"
+																value="<%= tipoEnvio[i].id_shpgtype %>" required>
+															<label for="<%= tipoEnvio[i].id_shpgtype %>"><%= tipoEnvio[i].nm_shpgtype %></label>
 														</h5>
 														<div class="imagen">
 															<img class="img-top " width="100px" height="100px"
-																src="/images/<%= tipoEnvio[i].nombre_tipoEnvio %>.png" alt="Card image cap">
+																src="/images/<%= tipoEnvio[i].nm_shpgtype %>.png" alt="Card image cap">
 														</div>
 													</div>
 												</div>
