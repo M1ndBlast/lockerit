@@ -42,7 +42,7 @@ router.route('/iniciarSesion')
 
 router.route('/RegistroCliente')
 .get(Auth.onlyGuests, (req, res, next) => {
-	res.render('RegistroCliente', { title: req.session.user?.name });
+	res.render('RegistroCliente', { title: req.session.user?.name, requireToken:req.session.tmpId });
 })
 .post(Auth.onlyGuests, Validator.signup, (req, res, next) => {
 	let {nombre, apellidoP, apellidoM, telefono, correo, contrasena} = req.body,
