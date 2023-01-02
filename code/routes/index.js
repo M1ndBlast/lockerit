@@ -229,31 +229,31 @@ router.route('/cotizarEnvio')
 	});
 })
 .post(Validator.cotizacion, async (req, res, next) => {
-	console.log(req.body);
-	let {origen, destino, paquete, tipo} = req.body,
+	console.log('req.body', req.body);
+	let {
+		origen:alcaldiaOrgId, lockerOrigen:lockerOrgId,
+		destino:alcaldiaDstId, lockerDestino:lockerDstId,
+		tipo:tipoEnvioId, paquete:tipoPaqueteId} = req.body,
 
 		alcaldias = await db.lockers.getCityHalls(),
-		tipoEnvio = await db.lockers.getShipmentTypes(),
+		lockers = await db.lockers.getLockers(),
+		tipoEnvios = await db.lockers.getShipmentTypes(),
 		tamanios = await db.lockers.getShipmentSizes(),
 		
-		tamanio = tamanios.find(t => t.id_tamanio == paquete);
-		tipo = tipoEnvio.find(t => t.id_tipoEnvio == tipo);
-		origen = alcaldias.find(a => a.id_Alcaldias == origen);
-		destino = alcaldias.find(a => a.id_Alcaldias == destino);
+		lockerOrg = lockers.find(l => l.id_locker == lockerOrgId),
+		lockerDst = lockers.find(l => l.id_locker == lockerDstId),
+		tipoEnvio = tipoEnvios.find(t => t.id_shpgtype == tipoEnvioId),
+		tipoPaquete = tamanios.find(t => t.id_shpgsize == tipoPaqueteId),
+		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
+		precio = tipoPaquete.price_shpgsize+(25.6*(100/27.5)).toFixed(2);
 
-	console.log(tamanio);
-	console.log(size);
-	console.log(tipo);
-	console.log(origen);
-	console.log(destino);
 	
 	req.session.newShipping = {
-		origen: origen,
-		destino: destino,
-		tamanio: size,
-		tipo: tipo,
-		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio: tamanio.price_shpgsize+(25.6*(100/27.5))
+		lockerOrg: lockerOrg,
+		lockerDst: lockerDst,
+		tipoEnvio: tipoEnvio,
+		tipoPaquete: tipoPaquete,
+		precio: precio
 	};
 
 	console.log(req.session.newShipping);

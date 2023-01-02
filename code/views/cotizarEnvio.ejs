@@ -140,9 +140,9 @@
 					<ul class="list-group">
 						<% for (var i=0; i < lockers.length; i++) { %>
 							<li class="list-group-item d-none" alcaldia-origen="<%= lockers[i].id_cityhll%>">
-								<input class="form-check-input me-1" type="radio" name="lockerOrigen" value=""
-									id="firstRadio" required>
-								<label class="form-check-label stretched-link" for="firstRadio"></label>
+								<input class="form-check-input me-1" type="radio" name="lockerOrigen" value="<%= lockers[i].id_locker %>"
+									id="origen-<%= lockers[i].id_locker %>" required>
+								<label class="form-check-label stretched-link" for="origen-<%= lockers[i].id_locker %>"></label>
 								<div class="container row align-items-start">
 									<div class="col">
 										<p>
@@ -196,9 +196,9 @@
 					<ul class="list-group">
 						<% for (var i=0; i < lockers.length; i++) { %>
 							<li class="list-group-item d-none" alcaldia-destino="<%= lockers[i].id_cityhll%>">
-								<input class="form-check-input me-1" type="radio" name="lockerDestino" value=""
-									id="firstRadio" required>
-								<label class="form-check-label stretched-link" for="firstRadio"></label>
+								<input class="form-check-input me-1" type="radio" name="lockerDestino" value="<%= lockers[i].id_locker %>"
+									id="destino-<%= lockers[i].id_locker %>" required>
+								<label class="form-check-label stretched-link" for="destino-<%= lockers[i].id_locker %>"></label>
 								<div class="container row align-items-start">
 									<div class="col">
 										<p>
