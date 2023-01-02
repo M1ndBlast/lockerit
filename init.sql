@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `lockerit`.`costumer` (
   `tel_cos` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `em_cos` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
   `pas_cos` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `tk_cos` INT NULL,
+  `tk_cos` VARCHAR(6) NULL,
   `type_usr` INT NOT NULL,
   `act_cos` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_cos`),

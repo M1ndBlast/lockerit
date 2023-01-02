@@ -45,21 +45,28 @@ router.route('/RegistroCliente')
 	res.render('RegistroCliente', { title: req.session.user?.name });
 })
 .post(Auth.onlyGuests, Validator.signup, (req, res, next) => {
-	let {nombre, apellidoP, apellidoM, telefono, correo, contrasena} = req.body;
+	let {nombre, apellidoP, apellidoM, telefono, correo, contrasena} = req.body,
+		token = Math.floor(Math.random() * 1000000)// Random 6-digit number
+			.toString().padStart(6, '0'); 
 	// create new user
-	db.costumer.set(nombre, apellidoP, apellidoM, telefono, correo, contrasena, db.ROLES.CLIENT).then(async (results) => {
+	db.costumer.set(nombre, apellidoP, apellidoM, correo, telefono, contrasena, token, db.ROLES.CLIENT).then(async (results) => {
 		if (results.insertId) {
-			console.log('creado');
+			console.log(`results.insertId: ${results.insertId}`);
 			// get user by id
 			let costumer = await db.costumer.getById(results.insertId);
 			if (costumer.length) {
 				console.log('enviando correo');
 
-				await mailer.mailVerification(correo, results.insertId);
+				await mailer.mailVerification(correo, token);
+				req.session.tmpId = results.insertId;
 				res.json({
 					response: 'OK',
 					title: 'Usuario creado correctamente',
 					message: 'Verifique su correo para activar su cuenta',
+					modal: {
+						new: '#staticBackdrop',
+						old: 'none'
+					},
 				});
 			} else {
 				res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
@@ -72,17 +79,32 @@ router.route('/RegistroCliente')
 	});
 }); 
 
-router.route('/activacion/:id([0-9]{1,})')
-.get(Auth.onlyGuests, (req, res, next) => {
+router.route('/activacion')
+.post(Auth.onlyGuests, Validator.token, (req, res, next) => {
 	console.log('activacion');
-	let idUser = req.params.id;
-	db.costumer.getById(idUser).then((results) => {
-		if (results[0]) {
-			Auth.createSession(req, results[0]);
-			res.send("<h1>Cuenta Activada </h1><a href='/'>Inicio</a>")
+	let id = req.session.tmpId,
+		{Num1, Num2, Num3, Num4, Num5, Num6} = req.body,
+		token = Num1 + Num2 + Num3 + Num4 + Num5 + Num6;
+	console.log(`id: ${id}, token: ${token}`);
+	db.costumer.activate(id, token).then((results) => {
+		if (results.affectedRows) {
+			db.costumer.getById(id).then((results) => {
+				if (results[0]) {
+					Auth.createSession(req, results[0]);
+					res.json({
+						response: 'OK',
+						message: 'Usuario creado correctamente',
+						redirect: '/Dashboard',
+					});
+				}
+				else 
+					res.json({response:'ERROR', ...MSG.ERROR.MSE7});
+			});
+		} else {
+			res.json({response:'ERROR', ...MSG.ERROR.MSE7});
 		}
-		else 
-			res.send("<h1>Cuenta Desconocida</h1><h5>No existe ningún registro de la página</h5><a href='/'>Inicio</a>")
+	}).catch((err) => {
+		res.status(402).json({response:'ERROR', message:err.message||err});
 	});
 });
 

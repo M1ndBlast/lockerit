@@ -1,7 +1,6 @@
 const Auth = {
 	// Allow only logged users (ADMIN, CLIENT, DELIVERER)
 	onlyUsers: (req, res, next) => {
-		console.log('onlyUsers', !req.session.user);
 		if (!req.session.user) {
 			if (req.method == 'GET')
 				res.redirect('/');
@@ -54,7 +53,6 @@ const Auth = {
 	},
 	// Allow not logged users (GUEST)
 	onlyGuests: (req, res, next) => {
-		console.log('onlyGuests', req.session.user);
 		if (req.session.user) {
 			if (req.method == 'GET')
 				res.redirect('/Dashboard');

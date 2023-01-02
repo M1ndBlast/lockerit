@@ -148,6 +148,17 @@ const Validator = {
 		validateResult
 	],	
 
+	// Token
+	token: [
+		v._tokenDigit('Num1', 'El primer dígito'),
+		v._tokenDigit('Num2', 'El segundo dígito'),
+		v._tokenDigit('Num3', 'El tercer dígito'),
+		v._tokenDigit('Num4', 'El cuarto dígito'),
+		v._tokenDigit('Num5', 'El quinto dígito'),
+		v._tokenDigit('Num6', 'El sexto dígito'),
+		validateResult
+	],
+
 	// Update user (nombre, apellidoP, apellidoM, telefono, correo)
 	updatePersonalData: [
 		v._name('nombre', 'El nombre'),

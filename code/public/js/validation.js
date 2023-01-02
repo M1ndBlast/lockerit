@@ -7,6 +7,24 @@ function toast(title, message, type='error') {
 		confirmButtonText: 'Aceptar'
 	});
 }
+
+function switchModal(oldModalStr, newModalStr) {
+	let newModal = bootstrap.Modal.getOrCreateInstance(document.querySelector(newModalStr));
+
+	if (oldModalStr == 'none') {
+		newModal.show();
+		return;
+	}
+
+	let oldModalElem = document.querySelector(oldModalStr);
+	let oldModal = bootstrap.Modal.getOrCreateInstance(oldModalElem);
+	
+	oldModalElem.addEventListener('hidden.bs.modal', (event) => {
+		newModal.show();
+	}, { once: true });
+	oldModal.hide();
+}
+
 (() => {
 	// Fetch all the forms we want to apply custom Bootstrap validation styles to
 	const forms = document.querySelectorAll('form')	
@@ -55,7 +73,6 @@ function toast(title, message, type='error') {
 							window.location.href = data.redirect;
 						else if(data.modal)	// switch modal
 							switchModal(data.modal.old, data.modal.new);
-						
 						else {				// show toast
 							console.log(data.message);
 							toast(data.title||'Éxito', data.message, 'success').then((isConfirm)=>{location.assign('/')});
@@ -68,7 +85,7 @@ function toast(title, message, type='error') {
 							
 							for (let err of errors){
 								console.log(err.param, err.msg);
-								form.querySelector(`[name="${err.param}"]`).classList.add('is-invalid');
+								form.querySelector(`[name="${err.param}"]`)?.classList.add('is-invalid');
 							}
 							
 							toast('Error', errors[0].msg);
@@ -83,6 +100,8 @@ function toast(title, message, type='error') {
 					
 				})
 				.catch(err => {
+					if (err.name == 'undefined') err.name = 'Error';
+					
 					toast(err.name || 'Error',
 						err.message || 'Error al enviar la petición');
 					console.log(err);

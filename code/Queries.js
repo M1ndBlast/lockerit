@@ -1,31 +1,27 @@
 const mysql = require('mysql2');
-const MSG = require('./Messages');
-
-const con = mysql.createConnection({
-	host:		process.env.MYSQL_HOST,
-	port:		process.env.MYSQL_PORT,
-	user: 		process.env.MYSQL_USER,
-	password:	process.env.MYSQL_PASSWORD,
-	database:	process.env.MYSQL_DATABASE,
-});
-const errorDBConnection = new Error('Sin conexión a la base de datos.');
-var isConnected = false;
-
-con.on('error', async function(err) {
+const errorDBConnection = new Error('No se pudo conectar a la base de datos');
+var con,
 	isConnected = false;
-	console.error('db error', err);
-	if(err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED') {
-		console.log('Connection to MySQL failed. Retrying in 5 seconds...');
-		setTimeout(() => {console.log('sending again');con.connect()}, 5*1000);	// try again in 2 seconds
-	}
-	else
-		throw err;
-}).on('connect', function(err) {
-	isConnected = true;
-	console.info(`Connected to MySQL on ${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}!`)
-});
 
-con.connect();
+function connect(time=5) {
+	con = mysql.createConnection({
+		host:		process.env.MYSQL_HOST,
+		port:		process.env.MYSQL_PORT,
+		user: 		process.env.MYSQL_USER,
+		password:	process.env.MYSQL_PASSWORD,
+		database:	process.env.MYSQL_DATABASE,
+	});
+	con.connect((err) => {
+		isConnected = !err;
+		if (err) {
+			console.log(`Connection to MySQL failed [${err.code}]. Retrying in ${time} seconds...`);
+			setTimeout(() => connect(++time), 5*1000);	// try again in time seconds
+		} 
+		else console.log(`Connected to MySQL on ${process.env.MYSQL_HOST}:${process.env.MYSQL_PORT}!`);
+	});
+}
+
+connect();
 
 const db = {
 	// Roles
@@ -62,7 +58,7 @@ const db = {
 				db.costumer.getByEmail(email).then((results) => {
 					if (results.length > 0) reject('Correo ya en uso');
 					else {
-						con.query('INSERT INTO costumer VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, 3, ?)', [name, lastnameF, lastnameM, tel, email, password, token, type], (err, results) => {
+						con.query('INSERT INTO costumer VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, 0)', [name, lastnameF, lastnameM, tel, email, password, token, type], (err, results) => {
 							if (err) reject(err);
 							else resolve(results);
 						});
@@ -99,7 +95,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM costumer WHERE em_cos = ? AND pw_cos = ? LIMIT 1', [email, password], (err, results) => {
+				con.query('SELECT * FROM costumer WHERE em_cos = ? AND pas_cos = ? LIMIT 1', [email, password], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -224,7 +220,6 @@ const db = {
 	+-------------+---------+----------------+
 	 */
 	shipping: {
-		// TODO: Generate tracking number
 		set: (id_cos, id_shpgtype, price_shpg, id_shpgsize, id_pmt, name_addrs, em_addrs, tel_addrs, id_orglock, id_deslock) => {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
