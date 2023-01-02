@@ -304,8 +304,8 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM cityhalls', (err, results) => {
-					if (err) reject(err);
+				con.query('SELECT cityhalls.*, count(locker.id_cityhll) AS num_lockers FROM cityhalls NATURAL JOIN locker GROUP BY locker.id_cityhll', (err, results) => {
+				if (err) reject(err);
 					else resolve(results);
 				});
 			});

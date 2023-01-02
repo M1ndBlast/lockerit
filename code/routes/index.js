@@ -218,6 +218,7 @@ router.route('/cotizarEnvio')
 .get(async(req, res, next) => {
 	let alcaldias = await db.lockers.getCityHalls(),
 		tipoEnvio = await db.lockers.getShipmentTypes(),
+		lockers = await db.lockers.getLockers(), 
 		tamanios = await db.lockers.getShipmentSizes();
 	res.render('cotizarEnvio', { 
 		user: req.session.user, 
@@ -275,6 +276,7 @@ router.route('/realizarEnvio')
 	let alcaldias = await db.lockers.getCityHalls(),
 		tipoEnvio = await db.lockers.getShipmentTypes(),
 		tamanios = await db.lockers.getShipmentSizes(),
+		lockers = await db.lockers.getLockers(),
 		metodosPago = await db.payment.getAllByCostumer(req.session.user.id);
 
 	res.render('realizarEnvio', {
@@ -282,7 +284,8 @@ router.route('/realizarEnvio')
 		alcaldias: alcaldias,
 		tipoEnvio: tipoEnvio,
 		tamanios: tamanios,
-		metodosPago: metodosPago
+		metodosPago: metodosPago,
+		lockers: lockers
 	});
 })
 .post(Validator.realizarEnvio, async (req, res, next) => {

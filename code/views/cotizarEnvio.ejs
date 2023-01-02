@@ -22,7 +22,7 @@
 				map = new google.maps.Map(document.getElementById("map"), {
 					center: { lat: 19.393628348303253, lng: -99.14488340654229 },
 					zoom: 11,
-				});			
+				});
 
 				map2 = new google.maps.Map(document.getElementById("map2"), {
 					center: { lat: 19.393628348303253, lng: -99.14488340654229 },
@@ -33,37 +33,37 @@
 
 
 				/*Marcadores*/
-				
-				//const lockerimage = src = "";
-			}		
 
-			var lugares = [  ['Tlalpan', 19.28380112062941, -99.1771035356514],  
-			['Cuauhtémoc', 19.428809314912836, -99.16169126910391],  
+				//const lockerimage = src = "";
+			}
+
+			var lugares = [['Tlalpan', 19.28380112062941, -99.1771035356514],
+			['Cuauhtémoc', 19.428809314912836, -99.16169126910391],
 			['Gustavo A. Madero', 19.49215147959578, -99.13359960338582],
 			['Miguel Hidalgo', 19.43902613507273, -99.20223391079132]
 			];
 
-			function setMarkers(map, map2){		
-				
-				for(var i = 0; i < lugares.length; i++){
+			function setMarkers(map, map2) {
+
+				for (var i = 0; i < lugares.length; i++) {
 					var sitio = lugares[i];
 					var marcador = new google.maps.Marker({
-						position: {lat: sitio[1], lng: sitio[2]},
+						position: { lat: sitio[1], lng: sitio[2] },
 						map: map,
 						title: sitio[0]
 					})
-				}  
+				}
 
-				for(var i = 0; i < lugares.length; i++){
+				for (var i = 0; i < lugares.length; i++) {
 					var sitio = lugares[i];
 					var marcador = new google.maps.Marker({
-						position: {lat: sitio[1], lng: sitio[2]},
+						position: { lat: sitio[1], lng: sitio[2] },
 						map: map2,
 						title: sitio[0]
 					})
-				} 
-				
-				
+				}
+
+
 
 			}
 
@@ -115,10 +115,20 @@
 					<div class="input-group mt-2">
 						<p class="small fw-light">*Campos obligatorios</p>
 					</div>
-					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen" required>
+					<!-- Seccion locker origen -->
+					<div class=" mt-2">
+						<h3 class="font-weight-bold ">Locker de origen</h3>
+					</div>
+					<div class="input-group mt-2">
+						<p class="small fw-light">*Campos obligatorios</p>
+					</div>
+					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen"
+						required>
 						<option value="" selected disabled>Seleccione su alcaldía</option>
-						<% for (var i = 0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_cityhll%>"><%= alcaldias[i].name_cityhll %></option>
+						<% for (var i=0; i < alcaldias.length; i++) { %>
+							<option value="<%= alcaldias[i].id_cityhll%>">
+								<%= alcaldias[i].name_cityhll %>
+							</option>
 						<% } %>
 					</select>
 
@@ -127,45 +137,54 @@
 					<div class="input-group mt-2">
 						<p class="small fw-light">Seleccione el locker de origen de su preferencia*</p>
 					</div>
-					<!-- <form>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="lockerOrigen" value="" id="firstRadio" checked required>
-            <label class="form-check-label stretched-link" for="firstRadio"></label>
-            <div class="container row align-items-start">
-              <div class="col">
-                <p>Locker</p>
-              </div>
-              <div class="col-8">
-                <p>Información del locker</p>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="lockerOrigen" value="" id="secondRadio">
-            <label class="form-check-label stretched-link" for="secondRadio"></label>
-            <div class="container row align-items-start">
-              <div class="col">
-                <p>Locker</p>
-              </div>
-              <div class="col-8">
-                <p>Información del locker</p>
-              </div>
-            </div>
-          </li>
-          </li>
-        </ul>
-      </form> -->
+					<ul class="list-group">
+						<% for (var i=0; i < lockers.length; i++) { %>
+							<li class="list-group-item d-none" alcaldia-origen="<%= lockers[i].id_cityhll%>">
+								<input class="form-check-input me-1" type="radio" name="lockerOrigen" value=""
+									id="firstRadio" required>
+								<label class="form-check-label stretched-link" for="firstRadio"></label>
+								<div class="container row align-items-start">
+									<div class="col">
+										<p>
+											<%= lockers[i].name_locker %>
+										</p>
+									</div>
+									<div class="col-8">
+										<p>
+											<%= lockers[i].addrs_locker %>
+										</p>
+									</div>
+								</div>
+							</li>
+						<% } %>
+					</ul>
+					<script>
+						document.querySelector('[name=origen]').addEventListener('change', function () {
+							var id = this.value;
+							var lockers = document.querySelectorAll('[alcaldia-origen]');
+
+							lockers.forEach((locker) => {
+								console.log(locker.getAttribute('alcaldia-origen'), id);
+								if (locker.getAttribute('alcaldia-origen') == id)
+									locker.classList.remove('d-none');
+								else
+									locker.classList.add('d-none');
+							})
+						})
+					</script>
 
 
 					<!-- Seccion Locker Destino -->
 					<div class=" mt-2">
 						<h3 class="font-weight-bold ">Locker de destino</h3>
 					</div>
-					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino" required>
+					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino"
+						required>
 						<option value="" selected disabled>Seleccione una alcaldía</option>
-						<% for (var i = 0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_cityhll%>"><%= alcaldias[i].name_cityhll %></option>
+						<% for (var i=0; i < alcaldias.length; i++) { %>
+							<option value="<%= alcaldias[i].id_cityhll%>">
+								<%= alcaldias[i].name_cityhll %>
+							</option>
 						<% } %>
 					</select>
 
@@ -174,35 +193,41 @@
 					<div class="input-group mt-2">
 						<p class="small fw-light">Seleccione el locker de destino de su preferencia*</p>
 					</div>
-					<!-- <form>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="firstRadioDestino"
-              checked>
-            <label class="form-check-label stretched-link" for="firstRadioDestino"></label>
-            <div class="container row align-items-start">
-              <div class="col">
-                <p>Locker</p>
-              </div>
-              <div class="col-8">
-                <p>Información del locker</p>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="secondRadioDestino">
-            <label class="form-check-label stretched-link" for="secondRadioDestino"></label>
-            <div class="container row align-items-start">
-              <div class="col">
-                <p>Locker</p>
-              </div>
-              <div class="col-8">
-                <p>Información del locker</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </form> -->
+					<ul class="list-group">
+						<% for (var i=0; i < lockers.length; i++) { %>
+							<li class="list-group-item d-none" alcaldia-destino="<%= lockers[i].id_cityhll%>">
+								<input class="form-check-input me-1" type="radio" name="lockerDestino" value=""
+									id="firstRadio" required>
+								<label class="form-check-label stretched-link" for="firstRadio"></label>
+								<div class="container row align-items-start">
+									<div class="col">
+										<p>
+											<%= lockers[i].name_locker %>
+										</p>
+									</div>
+									<div class="col-8">
+										<p>
+											<%= lockers[i].addrs_locker %>
+										</p>
+									</div>
+								</div>
+							</li>
+						<% } %>
+					</ul>
+					<script>
+						document.querySelector('[name=destino]').addEventListener('change', function () {
+							var id = this.value;
+							var lockers = document.querySelectorAll('[alcaldia-destino]');
+
+							lockers.forEach((locker) => {
+								console.log(locker.getAttribute('alcaldia-destino'), id);
+								if (locker.getAttribute('alcaldia-destino') == id)
+									locker.classList.remove('d-none');
+								else
+									locker.classList.add('d-none');
+							})
+						})
+					</script>
 
 					<!-- Seccion tamano de paquete -->
 					<div class=" mt-2">
@@ -218,26 +243,31 @@
 									<div class="form-group row">
 										<div class="col-12">
 											<div class="card-deck">
-												<% for (var i = 0; i < tamanios.length; i++) { %>
+												<% for (var i=0; i < tamanios.length; i++) { %>
 													<div class="card mb-4">
 														<div class="card-body" role="button">
-															<h5 class="card-title"><input id="<%= tamanios[i].name_size %>" type="radio"
-																	name="paquete" value="<%= tamanios[i].id_size %>" required>
-																<label for="<%= tamanios[i].id_size %>"><%= tamanios[i].name_size %></label>
+															<h5 class="card-title"><input
+																	id="<%= tamanios[i].name_size %>" type="radio"
+																	name="paquete" value="<%= tamanios[i].id_size %>"
+																	required>
+																<label for="<%= tamanios[i].id_size %>">
+																	<%= tamanios[i].name_size %>
+																</label>
 															</h5>
 															<div class="imagen">
 																<img class="img-top " width="100px" height="100px"
-																	src="/images/icon-paquete<%= tamanios[i].name_size %>.png" alt="Card image cap">
+																	src="/images/icon-paquete<%= tamanios[i].name_size %>.png"
+																	alt="Card image cap">
 															</div>
 															<p class="card-text">Con dimensiones de hasta:
 																<br>Altura: <%= tamanios[i].high_size %> cm
-																<br>Ancho: <%= tamanios[i].width_size %> cm
-																<br>Profundidad: <%= tamanios[i].depth_size %> cm
+																	<br>Ancho: <%= tamanios[i].width_size %> cm
+																		<br>Profundidad: <%= tamanios[i].depth_size %>
+																			cm
 															</p>
 														</div>
 													</div>
 												<% } %>
-												
 											</div>
 										</div>
 									</div>
@@ -260,16 +290,21 @@
 								<div class="form-group row">
 									<div class="col-12">
 										<div class="card-deck">
-											<% for (var i = 0; i < tipoEnvio.length; i++) { %>
+											<% for (var i=0; i < tipoEnvio.length; i++) { %>
 												<div id="<%= tipoEnvio[i].nm_shpgtype %>-card" class="card mb-4">
 													<div class="card-body" role="button">
-														<h5 class="card-title"><input id="<%= tipoEnvio[i].nm_shpgtype %>" type="radio" name="tipo"
-																value="<%= tipoEnvio[i].id_shpgtype %>" required>
-															<label for="<%= tipoEnvio[i].id_shpgtype %>"><%= tipoEnvio[i].nm_shpgtype %></label>
+														<h5 class="card-title"><input
+																id="<%= tipoEnvio[i].nm_shpgtype %>" type="radio"
+																name="tipo" value="<%= tipoEnvio[i].id_shpgtype %>"
+																required>
+															<label for="<%= tipoEnvio[i].id_shpgtype %>">
+																<%= tipoEnvio[i].nm_shpgtype %>
+															</label>
 														</h5>
 														<div class="imagen">
 															<img class="img-top " width="100px" height="100px"
-																src="/images/<%= tipoEnvio[i].nm_shpgtype %>.png" alt="Card image cap">
+																src="/images/<%= tipoEnvio[i].nm_shpgtype %>.png"
+																alt="Card image cap">
 														</div>
 													</div>
 												</div>
@@ -283,12 +318,13 @@
 						</center>
 					</div>
 				</div>
-				
+
 			</form>
 
 		</div>
 		<br>
-		<script src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&key=AIzaSyAEErsjNBLnxa3y-N2LFDpENunDEE8SDAs&v=weekly&callback=initMap"></script>
+		<script
+			src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&key=AIzaSyAEErsjNBLnxa3y-N2LFDpENunDEE8SDAs&v=weekly&callback=initMap"></script>
 		<!-- cards -->
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
 		<script src="/js/card.js"></script>
