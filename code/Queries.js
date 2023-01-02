@@ -160,7 +160,14 @@ const db = {
 
 				con.query('SELECT * FROM paymentmethods WHERE id_cos = ?', [id], (err, results) => {
 					if (err) reject(err);
-					else resolve(results);
+					else {
+						results.map((pmt) => {
+							pmt.date_pmt = pmt.date_pmt.toISOString().slice(0, 7);
+							pmt.num_pmt = '**** **** **** ' + pmt.num_pmt.slice(-4);
+
+						});
+						resolve(results);
+					}
 				});
 			});
 		},

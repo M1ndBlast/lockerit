@@ -134,7 +134,7 @@ router.route('/editarDatosUsuario')
 	let {nombre, apellidoP, apellidoM, telefono, correo} = req.body;
 
 	// create new user
-	db.costumer.update(req.session.user.id, nombre, apellidoP, apellidoM, telefono, correo).then((results) => {
+	db.costumer.update(req.session.user.id, nombre, apellidoP, apellidoM, correo, telefono).then((results) => {
 		console.log('updateClient', results);
 		if (results.affectedRows > 0) {
 			// get user by id
@@ -165,8 +165,8 @@ router.route('/agregarmetodoPago')
 })
 .post(Auth.onlyClients, Validator.creditCard, (req, res, next) => {
 	console.log(req.body);
-	let {nummerotarjeta, fechaexpiracion} = req.body;
-	db.payment.set(req.session.user.id, nummerotarjeta, fechaexpiracion).then((results) => {
+	let {nummerotarjeta, fechaexpiracion, cardDate} = req.body;
+	db.payment.set(req.session.user.id, nummerotarjeta, cardDate).then((results) => {
 		if (results.affectedRows > 0) {
 			res.status(200).json({
 				response: 'OK',
