@@ -197,6 +197,21 @@ router.route('/metodosPago')
 	}
 	else 
 		res.redirect('/');
+}).post(Auth.onlyClients, (req, res, next) => {
+	// eliminar metodo de pago with id
+	db.payment.delete(req.body.id).then((results) => {
+		if (results.affectedRows) {
+			res.json({
+				response: 'OK',
+				message: 'Metodo de pago eliminado correctamente',
+				redirect: '/metodosPago'
+			});
+		} else {
+			res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
+		}
+	}).catch((err) => {
+		res.status(402).json({response:'ERROR', message:err});
+	});
 });
 
 router.route('/cotizarEnvio')

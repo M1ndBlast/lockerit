@@ -171,6 +171,17 @@ const db = {
 				});
 			});
 		},
+
+		delete: (id) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('DELETE FROM paymentmethods WHERE id_pmt = ?', [id], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				});
+			});
+		}
 	},
 
 	/* 
