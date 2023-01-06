@@ -31,13 +31,13 @@
                         <h4 class="font-weight-bold">Número de envío: </h4>
                     </div>
                     <div class="col-md-3">
-                        <p class="Border" >874512</p>
+                        <p class="Border" ><%= envio.trk_shpg %></p>
                     </div>
                     <div class="col-md-3">
                         <h4 class="font-weight-bold">    Tipo de envío:</h4>
                     </div>
                     <div class="col-md-3">
-                        <p class="Border" >Express</p>
+                        <p class="Border" > <%= envio.nm_shpgtype %> </p>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -45,7 +45,7 @@
                         <h4 class="font-weight-bold">Tamaño del paquete: </h4>
                     </div>
                     <div class="col-md-3 position-relative">
-                        <p class="Border " >Grande</p>
+                        <p class="Border " > <%= envio.name_size %> </p>
                     </div>
                 </div>
                 <div class=" mt-2">
@@ -58,13 +58,13 @@
                                     <p>Locker #</p>
                                 </div>
                                 <div class="col">
-                                    <p></p>
+                                    <p> <%= lockerOrigen.id_locker %> </p>
                                 </div>
                                 <div class="col">
                                     <p>Dirección de locker</p>
                                 </div>
                                 <div class="col">
-                                    <p></p>
+                                    <p> <%= lockerOrigen.addrs_locker %>  </p>
                                 </div>
                             </div>
                         </div>
@@ -81,13 +81,13 @@
                                     <p>Locker #</p>
                                 </div>
                                 <div class="col">
-                                    <p></p>
+                                    <p> <%= lockerDestino.id_locker %> </p>
                                 </div>
                                 <div class="col">
                                     <p>Dirección de locker</p>
                                 </div>
                                 <div class="col">
-                                    <p></p>
+                                    <p> <%= lockerDestino.addrs_locker %>  </p>
                                 </div>
                             </div>
                         </div>

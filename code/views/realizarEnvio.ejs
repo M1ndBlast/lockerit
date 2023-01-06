@@ -16,9 +16,8 @@
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script>
-			let map, map2;
+				let map, map2;
 			function initMap() {
-				console.log("initMap");
 				const myLatLng = { lat: -19.30, lng: -99.04 };
 
 				map = new google.maps.Map(document.getElementById("map"), {
@@ -31,18 +30,45 @@
 					zoom: 11,
 				});
 
-				/*Marcadores*/
-				const lockerimage = src = "/images/lockers.png";
-				new google.maps.Marker({ position: { lat: 19.343625265988365, lng: -99.24650584242741 }, map, title: "Alvaro Obregon", });
-				new google.maps.Marker({ position: { lat: 19.432243219651717, lng: -99.14850109089078 }, map, title: "Cuauhtémoc", });
-				new google.maps.Marker({ position: { lat: 19.500261745337223, lng: -99.12512973823159, }, map, title: "Gustavo A. Madero", });
-				new google.maps.Marker({ position: { lat: 19.430553091619043, lng: -99.2025590499952 }, map, title: "Miguel Hidalgo" });
+				setMarkers(map, map2);
 
-				new google.maps.Marker({ position: { lat: 19.343625265988365, lng: -99.24650584242741 }, map2, title: "Alvaro Obregon", });
-				new google.maps.Marker({ position: { lat: 19.432243219651717, lng: -99.14850109089078 }, map2, title: "Cuauhtémoc", });
-				new google.maps.Marker({ position: { lat: 19.500261745337223, lng: -99.12512973823159, }, map2, title: "Gustavo A. Madero", });
-				new google.maps.Marker({ position: { lat: 19.430553091619043, lng: -99.2025590499952 }, map2, title: "Miguel Hidalgo" });
+
+				/*Marcadores*/
+
+				//const lockerimage = src = "";
 			}
+
+			var lugares = [['Tlalpan', 19.28380112062941, -99.1771035356514],
+			['Cuauhtémoc', 19.428809314912836, -99.16169126910391],
+			['Gustavo A. Madero', 19.49215147959578, -99.13359960338582],
+			['Miguel Hidalgo', 19.43902613507273, -99.20223391079132]
+			];
+
+			function setMarkers(map, map2) {
+
+				for (var i = 0; i < lugares.length; i++) {
+					var sitio = lugares[i];
+					var marcador = new google.maps.Marker({
+						position: { lat: sitio[1], lng: sitio[2] },
+						map: map,
+						title: sitio[0]
+					})
+				}
+
+				for (var i = 0; i < lugares.length; i++) {
+					var sitio = lugares[i];
+					var marcador = new google.maps.Marker({
+						position: { lat: sitio[1], lng: sitio[2] },
+						map: map2,
+						title: sitio[0]
+					})
+				}
+
+
+
+			}
+
+
 			window.initMap = initMap;
 		</script>
 	</head>

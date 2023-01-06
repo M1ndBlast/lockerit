@@ -263,6 +263,17 @@ const db = {
 			});
 		},
 
+		getByTracking: (trk) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('SELECT * FROM shipping NATURAL JOIN shippingtype NATURAL JOIN shippingstate NATURAL JOIN shippingsize NATURAL JOIN size NATURAL JOIN paymentmethods WHERE trk_shpg = ?', [trk], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				});
+			})
+		},
+
 		getAllByCostumer: (id) => {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
@@ -308,6 +319,17 @@ const db = {
 	+----------+------------+
 	 */
 	lockers : {
+		getById: (id) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('SELECT * FROM locker WHERE id_locker = ?', [id], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				});
+			});
+		},
+
 		getCityHalls : () => {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;

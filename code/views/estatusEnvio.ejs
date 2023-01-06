@@ -24,29 +24,29 @@
             <center><img src="/images/estatusEnvio.png" class="logo"></center>
             <h2 class="card-title text-center" style="margin-bottom: 20px;">Estado del Envío</h2>
             <!--Para ir cambiando el estado, se hicieron 6 imagenes para que sea de manera dinamico-->
-            <center><img src="/images/estado1.png" class="estado" id="imgEstado"></center>
+            <center><img src="/images/estado<%=envio.id_shpgstat%>.png" class="estado" id="imgEstado"></center>
             <h3 class="card-title text-center" style="margin-top: 20px; margin-bottom: 20px;">En espera a que el cliente lo deposite en el locker de origen</h3>
             <div class="numero">
-                <p>Número de envío: <input type="text" readonly /></p>
+                <p>Número de envío: <input type="text" readonly value="<%= envio.trk_shpg %>" /></p>
             </div>
             <div class="row text-center">
                 <div class="col">
                     <div class="col">
                         <div>
-                            <h4 class="card-title text-center">Locker de origen</h4>
+                            <h4 class="card-title text-center">Locker de origen: <%= lockerOrigen.name_locker %></h4>
                             <br>
                             <div class="border rounded">
-                                <p>Dirección del locker</p>
+                                <p>Dirección del locker: <%= lockerOrigen.addrs_locker %> </p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div>
-                        <h4 class="card-title text-center">Locker de destino</h4>
-                        <br>
-                        <div class="border rounded">
-                            <p>Dirección del locker</p>
+                        <h4 class="card-title text-center">Locker de destino <%= lockerDestino.name_locker %></h4>
+						<br>
+						<div class="border rounded">
+							<p>Dirección del locker: <%= lockerDestino.addrs_locker %> </p>
                         </div>
                     </div>
                 </div>

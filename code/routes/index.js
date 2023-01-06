@@ -340,6 +340,40 @@ router.route('/consultarEnvio')
 	 });
 });
 
+router.route('/detallesPaquete/:id')
+.get(Auth.onlyClients, async (req, res, next) => {
+	let id = req.params.id;
+	let envio = (await db.shipping.getByTracking(id))[0];
+	let lockerOrigen = (await db.lockers.getById(envio.id_orglock))[0];
+	let lockerDestino = (await db.lockers.getById(envio.id_deslock))[0];
+
+	console.log(envio);
+
+	res.render('detallesPaquete', {
+		user: req.session.user,
+		envio: envio,
+		lockerOrigen: lockerOrigen,
+		lockerDestino: lockerDestino
+	});
+});
+
+router.route('/estatusEnvio/:id')
+.get(Auth.onlyClients, async (req, res, next) => {
+	let id = req.params.id;
+	let envio = (await db.shipping.getByTracking(id))[0];
+	let lockerOrigen = (await db.lockers.getById(envio.id_orglock))[0];
+	let lockerDestino = (await db.lockers.getById(envio.id_deslock))[0];
+
+	console.log(envio);
+
+	res.render('estatusEnvio', {
+		user: req.session.user,
+		envio: envio,
+		lockerOrigen: lockerOrigen,
+		lockerDestino: lockerDestino
+	});
+});
+
 router.route('/ticketEnvios')
 .get(Auth.onlyClients, (req, res, next) => {
 	res.render('ticketEnvios', { user: req.session.user });
