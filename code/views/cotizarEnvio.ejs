@@ -73,31 +73,7 @@
 	</head>
 
 	<body>
-		<nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
-			<div class="container">
-				<a class="navbar-brand" href="#"><img src="/images/logo-amarillo.svg" alt="" width="150"
-						height="30"></a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-					aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarScroll">
-					<ul class="navbar-nav ms-auto" style="--bs-scroll-height: 100px;">
-						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="/">Inicio</a>
-						</li>
-						<li class="nav-item " class="Botones">
-							<button type="submit" onclick="location.href='/iniciarSesion'"
-								class="btn btn-outline-light  fw-semibold">Iniciar Sesión</button>
-						</li>
-						<li class="nav-item mx-2" style="margin-left: 20px;">
-							<button type="submit" onclick="location.href='/RegistroCliente'"
-								class="btn btn-outline-light  fw-semibold ">Registrate</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<%- include('./navInvitado'); %>
 		<!-- partial:index.partial.html -->
 		<div class=" d-flex justify-content-center align-items-center ">
 			<form action="/cotizarEnvio" method="post">

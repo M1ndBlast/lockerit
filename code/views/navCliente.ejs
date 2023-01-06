@@ -1,7 +1,6 @@
 <nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
     <div class="container">
-        <a class="navbar-brand" href="/AccesoMain"><img src="images/logo-amarillo.svg" alt="" width="150"
-                height="30"></a>
+        <a class="navbar-brand" href="#"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,26 +8,25 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="envios.ejs">Envios</a>
+                    <a class="nav-link active" aria-current="page" href="#">Envios</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Mi Cuenta
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="editarDatosUsuario.ejs">Mis Datos</a></li>
-                        <li><a class="dropdown-item" href="metodosPago.ejs">Métodos de Pago</a></li>
+                      <li><a class="dropdown-item" href="/editarDatosUsuario">Mis Datos</a></li>
+                      <li><a class="dropdown-item" href="/metodosPago">Métodos de Pago</a></li>
                     </ul>
-                </li>
+                  </li>
                 <li class="nav-item ">
-                    <h1 class="nav-link active" aria-current="page">|</h1>
+                    <h1 class="nav-link active" aria-current="page" >|</h1>
                 </li>
                 <li class="nav-item">
-                    <h1 class="nav-link active" aria-current="page">Bienvenido Usuario</h1>
+                    <h1 class="nav-link active" aria-current="page" >Bienvenido Usuario</h1>
                 </li>
                 <li class="nav-item " class="Botones">
-                    <button type="submit" onclick="location.href='main.ejs'"
+                    <button type="submit" onclick="location.href='/cerrarsesion'"
                         class="btn btn-outline-light  fw-semibold">Cerrar Sesión</button>
                 </li>
             </ul>
