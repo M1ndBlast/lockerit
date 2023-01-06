@@ -10,6 +10,7 @@ function connect(time=5) {
 		user: 		process.env.MYSQL_USER,
 		password:	process.env.MYSQL_PASSWORD,
 		database:	process.env.MYSQL_DATABASE,
+		charset : 'utf8',
 	});
 	con.connect((err) => {
 		isConnected = !err;
@@ -244,9 +245,16 @@ const db = {
 
 				// generate random tracking number
 				let trk_shpg = Date.now().toString().padEnd(18, '0');
+
+				// parse to int
+				id_shpgtype = parseInt(id_shpgtype);
+				id_pmt = parseInt(id_pmt);
+				id_shpgsize = parseInt(id_shpgsize);
+				id_orglock = parseInt(id_orglock);
+				id_deslock = parseInt(id_deslock);
 				
 				con.query(
-					'INSERT INTO shipping VALUES (?, ?, ?, 1, CURRENT_TIMESTAMP, NULL, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?)', 
+					'INSERT INTO shipping VALUES (?, ?, ?, 1, CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP(), ?, ?, ?, ?, ?, ?, ?, ?)', 
 					[trk_shpg, id_cos, id_shpgtype, price_shpg, id_shpgsize, id_pmt, name_addrs, em_addrs, tel_addrs, id_orglock, id_deslock], 
 					(err, results) => {
 						if (err) reject(err);

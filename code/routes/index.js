@@ -187,9 +187,9 @@ router.route('/metodosPago')
 		// obtener metodos de pago
 		db.payment.getAllByCostumer(req.session.user.id).then((results) => {
 			if (results.length > 0) {
-				res.render('metodosPago2', { user: req.session.user, metodosPago: results });
+				res.render('MetodosPago2', { user: req.session.user, metodosPago: results });
 			} else {
-				res.render('metodosPago2', { user: req.session.user, metodosPago: [] });
+				res.render('MetodosPago2', { user: req.session.user, metodosPago: [] });
 			}
 		}).catch((err) => {
 			res.status(402).json({response:'ERROR', message:err});
@@ -291,15 +291,11 @@ router.route('/realizarEnvio')
 .post(Validator.realizarEnvio, async (req, res, next) => {
 	console.log('req.body KEJEJ');
 	console.log(req.body);
-	let {origen, destino, paquete, tipo, inputName, inputMail, inputNumber, listGroupRadio} = req.body;
+	let {lockerOrigen:origen, lockerDestino:destino, paquete, tipo, inputName, inputMail, inputNumber, listGroupRadio} = req.body;
 	let tamanios = await db.lockers.getShipmentSizes();
-	let tamanio = tamanios.find(t => t.id_tamanio == paquete);
-	let precio= tamanio.Precio+(25.6*(100/27.5))
-
-	console.log(tamanio);
-	console.log(tipo);
-	console.log(origen);
-	console.log(destino);
+	let tamanio = tamanios.find(t => t.id_shpgsize == paquete);
+	console.log("tamanio", tamanio);
+	let precio = tamanio.price_shpgsize+(25.6*(100/27.5));
 	
 	req.session.newShipping = {
 		origen: origen,
@@ -311,7 +307,7 @@ router.route('/realizarEnvio')
 		inputNumber: inputNumber,
 		listGroupRadio: listGroupRadio,
 		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio: tamanio.Precio+(25.6*(100/27.5))
+		precio: tamanio.price_shpgsize+(25.6*(100/27.5))
 	};
 
 	console.log(req.session.newShipping);

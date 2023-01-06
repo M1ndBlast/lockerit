@@ -22,7 +22,7 @@ USE `lockerit` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`typeuser` (
   `id_typeusr` INT NOT NULL AUTO_INCREMENT,
-  `type_typeusr` VARCHAR(15) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `type_typeusr` VARCHAR(15) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_typeusr`),
   UNIQUE INDEX `id_typeusr_UNIQUE` (`id_typeusr` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -33,12 +33,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`costumer` (
   `id_cos` INT NOT NULL AUTO_INCREMENT,
-  `nam_cos` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `patsur_cos` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `matsur_cos` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `tel_cos` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `em_cos` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `pas_cos` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `nam_cos` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `patsur_cos` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `matsur_cos` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `tel_cos` VARCHAR(10) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `em_cos` VARCHAR(60) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `pas_cos` VARCHAR(16) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `tk_cos` VARCHAR(6) NULL,
   `type_usr` INT NOT NULL,
   `act_cos` INT NOT NULL DEFAULT 0,
@@ -57,13 +57,13 @@ ENGINE = InnoDB;
 -- Table `lockerit`.`staff`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`staff` (
-  `stfnum_stf` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `nam_stf` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `patsur_stf` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `matsur_stf` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `tel_stf` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `em_stf` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `pas_stf` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `stfnum_stf` VARCHAR(10) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `nam_stf` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `patsur_stf` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `matsur_stf` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `tel_stf` VARCHAR(10) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `em_stf` VARCHAR(60) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `pas_stf` VARCHAR(16) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `type_usr` INT NOT NULL,
   `id_stf` INT NOT NULL AUTO_INCREMENT,
   UNIQUE INDEX `id_stf_UNIQUE` (`stfnum_stf` ASC) VISIBLE,
@@ -82,7 +82,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`paymentmethods` (
   `id_pmt` INT NOT NULL AUTO_INCREMENT,
-  `num_pmt` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `num_pmt` VARCHAR(16) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `date_pmt` DATE NOT NULL,
   `id_cos` INT NULL,
   PRIMARY KEY (`id_pmt`),
@@ -100,7 +100,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`shippingtype` (
   `id_shpgtype` INT NOT NULL AUTO_INCREMENT,
-  `nm_shpgtype` VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `nm_shpgtype` VARCHAR(16) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `time_shpgtype` TIME NOT NULL,
   PRIMARY KEY (`id_shpgtype`))
 ENGINE = InnoDB;
@@ -111,7 +111,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`size` (
   `id_size` INT NOT NULL AUTO_INCREMENT,
-  `name_size` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_size` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `high_size` DOUBLE NOT NULL,
   `width_size` DOUBLE NOT NULL,
   `depth_size` DOUBLE NOT NULL,
@@ -141,7 +141,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`state` (
   `id_state` INT NOT NULL AUTO_INCREMENT,
-  `name_state` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_state` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_state`))
 ENGINE = InnoDB;
 
@@ -151,7 +151,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`cityhalls` (
   `id_cityhll` INT NOT NULL AUTO_INCREMENT,
-  `name_cityhll` VARCHAR(60) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_cityhll` VARCHAR(60) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_cityhll`))
 ENGINE = InnoDB;
 
@@ -161,11 +161,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`locker` (
   `id_locker` INT NOT NULL AUTO_INCREMENT,
-  `name_locker` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_locker` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `nums_door` INT NOT NULL,
   `numm_door` INT NOT NULL,
   `numl_door` INT NOT NULL,
-  `addrs_locker` VARCHAR(300) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `addrs_locker` VARCHAR(300) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_cityhll` INT NOT NULL,
   `id_state` INT NOT NULL,
   PRIMARY KEY (`id_locker`),
@@ -189,7 +189,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`shippingstate` (
   `id_shpgstat` INT NOT NULL AUTO_INCREMENT,
-  `name_shpgstat` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_shpgstat` VARCHAR(45) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_shpgstat`))
 ENGINE = InnoDB;
 
@@ -198,19 +198,19 @@ ENGINE = InnoDB;
 -- Table `lockerit`.`shipping`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`shipping` (
-  `trk_shpg` VARCHAR(18) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `trk_shpg` VARCHAR(18) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_cos` INT NULL,
   `id_shpgtype` INT NOT NULL,
   `id_shpgstat` INT NOT NULL,
   `crtdate_shpg` DATETIME NOT NULL DEFAULT now(),
-  `deldate_shpg` DATETIME NOT NULL,
+  `deldate_shpg` DATETIME NULL,
   `statdate_shpg` DATETIME NOT NULL,
   `price_shpg` DOUBLE NOT NULL,
   `id_shpgsize` INT NOT NULL,
   `id_pmt` INT NULL,
-  `name_addrs` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `em_addrs` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
-  `tel_addrs` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_addrs` VARCHAR(100) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `em_addrs` VARCHAR(100) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
+  `tel_addrs` VARCHAR(10) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_orglock` INT NOT NULL,
   `id_deslock` INT NOT NULL,
   PRIMARY KEY (`trk_shpg`),
@@ -296,7 +296,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lockerit`.`shippingdoor` (
   `id_shpgdr` INT NOT NULL AUTO_INCREMENT,
   `id_door` INT NOT NULL,
-  `trk_shpg` VARCHAR(18) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `trk_shpg` VARCHAR(18) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `act_shpgdr` INT NOT NULL,
   `availblt_shpgdr` INT NOT NULL,
   `qr_shpgdr` INT NOT NULL,
@@ -321,7 +321,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`reporttype` (
   `id_rpttype` INT NOT NULL AUTO_INCREMENT,
-  `name_rpttype` VARCHAR(250) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `name_rpttype` VARCHAR(250) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   PRIMARY KEY (`id_rpttype`))
 ENGINE = InnoDB;
 
@@ -332,7 +332,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `lockerit`.`report` (
   `id_rpt` INT NOT NULL AUTO_INCREMENT,
   `id_stf` INT NOT NULL,
-  `trk_shpg` VARCHAR(18) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `trk_shpg` VARCHAR(18) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `id_rpttype` INT NOT NULL,
   PRIMARY KEY (`id_rpt`),
   INDEX `fk_reporttype_report_idx` (`id_rpttype` ASC) VISIBLE,
@@ -361,7 +361,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lockerit`.`route` (
   `id_rout` INT NOT NULL AUTO_INCREMENT,
-  `stfnum_stf` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci' NOT NULL,
+  `stfnum_stf` VARCHAR(10) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci' NOT NULL,
   `date_rout` DATETIME NOT NULL,
   `stat_rout` INT NOT NULL,
   PRIMARY KEY (`id_rout`),
@@ -456,7 +456,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lockerit`;
-INSERT INTO `lockerit`.`staff` (`stfnum_stf`, `nam_stf`, `patsur_stf`, `matsur_stf`, `tel_stf`, `em_stf`, `pas_stf`, `type_usr`, `id_stf`) VALUES ('0000000001', 'Javier Francisco', 'Aragón', 'González', '5534315125', 'edgaarfigueroa01@gmail.com', 'MeL4stimas.', 2, 1);
+INSERT INTO `lockerit`.`staff` (`stfnum_stf`, `nam_stf`, `patsur_stf`, `matsur_stf`, `tel_stf`, `em_stf`, `pas_stf`, `type_usr`, `id_stf`) VALUES ('0000000001', 'Javier Francisco', 'Aragon', 'Gonzalez', '5534315125', 'edgaarfigueroa01@gmail.com', 'MeL4stimas.', 2, 1);
 
 COMMIT;
 
@@ -512,19 +512,19 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lockerit`;
-INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (1, 'Álvaro Obregón');
+INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (1, 'Alvaro Obregon');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (2, 'Azcapotzalco');
-INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (3, 'Benito Juárez');
-INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (4, 'Coyoacán');
+INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (3, 'Benito Juarez');
+INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (4, 'Coyoacan');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (5, 'Cuajimalpa');
-INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (6, 'Cuahtémoc');
+INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (6, 'Cuahtemoc');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (7, 'Gustavo A. Madero');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (8, 'Iztacalco');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (9, 'Iztapalapa');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (10, 'Magdalena Contreras');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (11, 'Miguel Hidalgo');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (12, 'Milpa Alta');
-INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (13, 'Tláhuac');
+INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (13, 'Tlahuac');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (14, 'Tlalpan');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (15, 'Venustiano Carranza');
 INSERT INTO `lockerit`.`cityhalls` (`id_cityhll`, `name_cityhll`) VALUES (16, 'Xochimilco');
@@ -537,10 +537,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lockerit`;
-INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (1, 'Reforma 222', 5, 6, 2, 'Av. Paseo de la Reforma 222, Juárez, Cuauhtémoc, 06600 Cuauhtemoc, CDMX, {lat:19.428809314912836, lon:-99.16169126910391}', 6, 1);
-INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (2, 'Plaza Lindavista', 5, 6, 2, 'Av. Montevideo 363, Lindavista Sur, Gustavo A. Madero, 07300 Ciudad de México, CDMX, {lat:19.49215147959578, lon:-99.13359960338582}', 7, 1);
-INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (3, 'Patio Tlalpan', 5, 6, 2, 'Av. Insurgentes Sur 4177, Sta Úrsula Xitla, Tlalpan, 14420 Ciudad de México, CDMX, {lat:19.28380112062941, lon:-99.1771035356514}', 14, 1);
-INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (4, 'Plaza Antara', 5, 6, 2, 'Av. Ejército Nacional Mexicano 843-B, Granada, Miguel Hidalgo, 11520 Ciudad de México, CDMX, {lat:19.43902613507273, lon:-99.20223391079132}', 11, 1);
+INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (1, 'Reforma 222', 5, 6, 2, 'Av. Paseo de la Reforma 222, Juarez, Cuauhtemoc, 06600 Cuauhtemoc, CDMX, {lat:19.428809314912836, lon:-99.16169126910391}', 6, 1);
+INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (2, 'Plaza Lindavista', 5, 6, 2, 'Av. Montevideo 363, Lindavista Sur, Gustavo A. Madero, 07300 Ciudad de Mexico, CDMX, {lat:19.49215147959578, lon:-99.13359960338582}', 7, 1);
+INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (3, 'Patio Tlalpan', 5, 6, 2, 'Av. Insurgentes Sur 4177, Sta Ursula Xitla, Tlalpan, 14420 Ciudad de Mexico, CDMX, {lat:19.28380112062941, lon:-99.1771035356514}', 14, 1);
+INSERT INTO `lockerit`.`locker` (`id_locker`, `name_locker`, `nums_door`, `numm_door`, `numl_door`, `addrs_locker`, `id_cityhll`, `id_state`) VALUES (4, 'Plaza Antara', 5, 6, 2, 'Av. Ejercito Nacional Mexicano 843-B, Granada, Miguel Hidalgo, 11520 Ciudad de Mexico, CDMX, {lat:19.43902613507273, lon:-99.20223391079132}', 11, 1);
 
 COMMIT;
 
@@ -550,10 +550,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `lockerit`;
-INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (1, 'En espera de entrega para recolección');
-INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (2, 'En espera de recolección');
+INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (1, 'En espera de entrega para recoleccion');
+INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (2, 'En espera de recoleccion');
 INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (3, 'En traslado');
-INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (4, 'En espera de recepción del destinatario');
+INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (4, 'En espera de recepcion del destinatario');
 INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (5, 'En almacen');
 INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (6, 'Completado');
 INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (7, 'Cancelado');
@@ -567,8 +567,8 @@ use lockerit;
 delimiter //
 drop procedure if exists inicio;
 create procedure inicio(
-	in correo VARCHAR(80) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci', 
-	in contra VARCHAR(16) CHARACTER SET 'utf8' COLLATE 'utf8_spanish_ci')
+	in correo VARCHAR(80) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci', 
+	in contra VARCHAR(16) CHARACTER SET utf8 COLLATE 'utf8_spanish_ci')
 begin
 	select costumer.em_cos into @em from costumer where costumer.em_cos = correo;
     if (@em = correo) then

@@ -188,13 +188,15 @@ const Validator = {
 
 	// Realizar envio
 	realizarEnvio: [
-		v._anyexist('origen', 'El origen'),
-		v._anyexist('destino', 'El destino'),
+		v._anyexist('origen', 'La delegación de origen'),
+		v._anyexist('lockerOrigen', 'El locker de origen'), 
+		v._anyexist('destino', 'La delegación de destino'),
+		v._anyexist('lockerDestino', 'El locker de destino'),
 		v._anyexist('paquete', 'El paquete'),
 		v._anyexist('tipo', 'El tipo'),
-		v._name('inputName', 'El nombre'),
-		v._email('inputMail', 'El correo'),
-		v._phone('inputNumber', 'El teléfono'),
+		v._name('inputName', 'El nombre del destinatario'),
+		v._email('inputMail', 'El correo del destinatario'),
+		v._phone('inputNumber', 'El teléfono del destinatario'),
 		v._anyexist('listGroupRadio', 'Método de pago'),
 		v._creditCardCvv('inputCVV', 'El CVV'),
 		validateResult
