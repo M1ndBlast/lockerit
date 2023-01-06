@@ -333,6 +333,7 @@ router.route('/realizarEnvio')
 router.route('/consultarEnvio')
 .get(Auth.onlyClients,async (req, res, next) => {
 	let envios = await db.shipping.getAllByCostumer(req.session.user.id);
+	console.log(envios);
 	res.render('consultarEnvio', { 
 		user: req.session.user,
 		envios: envios

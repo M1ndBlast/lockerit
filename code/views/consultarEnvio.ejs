@@ -34,18 +34,18 @@
 						<div class="row">
 							<div class="col-4">
 								<center>
-									<p>Número de envío #<%= envios[i].id_envio %></p>
+									<p>Número de envío #<%= envios[i].trk_shpg %></p>
 								</center>
 							</div>
 							<div class="col-4">
 								<center>
-									<p>Recibe: <%= envios[i].nombre_destinatario %></p>
+									<p>Recibe: <%= envios[i].name_addrs %></p>
 								</center>
 							</div>
 							<div class="col-4" >
 								<center>
 									<input class="form-check-input ml-5" type="radio" name="locker" 
-										value="<%=envios[i].id_envio %>" id="locker<%= i %>" checked>
+										value="<%=envios[i].trk_shpg %>" id="locker<%= i %>" checked>
 								</center>
 							</div>
 						</div>
