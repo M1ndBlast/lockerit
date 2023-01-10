@@ -13,3 +13,14 @@
     border-color: rgb(33, 46, 70) !important;
     background-color: rgb(33, 46, 70) !important;
   }
+
+  .boton-amarillo{
+    margin-top: 20px;
+    border-color: rgb(249, 217, 80) !important;
+    background-color: rgb(249, 217, 80)  !important;
+  }
+
+.btn{
+    text-align: center;
+    width: 170px;
+}
