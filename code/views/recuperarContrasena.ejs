@@ -1,36 +1,94 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lockerit!</title>
-    <link rel="stylesheet" href="css/styleInicioSesion.css">
-    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
-    rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styleRecuperarCon.css">
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-  <body >
-    <%- include('./navInvitado'); %>
-    <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title text-center">Recuperar Contraseña</h2>
-                <p class="card-text text-center">Necesitamos confirmar tu email para enviarte instrucciones para reestablecer tu contraseña</p>
-                <p class="card-text">*Campos obligatorios</p>
-                <form>
-                    <input type="email" id="inputPassword5" class="form-control" placeholder="Correo">
-                </form>
-                <br>
-                <center><a href="#" class="btn text-white boton">Recuperar contraseña</a>
-                </center>
-                <br>
-                <center><a href="/iniciarSesion" class="btn btn-outline-dark">Regresar</a>
-                </center>
-            </div>
-        </div>
-    </div>
-  </body>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Lockerit!</title>
+		<link rel="stylesheet" href="css/styleInicioSesion.css">
+		<link href="https://fonts.googleapis.com/css2?family=Alata&family=Josefin+Sans:wght@300&display=swap"
+			rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+			crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="css/styleRecuperarCon.css">
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	</head>
+
+	<body>
+		<%- include('./navInvitado'); %>
+		<form action="/recuperarContrasena" method="POST">
+			<div class="container">
+				<div class="card">
+					<div class="card-body">
+						<h2 class="card-title text-center">Recuperar Contraseña</h2>
+						<p class="card-text text-center">Necesitamos confirmar tu email para enviarte instrucciones
+							para reestablecer tu contraseña</p>
+						<p class="card-text">*Campos obligatorios</p>
+						<input type="email" name="correo" id="inputPassword5" class="form-control" placeholder="Correo">
+						<br>
+						<center>
+							<button type="submit" class="btn text-white boton">Recuperar contraseña</button>
+						</center>
+						<br>
+						<center>
+							<a href="/iniciarSesion" class="btn btn-outline-dark">Regresar</a>
+						</center>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- Modal -->
+	<form action="/activacionContra" method="post">
+		<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h1 class="modal-title fs-5" id="staticBackdropLabel">Verificación de correo electrónico</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+				Hemos enviado un código de verificación a su correo electrónico.
+				<br>
+				Por favor ingresa los dígitos del código que recibió:
+				<div class="form-floating mb-3">
+				  <div class="row">
+					<div class="col-2 p-3">
+					  <input type="text"class="form-control" maxlength="1" name="Num1">
+					</div>
+					<div class="col-2 p-3">
+					  <input type="text"class="form-control" maxlength="1" name="Num2">
+					</div>
+					  <div class="col-2 p-3">
+					<input type="text" class="form-control"maxlength="1" name="Num3">
+					  </div>
+					<div class="col-2 p-3">
+					  <input type="text" class="form-control"maxlength="1" name="Num4">
+					</div>
+					  <div class="col-2 p-3">
+					<input type="text"class="form-control" maxlength="1" name="Num5">
+					  </div>
+					<div class="col-2 p-3">
+					  <input type="text"class="form-control" maxlength="1" name="Num6">
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+				<button type="submit" class="btn boton text-white">Verificar</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		</form>
+		<script src="js/validation.js"></script>
+		<% if (requireToken) { %>
+			<script>
+				bootstrap.Modal.getOrCreateInstance(document.querySelector('#staticBackdrop')).show();
+			</script>
+		<% } %>
+	</body>
 </html>

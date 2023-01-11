@@ -69,7 +69,15 @@ function switchModal(oldModalStr, newModalStr) {
 				.then(res => res.json())
 				.then(data => {
 					if (data.response == 'OK')
-						if (data.redirect)	// redirect to url
+						if (data.message) {
+							toast(data.title||'Éxito', data.message, 'success').then((isConfirm)=>{
+								if (data.redirect)
+									window.location.href = data.redirect;
+								else if(data.modal)	// switch modal
+									switchModal(data.modal.old, data.modal.new);
+							});
+						}
+						else if (data.redirect)	// redirect to url
 							window.location.href = data.redirect;
 						else if(data.modal)	// switch modal
 							switchModal(data.modal.old, data.modal.new);
@@ -91,7 +99,7 @@ function switchModal(oldModalStr, newModalStr) {
 							toast('Error', errors[0].msg);
 						}
 						else
-							toast(data.title || `${data.status}`,
+							toast(data.title || data.status || data.response,
 								data.message);
 					}
 					else 

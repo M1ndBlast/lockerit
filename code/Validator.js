@@ -201,6 +201,19 @@ const Validator = {
 		v._creditCardCvv('inputCVV', 'El CVV'),
 		validateResult
 	],
+	
+	recoverPassword: [
+		v._email('correo', 'El correo'),
+		validateResult
+	],
+
+	// Change password
+	changePassword: [
+		v._anyexist('pwd_old', 'La contraseña actual'),
+		v._password('pwd_new', 'La nueva contraseña'),
+		v._passwordConfirm('pwd_newc', 'La confirmación de la nueva contraseña', 'pwd_new'),
+		validateResult
+	],
 
 
 

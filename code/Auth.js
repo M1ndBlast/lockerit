@@ -66,14 +66,17 @@ const Auth = {
 	},
 
 	createSession: (req, newUser) => {
+		console.log('newUser');
+		console.log(newUser);
 		req.session.user = {
-			id: newUser.id_cos,
-			nombres: newUser.nam_cos,
-			apellidoPaterno: newUser.patsur_cos,
-			apellidoMaterno: newUser.matsur_cos,
-			numeroCelular: newUser.tel_cos,
-			correo: newUser.em_cos,
-			type_usr: newUser.type_usr
+			id: newUser.id,
+			nombres: newUser.nam,
+			apellidoPaterno: newUser.patsur,
+			apellidoMaterno: newUser.matsur,
+			numeroCelular: newUser.tel,
+			correo: newUser.em,
+			type_usr: newUser.type,
+			stfnum: newUser.stfnum,
 		};
 	},
 

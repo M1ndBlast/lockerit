@@ -1,10 +1,10 @@
-const mysql = require('mysql2');
-const errorDBConnection = new Error('No se pudo conectar a la base de datos');
+const mysql=require('mysql2');
+const errorDBConnection=new Error('No se pudo conectar a la base de datos');
 var con,
-	isConnected = false;
+	isConnected=false;
 
 function connect(time=5) {
-	con = mysql.createConnection({
+	con=mysql.createConnection({
 		host:		process.env.MYSQL_HOST,
 		port:		process.env.MYSQL_PORT,
 		user: 		process.env.MYSQL_USER,
@@ -13,7 +13,7 @@ function connect(time=5) {
 		charset : 'utf8',
 	});
 	con.connect((err) => {
-		isConnected = !err;
+		isConnected=!err;
 		if (err) {
 			console.log(`Connection to MySQL failed [${err.code}]. Retrying in ${time} seconds...`);
 			setTimeout(() => connect(++time), 5*1000);	// try again in time seconds
@@ -24,7 +24,7 @@ function connect(time=5) {
 
 connect();
 
-const db = {
+const db={
 	// Roles
 	ROLES: {
 		ADMIN: 1,
@@ -74,7 +74,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM costumer WHERE id_cos = ? LIMIT 1', [id], (err, results) => {
+				con.query('SELECT * FROM costumer WHERE id_cos=? LIMIT 1', [id], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -85,8 +85,11 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM costumer WHERE em_cos = ? LIMIT 1', [email], (err, results) => {
-					if (err) reject(err);
+				con.query('SELECT * FROM costumer WHERE em_cos=? LIMIT 1', [email], (err, results) => {
+					if (err) con.query('SELECT * FROM staff WHERE em_stf=? LIMIT 1', [email], (err, results) => {
+						if (err) reject(err);
+						else resolve(results);
+					});
 					else resolve(results);
 				});
 			});
@@ -96,7 +99,8 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM costumer WHERE em_cos = ? AND pas_cos = ? LIMIT 1', [email, password], (err, results) => {
+				// con.query('SELECT * FROM costumer WHERE em_cos=? AND pas_cos=? LIMIT 1', [email, password], (err, results) => {
+				con.query('CALL inicio(?,?)', [email, password], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -106,7 +110,34 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('UPDATE costumer SET nam_cos=?, patsur_cos=?, matsur_cos=?, tel_cos=?, em_cos=? WHERE id_cos = ?', [name, lastnameF, lastnameM, tel, email, id], (err, results) => {
+				con.query('UPDATE costumer SET nam_cos=?, patsur_cos=?, matsur_cos=?, tel_cos=?, em_cos=? WHERE id_cos=?', [name, lastnameF, lastnameM, tel, email, id], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				});
+			});
+		},
+
+		updatePwd: (email, password) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('UPDATE costumer SET pas_cos=? WHERE em_cos=?', [password, email], (err, results) => {
+					if (err) 
+						con.query('UPDATE staff SET pas_stf=? WHERE em_stf=?', [password, email], (err, results) => {
+							if (err) reject(err);
+							else resolve(results);
+						});
+					else resolve(results);
+				});
+			});
+		},
+
+		setToken: (email, token) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+				console.log('email: ' + email);
+				console.log('token: ' + token);
+				con.query('UPDATE costumer SET tk_cos=? WHERE em_cos=?', [token, email], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -117,10 +148,10 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM costumer WHERE id_cos = ? AND tk_cos = ? LIMIT 1', [id, token], (err, results) => {
+				con.query('SELECT * FROM costumer WHERE id_cos=? AND tk_cos=? LIMIT 1', [id, token], (err, results) => {
 					if (err) reject(err);
 					else if (results.length > 0) {
-						con.query('UPDATE costumer SET tk_cos=NULL, act_cos=1 WHERE id_cos = ?', [id], (err, results) => {
+						con.query('UPDATE costumer SET tk_cos=NULL, act_cos=1 WHERE id_cos=?', [id], (err, results) => {
 							if (err) reject(err);
 							else resolve(results);
 						});
@@ -128,7 +159,25 @@ const db = {
 					else reject('Código inválido');
 				});
 			});
-		}
+		},
+
+		activateWithEmail: (email, token) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('SELECT * FROM costumer WHERE em_cos=? AND tk_cos=? LIMIT 1', [email, token], (err, results) => {
+					if (err) reject(err);
+					else if (results.length > 0) {
+						// con.query('UPDATE costumer SET tk_cos=NULL, act_cos=1 WHERE em_cos=?', [email], (err, results) => {
+						con.query('UPDATE costumer SET tk_cos=NULL WHERE em_cos=?', [email], (err, results) => {
+							if (err) reject(err);
+							else resolve(results);
+						});
+					}
+					else reject('Código inválido');
+				});
+			});
+		},
 	},
 
 	/* 
@@ -159,12 +208,12 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM paymentmethods WHERE id_cos = ?', [id], (err, results) => {
+				con.query('SELECT * FROM paymentmethods WHERE id_cos=?', [id], (err, results) => {
 					if (err) reject(err);
 					else {
 						results.map((pmt) => {
-							pmt.date_pmt = pmt.date_pmt.toISOString().slice(0, 7);
-							pmt.num_pmt = '**** **** **** ' + pmt.num_pmt.slice(-4);
+							pmt.date_pmt=pmt.date_pmt.toISOString().slice(0, 7);
+							pmt.num_pmt='**** **** **** ' + pmt.num_pmt.slice(-4);
 
 						});
 						resolve(results);
@@ -177,7 +226,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('DELETE FROM paymentmethods WHERE id_pmt = ?', [id], (err, results) => {
+				con.query('DELETE FROM paymentmethods WHERE id_pmt=?', [id], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -239,19 +288,16 @@ const db = {
 	+-------------+---------+----------------+
 	 */
 	shipping: {
-		set: (id_cos, id_shpgtype, price_shpg, id_shpgsize, id_pmt, name_addrs, em_addrs, tel_addrs, id_orglock, id_deslock) => {
+		set: (id_cos, trk_shpg, id_shpgtype, price_shpg, id_shpgsize, id_pmt, name_addrs, em_addrs, tel_addrs, id_orglock, id_deslock) => {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				// generate random tracking number
-				let trk_shpg = Date.now().toString().padEnd(18, '0');
-
 				// parse to int
-				id_shpgtype = parseInt(id_shpgtype);
-				id_pmt = parseInt(id_pmt);
-				id_shpgsize = parseInt(id_shpgsize);
-				id_orglock = parseInt(id_orglock);
-				id_deslock = parseInt(id_deslock);
+				id_shpgtype=parseInt(id_shpgtype);
+				id_pmt=parseInt(id_pmt);
+				id_shpgsize=parseInt(id_shpgsize);
+				id_orglock=parseInt(id_orglock);
+				id_deslock=parseInt(id_deslock);
 				
 				con.query(
 					'INSERT INTO shipping VALUES (?, ?, ?, 1, CURRENT_TIMESTAMP(), NULL, CURRENT_TIMESTAMP(), ?, ?, ?, ?, ?, ?, ?, ?)', 
@@ -267,7 +313,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM shipping NATURAL JOIN shippingtype NATURAL JOIN shippingstate NATURAL JOIN shippingsize NATURAL JOIN size NATURAL JOIN paymentmethods WHERE trk_shpg = ?', [trk], (err, results) => {
+				con.query('SELECT * FROM shipping NATURAL JOIN shippingtype NATURAL JOIN shippingstate NATURAL JOIN shippingsize NATURAL JOIN size NATURAL JOIN paymentmethods WHERE trk_shpg=?', [trk], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -278,7 +324,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM shipping WHERE id_cos = ?', [id], (err, results) => {
+				con.query('SELECT * FROM shipping WHERE id_cos=?', [id], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -323,7 +369,7 @@ const db = {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
 
-				con.query('SELECT * FROM locker WHERE id_locker = ?', [id], (err, results) => {
+				con.query('SELECT * FROM locker WHERE id_locker=?', [id], (err, results) => {
 					if (err) reject(err);
 					else resolve(results);
 				});
@@ -376,4 +422,4 @@ const db = {
 	},
 };
 
-module.exports = db;
+module.exports=db;

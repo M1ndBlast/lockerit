@@ -16,7 +16,7 @@
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script>
-				let map, map2;
+			let map, map2;
 			function initMap() {
 				const myLatLng = { lat: -19.30, lng: -99.04 };
 
@@ -31,17 +31,13 @@
 				});
 
 				setMarkers(map, map2);
-
-
-				/*Marcadores*/
-
-				//const lockerimage = src = "";
 			}
 
-			var lugares = [['Tlalpan', 19.28380112062941, -99.1771035356514],
-			['Cuauhtémoc', 19.428809314912836, -99.16169126910391],
-			['Gustavo A. Madero', 19.49215147959578, -99.13359960338582],
-			['Miguel Hidalgo', 19.43902613507273, -99.20223391079132]
+			var lugares = [
+				['Tlalpan', 19.28380112062941, -99.1771035356514],
+				['Cuauhtémoc', 19.428809314912836, -99.16169126910391],
+				['Gustavo A. Madero', 19.49215147959578, -99.13359960338582],
+				['Miguel Hidalgo', 19.43902613507273, -99.20223391079132]
 			];
 
 			function setMarkers(map, map2) {
@@ -63,12 +59,7 @@
 						title: sitio[0]
 					})
 				}
-
-
-
 			}
-
-
 			window.initMap = initMap;
 		</script>
 	</head>
@@ -94,9 +85,9 @@
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="origen"
 						required>
-						<option value="" selected disabled>Seleccione su alcaldía</option>
+						<option value="" disabled <% if (!newShipping?.orgAlcaldiaId) {%>selected<%} %>>Seleccione su alcaldía</option>
 						<% for (var i=0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_cityhll%>">
+							<option value="<%= alcaldias[i].id_cityhll%>" <% if (newShipping?.orgAlcaldiaId==alcaldias[i].id_cityhll) {%>selected<%} %>>
 								<%= alcaldias[i].name_cityhll %>
 							</option>
 						<% } %>
@@ -111,6 +102,7 @@
 						<% for (var i=0; i < lockers.length; i++) { %>
 							<li class="list-group-item d-none" alcaldia-origen="<%= lockers[i].id_cityhll%>">
 								<input class="form-check-input me-1" type="radio" name="lockerOrigen" value="<%= lockers[i].id_locker %>"
+								<% if (newShipping?.orgLockerId==lockers[i].id_locker) {%>checked<%} %>
 								id="origen-<%= lockers[i].id_locker %>" required>
 							<label class="form-check-label stretched-link" for="origen-<%= lockers[i].id_locker %>"></label>
 								<div class="container row align-items-start">
@@ -129,18 +121,21 @@
 						<% } %>
 					</ul>
 					<script>
-						document.querySelector('[name=origen]').addEventListener('change', function () {
-							var id = this.value;
-							var lockers = document.querySelectorAll('[alcaldia-origen]');
+						let origen = document.querySelector('[name=origen]')
+						let locker_origen = document.querySelectorAll('[alcaldia-origen]');
+						function update_origen() {
+							let id =origen.value;
 
-							lockers.forEach((locker) => {
+							locker_origen.forEach((locker) => {
 								console.log(locker.getAttribute('alcaldia-origen'), id);
 								if (locker.getAttribute('alcaldia-origen') == id)
 									locker.classList.remove('d-none');
 								else
 									locker.classList.add('d-none');
 							})
-						})
+						}
+						origen.addEventListener('change', update_origen)
+						update_origen()
 					</script>
 
 
@@ -150,9 +145,9 @@
 					</div>
 					<select class="form-select form-select-lg mb-3 mx-sm" aria-label=".form-select-lg" name="destino"
 						required>
-						<option value="" selected disabled>Seleccione una alcaldía</option>
+						<option value="" disabled <% if (!newShipping?.dstAlcaldiaId) {%>selected<%} %>>Seleccione una alcaldía</option>
 						<% for (var i=0; i < alcaldias.length; i++) { %>
-							<option value="<%= alcaldias[i].id_cityhll%>">
+							<option value="<%= alcaldias[i].id_cityhll%>" <% if (newShipping?.dstAlcaldiaId==alcaldias[i].id_cityhll) {%>selected<%} %>>
 								<%= alcaldias[i].name_cityhll %>
 							</option>
 						<% } %>
@@ -167,6 +162,7 @@
 						<% for (var i=0; i < lockers.length; i++) { %>
 							<li class="list-group-item d-none" alcaldia-destino="<%= lockers[i].id_cityhll%>">
 								<input class="form-check-input me-1" type="radio" name="lockerDestino" value="<%= lockers[i].id_locker %>"
+								<% if (newShipping?.dstLockerId==lockers[i].id_locker) {%>checked<%} %>
 								id="destino-<%= lockers[i].id_locker %>" required>
 							<label class="form-check-label stretched-link" for="destino-<%= lockers[i].id_locker %>"></label>
 								<div class="container row align-items-start">
@@ -185,18 +181,21 @@
 						<% } %>
 					</ul>
 					<script>
-						document.querySelector('[name=destino]').addEventListener('change', function () {
-							var id = this.value;
-							var lockers = document.querySelectorAll('[alcaldia-destino]');
+						let destino = document.querySelector('[name=destino]')
+						let lockers_destino = document.querySelectorAll('[alcaldia-destino]');
+						function update_destino() {
+							let id = destino.value;
 
-							lockers.forEach((locker) => {
+							lockers_destino.forEach((locker) => {
 								console.log(locker.getAttribute('alcaldia-destino'), id);
 								if (locker.getAttribute('alcaldia-destino') == id)
 									locker.classList.remove('d-none');
 								else
 									locker.classList.add('d-none');
 							})
-						})
+						}
+						destino.addEventListener('change', update_destino)
+						update_destino()
 					</script>
 
 					<!-- Seccion tamano de paquete -->
@@ -215,9 +214,11 @@
 											<% for (var i=0; i < tamanios.length; i++) { %>
 												<div class="card mb-4">
 													<div class="card-body" role="button">
-														<h5 class="card-title"><input
+														<h5 class="card-title">
+															<input
 																id="<%= tamanios[i].name_size %>" type="radio"
 																name="paquete" value="<%= tamanios[i].id_size %>"
+																<% if (newShipping?.sizeShippingId==tamanios[i].id_size) {%>checked<%} %>
 																required>
 															<label for="<%= tamanios[i].id_size %>">
 																<%= tamanios[i].name_size %>
@@ -261,9 +262,11 @@
 											<% for (var i=0; i < tipoEnvio.length; i++) { %>
 												<div id="<%= tipoEnvio[i].nm_shpgtype %>-card" class="card mb-4">
 													<div class="card-body" role="button">
-														<h5 class="card-title"><input
+														<h5 class="card-title">
+															<input
 																id="<%= tipoEnvio[i].nm_shpgtype %>" type="radio"
 																name="tipo" value="<%= tipoEnvio[i].id_shpgtype %>"
+																<% if (newShipping?.typeShippingId==tipoEnvio[i].id_shpgtype) {%>checked<%} %>
 																required>
 															<label for="<%= tipoEnvio[i].id_shpgtype %>">
 																<%= tipoEnvio[i].nm_shpgtype %>
@@ -354,8 +357,13 @@
 						<% } %>
 					</ul>
 
-					<center><a href="/agregarmetodoPago" class="btn btn-outline-danger agregar">Agregar nueva
-							tarjeta</a>
+					<center>
+						<button type="submit" class="btn btn-outline-danger agregar" onclick="document.forms[0].method='put'">
+							Agregar nueva tarjeta
+						</button>
+						<!-- <a href="/agregarmetodoPago" class="btn btn-outline-danger agregar">
+							Agregar nueva tarjeta
+						</a> -->
 					</center>
 
 

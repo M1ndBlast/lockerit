@@ -23,10 +23,10 @@ router.route('/iniciarSesion')
 	db.costumer.getByCredentials(correo, contrasena).then((results) => {
 		debug('results', results);
 		if (results.length) {
-			Auth.createSession(req, results[0]);
+			Auth.createSession(req, results[0][0]);
 			res.json({
 				response: 'OK',
-				message: 'Usuario creado correctamente',
+				message: 'Usuario identificado correctamente',
 				redirect: '/Dashboard',
 			});
 		} else {
@@ -110,8 +110,79 @@ router.route('/activacion')
 
 router.route('/recuperarContrasena')
 .get((req, res, next) => {
-	res.render('recuperarContrasena');
+	res.render('recuperarContrasena', { title: req.session.user?.name, requireToken:req.session.tmpId });
+})
+.post(Validator.recoverPassword, (req, res, next) => {
+	let correo = req.body.correo,
+		token = Math.floor(Math.random() * 1000000)// Random 6-digit number
+			.toString().padStart(6, '0');
+	db.costumer.setToken(correo, token).then(async (results) => {
+		if (results.affectedRows) {
+			await mailer.mailRecoverPassword(correo, token);
+			req.session.tmpId = correo;
+			res.json({
+				response: 'OK',
+				message: 'Correo enviado correctamente',
+				modal: {
+					new: '#staticBackdrop',
+					old: 'none'
+				},
+			});
+		} else {
+			res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE2});
+		}
+	});
 });
+router.route('/activacionContra')
+.post(Auth.onlyGuests, Validator.token, (req, res, next) => {
+	let correo = req.session.tmpId,
+		{Num1, Num2, Num3, Num4, Num5, Num6} = req.body,
+		token = Num1 + Num2 + Num3 + Num4 + Num5 + Num6;
+	console.log(`id: ${correo}, token: ${token}`);
+	db.costumer.activateWithEmail(correo, token).then((results) => {
+		if (results.affectedRows) {
+			req.session.validateChange = true
+			res.json({
+				response: 'OK',
+				redirect: '/cambiarContraCliente',
+			});
+		} else {
+			res.json({response:'ERROR', ...MSG.ERROR.MSE7});
+		}
+	}).catch((err) => {
+		res.status(402).json({response:'ERROR', message:err.message||err});
+	});
+});
+router.route('/cambiarContraCliente')
+.get(Auth.onlyGuests, (req, res, next) => {
+	if(req.session.validateChange){
+		res.render('cambiarContraCliente', { title: req.session.user?.name, requireToken:req.session.tmpId });
+	}else{
+		res.redirect('/recuperarContrasena');
+	}
+}).post(Auth.onlyGuests, Validator.changePassword, (req, res, next) => {
+	let correo = req.session.tmpId,
+		{pwd_old, pwd_new} = req.body;
+	db.costumer.getByCredentials(correo, pwd_old).then((results) => {
+		if (results[0])
+			return db.costumer.updatePwd(correo, pwd_new);
+		else 
+			throw new Error('Contraseña incorrecta');
+	})
+	.then((results) => {
+		if (results?.affectedRows) {
+			res.json({
+				response: 'OK',
+				message: 'Contraseña cambiada correctamente',
+				redirect: '/Dashboard',
+			});
+		} else
+			throw MSG.ERROR.MSE7
+	}).catch((err) => {
+		res.status(402).json({response:'ERROR', message:err.message||err});
+	});
+});
+
 
 router.route('/cerrarsesion')
 .get(Auth.onlyUsers, (req, res, next) => {
@@ -120,7 +191,11 @@ router.route('/cerrarsesion')
 
 router.route('/Dashboard')
 .get(Auth.onlyUsers, (req, res, next) => {
-	res.render('AccesoMain', { user: req.session.user }); 
+	console.log(req.session.user)
+	if (req.session.user.type_usr==3)
+		res.render('AccesoMain', { user: req.session.user }); 
+	else
+		res.render('AccesoRepartidor', { user: req.session.user });
 });
 
 router.route('/editarDatosUsuario')
@@ -161,7 +236,7 @@ router.route('/editarDatosUsuario')
 
 router.route('/agregarmetodoPago')
 .get(Auth.onlyClients, (req, res, next) => {
-	res.render('agregarmetodoPago2');
+	res.render('agregarmetodoPago2', { user: req.session.user });
 })
 .post(Auth.onlyClients, Validator.creditCard, (req, res, next) => {
 	console.log(req.body);
@@ -171,7 +246,7 @@ router.route('/agregarmetodoPago')
 			res.status(200).json({
 				response: 'OK',
 				message: 'Metodo de pago agregado correctamente',
-				redirect: '/metodosPago'
+				redirect: req.session.newShipping?'/realizarEnvio':'/metodosPago'
 			});
 		} else {
 			res.status(401).json({response:'ERROR', ...MSG.ERROR.MSE7});
@@ -235,40 +310,54 @@ router.route('/cotizarEnvio')
 		destino:alcaldiaDstId, lockerDestino:lockerDstId,
 		tipo:tipoEnvioId, paquete:tipoPaqueteId} = req.body,
 
-		alcaldias = await db.lockers.getCityHalls(),
-		lockers = await db.lockers.getLockers(),
-		tipoEnvios = await db.lockers.getShipmentTypes(),
-		tamanios = await db.lockers.getShipmentSizes(),
+		tamanios = await db.lockers.getShipmentSizes(),		
 		
-		lockerOrg = lockers.find(l => l.id_locker == lockerOrgId),
-		lockerDst = lockers.find(l => l.id_locker == lockerDstId),
-		tipoEnvio = tipoEnvios.find(t => t.id_shpgtype == tipoEnvioId),
 		tipoPaquete = tamanios.find(t => t.id_shpgsize == tipoPaqueteId),
 		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio = tipoPaquete.price_shpgsize+(25.6*(100/27.5)).toFixed(2);
+		precio = (tipoPaquete.price_shpgsize+25.6*(1/27.5)).toFixed(2);
 
 	
 	req.session.newShipping = {
-		lockerOrg: lockerOrg,
-		lockerDst: lockerDst,
-		tipoEnvio: tipoEnvio,
-		tipoPaquete: tipoPaquete,
-		precio: precio
-	};
+		typeShippingId: tipoEnvioId,
+		precio: precio,
+		sizeShippingId: tipoPaqueteId,
+		// paymentId: paymentId,
+
+		// nmCtc: inputName,
+		// emCtc: inputMail, 
+		// telCtc: inputNumber,
+
+		orgLockerId: lockerOrgId,
+		dstLockerId: lockerDstId,
+		orgAlcaldiaId: alcaldiaOrgId,
+		dstAlcaldiaId: alcaldiaDstId,
+	}
 
 	console.log(req.session.newShipping);
 	res.redirect('/resumenCotizacion');
 });
 
 router.route('/resumenCotizacion')
-.get((req, res, next) => {
-	res.render('resumenCotizacion', { user: req.session.user, ...req.session.newShipping });
-});
+.get(async (req, res, next) => {
+	let params = {}
 
+	lockers = await db.lockers.getLockers(),
+	tipoEnvios = await db.lockers.getShipmentTypes(),
+	tamanios = await db.lockers.getShipmentSizes()
+ 
 
-router.route('/envios')
-.get(Auth.onlyClients, (req, res, next) => {
-	res.render('envios', { user: req.session.user });
+	if (req.session.newShipping.typeShippingId)
+		params.typeShipping = tipoEnvios.find(t => t.id_shpgtype == req.session.newShipping.typeShippingId);
+	if (req.session.newShipping.sizeShippingId)
+		params.sizeShipping = tamanios.find(t => t.id_shpgsize == req.session.newShipping.sizeShippingId);
+	if (req.session.newShipping.orgLockerId)
+		params.orgLocker = lockers.find(l => l.id_locker == req.session.newShipping.orgLockerId);
+	if (req.session.newShipping.dstLockerId)
+		params.dstLocker = lockers.find(l => l.id_locker == req.session.newShipping.dstLockerId);
+	if (req.session.newShipping.precio)
+		params.precio = req.session.newShipping.precio;
+
+	res.render('resumenCotizacion', { user: req.session.user, ...params });
 });
 
 router.route('/realizarEnvio')
@@ -285,38 +374,56 @@ router.route('/realizarEnvio')
 		tipoEnvio: tipoEnvio,
 		tamanios: tamanios,
 		metodosPago: metodosPago,
-		lockers: lockers
+		lockers: lockers,
+		newShipping: req.session.newShipping
+	});
+})
+.put(async (req, res, next) => {
+	let { 
+		origen:alcaldiaOrgId, destino:alcaldiaDstId, 
+		lockerOrigen:origen, lockerDestino:destino, 
+		paquete, tipo, 
+		inputName, inputMail, inputNumber, 
+		listGroupRadio: paymentId 
+	} = req.body;
+	
+	req.session.newShipping = {
+		typeShippingId: tipo,
+		// precio: precio,
+		sizeShippingId: paquete,
+		paymentId: paymentId,
+
+		nmCtc: inputName,
+		emCtc: inputMail, 
+		telCtc: inputNumber,
+
+		orgLockerId: origen,
+		dstLockerId: destino,
+		orgAlcaldiaId: alcaldiaOrgId,
+		dstAlcaldiaId: alcaldiaDstId,
+	}
+	console.log(req.session.newShipping);
+	res.json({
+		response: 'OK',
+		redirect: '/agregarmetodoPago',
 	});
 })
 .post(Validator.realizarEnvio, async (req, res, next) => {
-	console.log('req.body KEJEJ');
-	console.log(req.body);
-	let {lockerOrigen:origen, lockerDestino:destino, paquete, tipo, inputName, inputMail, inputNumber, listGroupRadio} = req.body;
+	let {lockerOrigen:origen, lockerDestino:destino, paquete, tipo, inputName, inputMail, inputNumber, listGroupRadio: paymentId} = req.body;
 	let tamanios = await db.lockers.getShipmentSizes();
 	let tamanio = tamanios.find(t => t.id_shpgsize == paquete);
-	console.log("tamanio", tamanio);
-	let precio = tamanio.price_shpgsize+(25.6*(100/27.5));
-	
-	req.session.newShipping = {
-		origen: origen,
-		destino: destino,
-		tamanio: tamanio,
-		tipo: tipo,
-		inputName: inputName,
-		inputMail: inputMail, 
-		inputNumber: inputNumber,
-		listGroupRadio: listGroupRadio,
-		//Precio del tamaño del paquete + (25.6*(Distancia entre origen y destino/27.5))
-		precio: tamanio.price_shpgsize+(25.6*(100/27.5))
-	};
+	let precio = (tamanio.price_shpgsize+25.6*(1/27.5)).toFixed(2);
 
-	console.log(req.session.newShipping);
+	// generate random tracking number
+	let trk_shpg = Date.now().toString().padEnd(18, '0');
 
-	db.shipping.set(req.session.user.id, tipo, precio, paquete, listGroupRadio, inputName, inputMail, inputNumber, origen, destino).then((results) => {
+	db.shipping.set(req.session.user.id, trk_shpg, tipo, precio, paquete, paymentId, inputName, inputMail, inputNumber, origen, destino).then((results) => {
+		console.log(results)
 		res.json({
 			response: 'OK', 
-			message: 'Solicitud de envío generada con éxito. Recibirá un correo electronico con todos los estados para continuar con su envío',
+			message: 'Solicitud de envío generada con éxito. Recibirá un correo electronico con todos los estados para continuar con su envío\tGuía '+trk_shpg, 
 			title: 'Envío Generado',
+			redirect: '/envios'
 		});
 	}).catch((err) => {
 		console.log(err);
@@ -326,8 +433,11 @@ router.route('/realizarEnvio')
 			title: 'Error',
 		});
 	});
+});
 
-	
+router.route('/envios')
+.get(Auth.onlyClients, (req, res, next) => {
+	res.render('envios', { user: req.session.user });
 });
 
 router.route('/consultarEnvio')
