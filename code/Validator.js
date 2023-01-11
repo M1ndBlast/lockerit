@@ -31,26 +31,26 @@ const v = {
 	_nickname: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isLength({ min: 3 }).withMessage(`${name} debe tener al menos 3 caracteres`)
-		.isLength({ max: 50 }).withMessage(`${name} debe tener maximo 50 caracteres`)
+		.isLength({ max: 50 }).withMessage(`${name} debe tener máximo 50 caracteres`)
 		.isAlphanumeric().withMessage(`${name} solo puede contener letras y números`)
 	},
 	// Only firstname
 	_name: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isLength({ min: 3 }).withMessage(`${name} debe tener al menos 3 caracteres`)
-		.isLength({ max: 50 }).withMessage(`${name} debe tener maximo 50 caracteres`)
+		.isLength({ max: 50 }).withMessage(`${name} debe tener máximo 50 caracteres`)
 		.matches(/^[a-zA-Zà-ÿÀ-Ÿ]{3,}( [a-zA-Zà-ÿÀ-Ÿ]{2,})? *$/).withMessage(`${name} debe contener solo letras y espacios`)
 	},
 	// Phone
 	_phone: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isInt().withMessage(`${name} solo puede contener números`)
-		.isLength({ min: 10, max: 10 }).withMessage(`${name} debe tener solo 10 caracteres`)
+		.isLength({ min: 10, max: 10 }).withMessage(`${name} debe tener solo 10 digitos`)
 	},
 	// Email
 	_email: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
-		.isEmail().withMessage(`${name} no es valido`)
+		.isEmail().withMessage(`${name} no es válido`)
 	},
 	// Email confirm
 	_emailConfirm: function (param, name, comparation) { return this._email(param, name)
@@ -61,10 +61,10 @@ const v = {
 	_password: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatoria`)
 		.isLength({ min: 8 }).withMessage(`${name} debe tener al menos 8 caracteres`)
-		.isLength({ max: 16 }).withMessage(`${name} debe tener maximo 16 caracteres`)
+		.isLength({ max: 16 }).withMessage(`${name} debe tener máximo 16 caracteres`)
 		.matches(/\d/).withMessage(`${name} debe tener al menos un número`)
 		.matches(/[a-z]/).withMessage(`${name} debe tener al menos una letra minuscula`)
-		.matches(/[A-Z]/).withMessage(`${name} debe tener al menos una letra mayuscula`)
+		.matches(/[A-Z]/).withMessage(`${name} debe tener al menos una letra mayúscula`)
 		.matches(/[\W_]/).withMessage(`${name} debe tener al menos un caracter especial`)
 	},
 	// Password confirm
@@ -81,25 +81,25 @@ const v = {
 	_tokenDigit: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isInt().withMessage(`${name} solo puede contener números`)
-		.isLength({ min: 1, max: 1 }).withMessage(`${name} debe tener solo 1 caracter`)
+		.isLength({ min: 1, max: 1 }).withMessage(`${name} debe tener solo un digito`)
 	},
 	// Tracking number
 	_trackingNumber: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isInt().withMessage(`${name} solo puede contener números`)
-		.isLength({ min: 18, max: 18 }).withMessage(`${name} debe tener solo 18 caracteres`)
+		.isLength({ min: 18, max: 18 }).withMessage(`${name} debe tener solo 18 digitos`)
 	},
 	// Credit card
 	_creditCard: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isInt().withMessage(`${name} solo puede contener números`)
-		.isLength({ min: 16, max: 16 }).withMessage(`${name} debe tener solo 16 caracteres`)
+		.isLength({ min: 16, max: 16 }).withMessage(`${name} debe tener solo 16 digitos`)
 	},
 	// Credit card date format: MM/YY
 	_creditCardDate: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatoria`)
 		.isLength({ min: 5, max: 5 }).withMessage(`${name} debe tener solo 5 caracteres`)
-		.matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/).withMessage(`${name} no es valida`)
+		.matches(/^(0[1-9]|1[0-2])\/([0-9]{2})$/).withMessage(`${name} no es válida`)
 		.custom((value, { req }) => {
 			let date = value.split('/')
 			let cardDate = new Date(`20${date[1]}`, date[0])
@@ -112,13 +112,13 @@ const v = {
 			req.body.cardDate = cardDate.toISOString().split('T')[0]
 			
 			return cardDate > today
-		}).withMessage('La fecha de expiración no es valida')
+		}).withMessage('La fecha de expiración no es válida')
 	},
 	// Credit card cvv
 	_creditCardCvv: function (param, name) { return check(param)
 		.not().isEmpty().withMessage(`${name} es obligatorio`)
 		.isInt().withMessage(`${name} solo puede contener números`)
-		.isLength({ min: 3, max: 3 }).withMessage(`${name} debe tener solo 3 caracteres`)
+		.isLength({ min: 3, max: 3 }).withMessage(`${name} debe tener solo 3 digitos`)
 	},
 	// Credit card name
 	_creditCardName: function (param, name) { return this._name(param, name)},

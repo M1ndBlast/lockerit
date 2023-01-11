@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -102,12 +102,12 @@
                     <div class="row">
                         <div class="col-md-6 position-relative">
                             <center>
-                                <button type="button" class="btn btn-primary boton-azul">Confirmar Recolección</button>
+                                <button type="button" class="btn btn-primary boton-azul" data-bs-toggle="modal" data-bs-target="#ModalConfirmacion">Confirmar Recolección</button>
                             </center>
                         </div>
                         <div class="col-md-6 position-relative">
                             <center>
-                                <button type="button" class="btn btn-danger boton-rojo" >Reportar un problema</button>
+                                <button type="button" class="btn btn-danger boton-rojo" data-bs-toggle="modal" data-bs-target="#ModalReporte">Reportar un problema</button>
                             </center>
                         </div>
                     </div>
@@ -115,6 +115,93 @@
                 
                 
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" aria-labelledby="ModalConfirmacionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="ModalConfirmacionLabel">¿Confirmar entrega?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Ha entregado el paquete con número de envió: #?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn boton text-white" data-bs-toggle="modal" data-bs-target="#modalListo">Confirmar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalListo" aria-hidden="true" aria-labelledby="modalListoLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalListoLabel">Paquete entregado</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Se ha marcado el paquete como entregado
+            </div>
+            <div class="modal-footer">
+              <button class="btn boton text-white" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Modal reporte-->
+    <div class="modal fade" id="ModalReporte" tabindex="-1" aria-labelledby="ModalReporteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="ModalReporteLabel">Reportar un problema</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <center><b>¿Tiene un problema para recolectar el paquete: #?</b><br>
+                Seleccione el problema con el paquete:</center>
+
+                <form >
+                    <div style="padding-left: 30px;">
+                        <br><label><input type="radio" name="problema" value="malEstado"> Paquete en mal estado</label><br>
+                  
+                        <label><input type="radio" name="problema" value="sinRastreo"> Paquete sin guía de rastreo</label><br>
+                  
+                            <label><input type="radio" name="problema" value="vacio" checked> Locker vacío</label>
+                    </div>
+                  </form>
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalGenerado">Enviar reporte</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalGenerado" aria-hidden="true" aria-labelledby="modalGeneradoLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalGeneradoLabel">Reporte generado</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Se ha generado el reporte con éxito
+            </div>
+            <div class="modal-footer">
+              <button class="btn boton text-white" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
 </body>
 
 </html>

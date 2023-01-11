@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 	<head>
 		<meta charset="UTF-8">
@@ -73,7 +73,27 @@
 	</head>
 
 	<body>
-		<%- include('./navInvitado'); %>
+		<nav class="navbar fixed-top navbar-fixed-top navbar-dark navbar-expand-lg colorNav">
+			<div class="container">
+			  <a class="navbar-brand" href="/main"><img src="/images/logo-amarillo.svg" alt="" width="150" height="30"></a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarScroll">
+				<ul class="navbar-nav   ms-auto" style="--bs-scroll-height: 100px;">
+				  <li class="nav-item">
+					<a class="nav-link" aria-current="page" href="/main">Inicio</a>
+				  </li>
+				  <li class="nav-item Botones">
+					<button type="submit" onclick="location.href='/iniciarSesion'" class="btn btn-outline-light  fw-semibold">Iniciar Sesión</button>
+				  </li>
+				  <li class="nav-item Botones">
+					<button type="submit" onclick="location.href='/RegistroCliente'" class="btn btn-outline-light  fw-semibold ">Registrate</button>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+		</nav>
 		<!-- partial:index.partial.html -->
 		<div class=" d-flex justify-content-center align-items-center ">
 			<form action="/cotizarEnvio" method="post">
@@ -84,13 +104,6 @@
 						<h2 class="card-title text-center titulo">Cotizar envío</h2>
 					</div>
 
-					<!-- Seccion locker origen -->
-					<div class=" mt-2">
-						<h3 class="font-weight-bold ">Locker de origen</h3>
-					</div>
-					<div class="input-group mt-2">
-						<p class="small fw-light">*Campos obligatorios</p>
-					</div>
 					<!-- Seccion locker origen -->
 					<div class=" mt-2">
 						<h3 class="font-weight-bold ">Locker de origen</h3>
@@ -290,7 +303,7 @@
 								</div>
 							</div>
 						</div>
-						<center><button class="btn btn-outline-danger btn-lg agregar" type="submit">Cotizar</a>
+						<center><button class="btn boton-azul btn-lg text-white " type="submit">Cotizar</a>
 						</center>
 					</div>
 				</div>

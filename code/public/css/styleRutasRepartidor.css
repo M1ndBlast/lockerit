@@ -1,0 +1,26 @@
+.imgmapa { 
+    width:600px; /* you can use % */ 
+    height: auto;
+    max-width:100%;
+}
+
+.mapa{
+    display: flex;
+    justify-content: center;
+}
+
+.pines{
+  max-width: 100%;
+  width: 60px;
+  height: auto;
+}
+
+.letras{
+  font-size: 2vw;
+}
+
+@media screen and (max-width: 990px) {
+  .barra{
+      display: none;
+  }
+}

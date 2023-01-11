@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,12 @@
 	</head>
 
 	<body>
-		<!-- include navCliente.ejs -->
-		<%- include('navCliente.ejs');%>
+		<%- include('./navCliente'); %>
 		<section id="section1">
 			<div class="containter-text">
 				<img src="images/logo-oscuro.svg" class="logo_main">
 				<p>Envía o recibe paquetes de forma sencilla, segura y rápida</p>
-				<button class="btn btn-outline-danger" onclick="location.href='#'">Comenzar</button>
+				<button class="btn btn-outline-danger" onclick="location.href='/envios'">Comenzar</button>
 			</div>
 			<img src="images/LockersXD.svg" alt="" class="img1">
 		</section>

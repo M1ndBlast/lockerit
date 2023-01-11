@@ -46,6 +46,18 @@ a{
   margin-left: 20px;
 }
 
+.boton-azul{
+  margin-top: 20px;
+  border-color: rgb(33, 46, 70) !important;
+  background-color: rgb(33, 46, 70) !important;
+}
+
+div[disabled]
+{
+    pointer-events: none;
+    opacity: 0.7; 
+}
+
 @media screen and (max-width: 990px) {
   .Botones{
       margin-bottom: 10px;

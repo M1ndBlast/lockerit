@@ -38,6 +38,12 @@
     padding-bottom: 0;
 }
 
+.boton-azul{
+    margin-top: 20px;
+    border-color: rgb(33, 46, 70) !important;
+    background-color: rgb(33, 46, 70) !important;
+}
+
 .Botones{
     margin-left: 20px;
 }

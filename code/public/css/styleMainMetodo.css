@@ -36,3 +36,9 @@ a{
 .color-eliminar:hover{
   color: red !important;
 }
+
+.boton-amarillo{
+  margin-top: 20px;
+  border-color: rgb(249, 217, 80) !important;
+  background-color: rgb(249, 217, 80)  !important;
+}
