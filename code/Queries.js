@@ -309,6 +309,17 @@ const db={
 			});
 		},
 
+		updateState: (trk, id_shpgstat) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+
+				con.query('UPDATE shipping SET id_shpgstat=? WHERE trk_shpg=?', [id_shpgstat, trk], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				})
+			})
+		},
+
 		getByTracking: (trk) => {
 			return new Promise((resolve, reject) => {
 				if (!isConnected) throw errorDBConnection;
@@ -330,6 +341,29 @@ const db={
 				});
 			});
 		},
+
+		getAllByDeliverer: (id) => {
+			return new Promise((resolve, reject) => {
+				if (!isConnected) throw errorDBConnection;
+				con.query('SELECT '+
+					'shipping.*, name_shpgstat,  '+
+					' lockerorg.name_locker as name_locker_org, lockerdst.name_locker as name_locker_dst '+
+					'FROM shipping '+
+					'NATURAL JOIN shippingstate '+
+					'RIGHT JOIN (shippingdoor as shpgdrorg, door as doororg, locker as lockerorg) '+
+						'ON (shipping.trk_shpg=shpgdrorg.trk_shpg AND shpgdrorg.id_door=doororg.id_door AND doororg.id_locker=lockerorg.id_locker) '+
+					'RIGHT JOIN (shippingdoor as shpgdrdst, door as doordst, locker as lockerdst) '+
+						'ON (shipping.trk_shpg=shpgdrdst.trk_shpg AND shpgdrdst.id_door=doordst.id_door AND doordst.id_locker=lockerdst.id_locker) '+
+					'WHERE id_shpgstat>1 AND id_shpgstat<4 '+
+						'AND shpgdrorg.trk_shpg=shpgdrdst.trk_shpg '+
+						'AND shpgdrorg.act_shpgdr=1 '+
+						'AND shpgdrdst.act_shpgdr=2 ',
+					[/* id */], (err, results) => {
+					if (err) reject(err);
+					else resolve(results);
+				});
+			});
+		}
 	},
 
 

@@ -495,10 +495,28 @@ router.route('/estatusEnvio')
 });
 
 router.route('/paquetesRepartidor')
-.get(Auth.onlyDeliverers, (req, res, next) => {
+.get(Auth.onlyDeliverers, async (req, res, next) => {
+	let shippings = await db.shipping.getAllByDeliverer(req.session.user.id);
 	
-	
-	res.render('paquetesRepartidor', { user: req.session.user });
+	res.render('paquetesRepartidor', { user: req.session.user, paquetes:shippings });
+}).post(async (req, res, next) => {
+	// update state 
+	db.shipping.updateState(req.body.tracking, req.body.estado).then((results) => {
+		console.log(results);
+		res.json({
+			response: 'OK',
+			redirect: '/paquetesRepartidor',
+			message: 'Estado actualizado con éxito',
+			title: 'Estado Actualizado'
+		});
+	}).catch((err) => {
+		console.log(err);
+		res.json({
+			response: 'ERROR',
+			message: 'No se pudo actualizar el estado del envío',
+			title: 'Error'
+		});
+	})
 });
 
 router.get('/:file', (req, res, next) => {

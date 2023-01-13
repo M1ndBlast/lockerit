@@ -46,53 +46,57 @@
                             </tr>
                         </thead>
                         <tbody>
+							<% for (let i in paquetes) { %>
                             <tr>
-                                <td>#################</td>
-                                <td>POR ENTREGAR</td>
-                                <td>Cuauhtémoc</td>
-                                <td>Juárez</td>
-                                <td><button type="button" class="btn btn-primary boton btn-sm" data-bs-toggle="modal" data-bs-target="#ModalConfirmacion">✓</button>
+                                <td> <%= paquetes[i].trk_shpg %> </td>
+                                <td> <%= paquetes[i].name_shpgstat %> </td>
+                                <td>
+									<%= paquetes[i].name_locker_org %>
+								</td>
+                                <td>
+									<%= paquetes[i].name_locker_dst %>
+								</td>
+                                <td><button type="button" class="btn btn-primary boton btn-sm" data-bs-toggle="modal" data-bs-target="#ModalConfirmacion" 
+									onclick='actualizar(<%= paquetes[i].trk_shpg %>, <%= paquetes[i].id_shpgtype %>)'
+									>✓</button>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalReporte">X</button></td>
                                 <td><button type="button" class="btn btn-light btn-sm detalles" onClick="location.href='/detallesPaquete'">Detalles</button></td>
                                 
                             </tr>
-                            <tr>
-                                <td>#################</td>
-                                <td>POR RECOLECTAR</td>
-                                <td>Cuauhtémoc</td>
-                                <td>Juárez</td>
-                                <td><button type="button" class="btn btn-primary boton btn-sm" data-bs-toggle="modal" data-bs-target="#ModalConfirmacion">✓</button>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#ModalReporte">X</button></td>
-                                <td><button type="button" class="btn btn-light btn-sm detalles" onClick="location.href='/detallesPaquete'">Detalles</button></td>
-                            </tr>
-                            <tr>
-                                <td>#################</td>
-                                <td>FINALIZADO</td>
-                                <td>Cuauhtémoc</td>
-                                <td>Juárez</td>
-                                <td></td>
-                                <td><button type="button" class="btn btn-light btn-sm detalles" onClick="location.href='/detallesPaquete'">Detalles</button></td>
-                            </tr>
+							<% } %>
                         </tbody>
                     </table>
                 </div>
         </div>
     </div>
+	<script>
+		function actualizar(guia, estado) {
+			document.getElementById("numeroEnvio").value = guia;
+			document.getElementById("estadoEnvio").value = estado;
+			// show modal 
+
+		}
+	</script>
     
     <!-- Modal -->
     <div class="modal fade" id="ModalConfirmacion" tabindex="-1" aria-labelledby="ModalConfirmacionLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="ModalConfirmacionLabel">¿Confirmar entrega?</h5>
+            <h5 class="modal-title" id="ModalConfirmacionLabel">¿Confirmar acción?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Ha entregado el paquete con número de envió: #?
+				<form action="paquetesRepartidor" method="post"> 
+					¿Ha acabado el proceso con el paquete con número de envió: 
+					<input type="text" class="form-control" id="numeroEnvio" name="tracking" placeholder="Número de envío" disabled>
+					<input type="hidden" class="form-control" id="estadoEnvio" name="estado" disabled>
+
+				</form>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn boton text-white" data-bs-toggle="modal" data-bs-target="#modalListo">Confirmar</button>
+            <button type="submit" class="btn boton text-white" data-bs-toggle="modal" data-bs-target="#modalListo">Confirmar</button>
             </div>
         </div>
         </div>
