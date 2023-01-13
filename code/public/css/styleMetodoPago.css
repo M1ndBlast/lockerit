@@ -24,3 +24,9 @@
     border-color: rgb(33, 46, 70) !important;
     background-color: rgb(33, 46, 70) !important;
 }
+
+@media screen and (max-width: 990px) {
+    .barra{
+        display: none;
+    }
+}

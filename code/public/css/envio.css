@@ -58,3 +58,9 @@ a:visited{
 .seleccion:hover{
     border-color: rgb(249, 217, 80);
 }
+
+@media screen and (max-width: 990px) {
+    .barra{
+        display: none;
+    }
+}

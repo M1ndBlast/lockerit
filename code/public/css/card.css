@@ -1,8 +1,4 @@
-.active {
-    border-color: #f9d950 !important;
-    background-color: #f2f2f2;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.18), 0 3px 6px rgba(0, 0, 0, 0.23);
-  }
+
   
   .card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0, 0, 0, 0.2);

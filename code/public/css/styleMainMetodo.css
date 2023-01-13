@@ -42,3 +42,9 @@ a{
   border-color: rgb(249, 217, 80) !important;
   background-color: rgb(249, 217, 80)  !important;
 }
+
+@media screen and (max-width: 990px) {
+  .barra{
+      display: none;
+  }
+}

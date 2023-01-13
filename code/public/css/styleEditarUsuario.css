@@ -20,7 +20,12 @@
     background-color: rgb(249, 217, 80)  !important;
   }
 
-.btn{
-    text-align: center;
-    width: 170px;
+.btn-editar{
+    text-align: center !important;
+    width: 170px !important;
+}
+@media screen and (max-width: 990px) {
+  .barra{
+      display: none;
+  }
 }
