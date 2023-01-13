@@ -560,6 +560,63 @@ INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `lockerit`.`shipping`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('019283746574839201', '1', '1', '1', '2023-01-11 12:00:00', '2023-01-12 12:00:00', '2023-01-11 12:00:00', '300', '1', '1', 'Enrique Uriel', 'uriel.enri@gmail.com', '5543216789', '1', '2');
+INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('102938475657483920', '1', '1', '6', '2023-01-05 12:00:00', '2023-01-06 12:00:00', '2023-01-06 12:00:00', '350', '2', '2', 'Eduardo Sanchez', 'edu.san@gmail.com', '5546372819', '2', '1');
+INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('019283746564738291', '1', '1', '2', '2023-01-01 12:00:00', '2023-01-02 12:00:00', '2023-01-01 17:00:00', '400', '3', '3', 'Maria Juarez', 'Marjua@gmail.com', '5501928374', '2', '3');
+INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('564738291029384756', '1', '1', '3', '2023-01-03 12:00:00', '2023-01-04 12:00:00', '2023-01-04 08:00:00', '300', '1', '1', 'Enrique Uriel', 'uriel.enri@gmail.com', '5543216789', '3', '2');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `lockerit`.`paymentmethods`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`paymentmethods` (`num_pmt`, `date_pmt`, `id_cos`) VALUES ("1234567890987654", "2023-12-31 23:59:59", 1), ("0987654321234567","2023-11-30 23:59:59",1), ("1029384756574839","2024-12-31 23:59:59",1);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `lockerit`.`door`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('1', '3', '2', '2', '1');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('2', '3', '3', '2', '1');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('3', '2', '2', '1', '2');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('4', '2', '1', '1', '1');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('5', '1', '1', '2', '2');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('6', '1', '2', '2', '3');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('7', '1', '3', '1', '2');
+INSERT INTO `lockerit`.`door` (`id_door`, `id_size`, `id_locker`, `id_state`, `nm_door`) VALUES ('8', '1', '2', '2', '4');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `lockerit`.`shippingdoor`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('1', '1', '019283746564738291', '2', '1', '1234567');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('2', '2', '019283746564738291', '1', '2', '7654321');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('3', '3', '102938475657483920', '2', '2', '0987654');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('4', '4', '102938475657483920', '1', '2', '4567890');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('5', '5', '019283746574839201', '2', '2', '1357924');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('6', '6', '019283746574839201', '1', '2', '4297531');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('7', '7', '564738291029384756', '2', '2', '0864297');
+INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('8', '8', '564738291029384756', '1', '2', '7924680');
+
+COMMIT;
+
 -- ---------------------------------------------------------------------------------------------------
 -- Creation of stored procedure to query users ------------------------------------------------------
 -- ---------------------------------------------------------------------------------------------------
