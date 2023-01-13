@@ -561,6 +561,16 @@ INSERT INTO `lockerit`.`shippingstate` (`id_shpgstat`, `name_shpgstat`) VALUES (
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `lockerit`.`paymentmethods`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`paymentmethods` (`num_pmt`, `date_pmt`, `id_cos`) VALUES ("1234567890987654", "2023-12-31 23:59:59", 1), ("0987654321234567","2023-11-30 23:59:59",1), ("1029384756574839","2024-12-31 23:59:59",1);
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `lockerit`.`shipping`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -570,16 +580,6 @@ INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpg
 INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('102938475657483920', '1', '1', '6', '2023-01-05 12:00:00', '2023-01-06 12:00:00', '2023-01-06 12:00:00', '350', '2', '2', 'Eduardo Sanchez', 'edu.san@gmail.com', '5546372819', '2', '1');
 INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('019283746564738291', '1', '1', '2', '2023-01-01 12:00:00', '2023-01-02 12:00:00', '2023-01-01 17:00:00', '400', '3', '3', 'Maria Juarez', 'Marjua@gmail.com', '5501928374', '2', '3');
 INSERT INTO `lockerit`.`shipping` (`trk_shpg`, `id_cos`, `id_shpgtype`, `id_shpgstat`, `crtdate_shpg`, `deldate_shpg`, `statdate_shpg`, `price_shpg`, `id_shpgsize`, `id_pmt`, `name_addrs`, `em_addrs`, `tel_addrs`, `id_orglock`, `id_deslock`) VALUES ('564738291029384756', '1', '1', '3', '2023-01-03 12:00:00', '2023-01-04 12:00:00', '2023-01-04 08:00:00', '300', '1', '1', 'Enrique Uriel', 'uriel.enri@gmail.com', '5543216789', '3', '2');
-
-COMMIT;
-
--- -----------------------------------------------------
--- Data for table `lockerit`.`paymentmethods`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `lockerit`;
-
-INSERT INTO `lockerit`.`paymentmethods` (`num_pmt`, `date_pmt`, `id_cos`) VALUES ("1234567890987654", "2023-12-31 23:59:59", 1), ("0987654321234567","2023-11-30 23:59:59",1), ("1029384756574839","2024-12-31 23:59:59",1);
 
 COMMIT;
 
