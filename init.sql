@@ -571,6 +571,17 @@ INSERT INTO `lockerit`.`paymentmethods` (`num_pmt`, `date_pmt`, `id_cos`) VALUES
 COMMIT;
 
 -- -----------------------------------------------------
+-- Data for table `lockerit`.`route`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`route` (`id_rout`, `stfnum_stf`, `date_rout`, `stat_rout`) VALUES ('1', '0000000001', '2023-01-12', '1');
+INSERT INTO `lockerit`.`route` (`id_rout`, `stfnum_stf`, `date_rout`, `stat_rout`) VALUES ('2', '0000000001', '2023-01-07', '1');
+
+COMMIT;
+
+-- -----------------------------------------------------
 -- Data for table `lockerit`.`shipping`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -614,6 +625,22 @@ INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_
 INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('6', '6', '019283746574839201', '1', '2', '4297531');
 INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('7', '7', '564738291029384756', '2', '2', '0864297');
 INSERT INTO `lockerit`.`shippingdoor` (`id_shpgdr`, `id_door`, `trk_shpg`, `act_shpgdr`, `availblt_shpgdr`, `qr_shpgdr`) VALUES ('8', '8', '564738291029384756', '1', '2', '7924680');
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `lockerit`.`routedetail`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `lockerit`;
+
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('1', '2', '2', '1');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('2', '2', '1', '2');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('3', '2', '3', '3');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('3', '2', '2', '3');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('4', '1', '1', '1');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('5', '1', '2', '2');
+
 
 COMMIT;
 
