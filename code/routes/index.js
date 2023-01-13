@@ -494,6 +494,13 @@ router.route('/estatusEnvio')
 	res.render('estatusEnvio', { user: req.session.user });
 });
 
+router.route('/paquetesRepartidor')
+.get(Auth.onlyDeliverers, (req, res, next) => {
+	
+	
+	res.render('paquetesRepartidor', { user: req.session.user });
+});
+
 router.get('/:file', (req, res, next) => {
 	let file = req.params.file;
 	console.log(file);
