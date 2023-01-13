@@ -637,9 +637,9 @@ USE `lockerit`;
 INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('1', '2', '2', '1');
 INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('2', '2', '1', '2');
 INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('3', '2', '3', '3');
-INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('3', '2', '2', '3');
-INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('4', '1', '1', '1');
-INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('5', '1', '2', '2');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('4', '2', '2', '3');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('5', '1', '1', '1');
+INSERT INTO `lockerit`.`routedetail` (`id_routdtl`, `id_rout`, `id_locker`, `ord_routdtl`) VALUES ('6', '1', '2', '2');
 
 
 COMMIT;
