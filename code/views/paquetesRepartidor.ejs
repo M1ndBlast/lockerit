@@ -79,6 +79,7 @@
 	</script>
     
     <!-- Modal -->
+	<form action="/paquetesRepartidor" method="post"> 
     <div class="modal fade" id="ModalConfirmacion" tabindex="-1" aria-labelledby="ModalConfirmacionLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -87,20 +88,19 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-				<form action="paquetesRepartidor" method="post"> 
 					¿Ha acabado el proceso con el paquete con número de envió: 
 					<input type="text" class="form-control" id="numeroEnvio" name="tracking" placeholder="Número de envío" disabled>
 					<input type="hidden" class="form-control" id="estadoEnvio" name="estado" disabled>
 
-				</form>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn boton text-white" data-bs-toggle="modal" data-bs-target="#modalListo">Confirmar</button>
-            </div>
-        </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn boton text-white" data-bs-toggle="modal" data-bs-target="#modalListo">Confirmar</button>
+				</div>
+			</div>
         </div>
     </div>
+	</form>
 
     <div class="modal fade" id="modalListo" aria-hidden="true" aria-labelledby="modalListoLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -120,6 +120,7 @@
     </div>
 
     <!-- Modal reporte-->
+	<form >
     <div class="modal fade" id="ModalReporte" tabindex="-1" aria-labelledby="ModalReporteLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -131,7 +132,6 @@
                 <center><b>¿Tiene un problema para recolectar el paquete: #?</b><br>
                 Seleccione el problema con el paquete:</center>
 
-                <form >
                     <div style="padding-left: 30px;">
                         <br><label><input type="radio" name="problema" value="malEstado"> Paquete en mal estado</label><br>
                   
@@ -139,16 +139,16 @@
                   
                             <label><input type="radio" name="problema" value="vacio" checked> Locker vacío</label>
                     </div>
-                  </form>
-
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalGenerado">Enviar reporte</button>
-            </div>
-        </div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalGenerado">Enviar reporte</button>
+				</div>
+			</div>
         </div>
     </div>
+	</form>
 
     <div class="modal fade" id="modalGenerado" aria-hidden="true" aria-labelledby="modalGeneradoLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -166,6 +166,7 @@
           </div>
         </div>
     </div>
+	<script src="/js/validation.js"></script>
 
 </body>
 

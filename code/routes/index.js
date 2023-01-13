@@ -501,6 +501,7 @@ router.route('/paquetesRepartidor')
 	res.render('paquetesRepartidor', { user: req.session.user, paquetes:shippings });
 }).post(async (req, res, next) => {
 	// update state 
+	console.log(req.body);
 	db.shipping.updateState(req.body.tracking, req.body.estado).then((results) => {
 		console.log(results);
 		res.json({
